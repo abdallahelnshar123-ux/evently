@@ -1,6 +1,7 @@
 import 'package:evently/home_screen/tabs/fav_tab/favorite_tab.dart';
 import 'package:evently/home_screen/tabs/home_tab/home_tab.dart';
 import 'package:evently/home_screen/tabs/profile_tab/profile_tab.dart';
+import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -34,19 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           builtBottomNavigationBarItem(
-            label: 'Home',
+            label: AppLocalizations.of(context)!.home,
             index: 0,
             selectedIcon: AppAssets.homeSelectedIcon,
             unselectedIcon: AppAssets.homeUnselectedIcon,
           ),
           builtBottomNavigationBarItem(
-            label: 'Favorite',
+            label: AppLocalizations.of(context)!.favorite,
             index: 1,
             selectedIcon: AppAssets.favoriteSelectedIcon,
             unselectedIcon: AppAssets.favoriteUnselectedIcon,
           ),
           builtBottomNavigationBarItem(
-            label: 'Profile',
+            label: AppLocalizations.of(context)!.profile,
             index: 2,
             selectedIcon: AppAssets.profileSelectedIcon,
             unselectedIcon: AppAssets.profileUnselectedIcon,
