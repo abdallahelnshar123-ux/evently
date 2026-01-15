@@ -8,8 +8,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  runApp(EasyLocalization(supportedLocales: [Locale('en'), Locale('ar')], path: 'assets/translation',
-  child: const MyApp()));
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('ar')],
+      path: 'assets/translation',
+      startLocale: Locale('en'),
+      saveLocale: true,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,15 +27,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.homeRouteName,
-      routes: { AppRoutes.homeRouteName : (context) => HomeScreen(),
-      },
+      routes: {AppRoutes.homeRouteName: (context) => HomeScreen()},
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme ,
-      themeMode: ThemeMode.system ,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
     );
   }
 }
-
