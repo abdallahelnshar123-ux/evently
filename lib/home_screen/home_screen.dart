@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/home_screen/tabs/fav_tab/favorite_tab.dart';
 import 'package:evently/home_screen/tabs/home_tab/home_tab.dart';
 import 'package:evently/home_screen/tabs/profile_tab/profile_tab.dart';
@@ -34,19 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           builtBottomNavigationBarItem(
-            label: 'Home',
+            label: context.tr('home'),
             index: 0,
             selectedIcon: AppAssets.homeSelectedIcon,
             unselectedIcon: AppAssets.homeUnselectedIcon,
           ),
           builtBottomNavigationBarItem(
-            label: 'Favorite',
+            label: context.tr('favorite'),
             index: 1,
             selectedIcon: AppAssets.favoriteSelectedIcon,
             unselectedIcon: AppAssets.favoriteUnselectedIcon,
           ),
           builtBottomNavigationBarItem(
-            label: 'Profile',
+            label: context.tr('profile'),
             index: 2,
             selectedIcon: AppAssets.profileSelectedIcon,
             unselectedIcon: AppAssets.profileUnselectedIcon,

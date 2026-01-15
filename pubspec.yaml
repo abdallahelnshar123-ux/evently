@@ -37,6 +37,7 @@ dependencies:
   google_fonts: ^7.0.0
   flutter_native_splash: ^2.4.7
   flutter_svg: ^2.2.3
+  easy_localization: ^3.0.8
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/translations/
 
   #   - images/a_dot_ham.jpeg
 

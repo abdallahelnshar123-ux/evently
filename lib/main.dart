@@ -1,10 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/home_screen/home_screen.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      startLocale: Locale('ar'),
+      saveLocale: true,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,12 +27,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.homeRouteName,
-      routes: { AppRoutes.homeRouteName : (context) => HomeScreen(),
-      },
+      routes: {AppRoutes.homeRouteName: (context) => HomeScreen()},
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme ,
-      themeMode: ThemeMode.system ,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }
-
