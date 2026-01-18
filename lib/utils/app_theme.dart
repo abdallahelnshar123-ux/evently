@@ -13,10 +13,11 @@ class AppTheme {
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColors.mainColor,
-      shape: StadiumBorder()
-
-    )
+      shape: StadiumBorder(),
+    ),
+    appBarTheme: AppBarTheme(backgroundColor: AppColors.backgroundColor),
   );
+
   static final ThemeData darkTheme = ThemeData(
     textTheme: TextTheme(),
     scaffoldBackgroundColor: AppColors.bgDarkModeColor,
@@ -29,6 +30,7 @@ class AppTheme {
       floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: AppColors.mainDarkModeColor,
           shape: StadiumBorder()
-      ),
+      ),,
+    appBarTheme: AppBarTheme(backgroundColor: AppColors.bgDarkModeColor),
   );
 }
