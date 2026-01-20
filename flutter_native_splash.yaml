@@ -18,7 +18,7 @@ flutter_native_splash:
   # dart run flutter_native_splash:remove -p ../your-filepath.yaml
 
   # IMPORTANT NOTE: These parameter do not affect the configuration of Android 12 and later, which
-  # handle splash screens differently that prior versions of Android.  Android 12 and later must be
+  # handle splash screen differently that prior versions of Android.  Android 12 and later must be
   # configured specifically in the android_12 section below, at the very end.
 
   #======================================================================
