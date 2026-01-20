@@ -37,7 +37,7 @@ class BackButtonWidget extends StatelessWidget {
                   : AppColors.inputsColor,
             ),
             child: Transform.flip(
-              flipX: context.savedLocale!.languageCode == 'ar',
+              flipX: context.savedLocale?.languageCode == 'ar',
               child: SvgPicture.asset(
                 AppAssets.arrowBackIcon,
                 colorFilter: ColorFilter.mode(

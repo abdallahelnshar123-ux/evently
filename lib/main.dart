@@ -17,6 +17,8 @@ void main() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   final int appTheme =
       sharedPreferences.getInt(SharedPrefsKeys.appThemeKey) ?? 1;
+  final bool showIntro =
+      sharedPreferences.getBool(SharedPrefsKeys.onBoardingKey) ?? true;
 
   runApp(
     ChangeNotifierProvider(
@@ -28,14 +30,16 @@ void main() async {
         path: 'assets/translations',
         startLocale: Locale('en'),
         saveLocale: true,
-        child: MyApp(),
+        child: MyApp(showIntro: showIntro),
       ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  bool showIntro;
+
+  MyApp({super.key, required this.showIntro});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +47,9 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.onBoardingScreen1RouteName,
+      initialRoute: showIntro
+          ? AppRoutes.onBoardingScreen1RouteName
+          : AppRoutes.homeRouteName,
       routes: {
         AppRoutes.homeRouteName: (context) => HomeScreen(),
         AppRoutes.onBoardingScreen1RouteName: (context) => OnBoardingScreen1(),
