@@ -31,8 +31,11 @@ class AppAssets {
       'assets/icons/profile_selected_icon.svg';
   static const String profileUnselectedIcon =
       'assets/icons/profile_unselected_icon.svg';
-  static const String sunIcon = 'assets/icons/sun_icon.svg';
-  static const String moonDarkIcon = 'assets/icons/moon_dark_icon.svg';
-  static const String moonLightIcon = 'assets/icons/moon_light_icon.svg';
+  static const String sunSelectedIcon = 'assets/icons/sun_selected_icon.svg';
+  static const String sunUnselectedIcon =
+      'assets/icons/sun_unselected_icon.svg';
+  static const String moonSelectedIcon = 'assets/icons/moon_selected_icon.svg';
+  static const String moonUnselectedIcon =
+      'assets/icons/moon_unselected_icon.svg';
   static const String arrowBackIcon = 'assets/icons/arrow_back_icon.svg';
 }

@@ -5,11 +5,40 @@ import '../../provider/app_theme_provider.dart';
 import '../../utils/app_colors.dart';
 
 class SkipButtonWidget extends StatelessWidget {
-  const SkipButtonWidget({super.key});
+  VoidCallback onPressed;
+
+  SkipButtonWidget({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.all(0),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: context.isLight
+                ? AppColors.strokeColor
+                : AppColors.strokeDarkColor,
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        backgroundColor: context.isLight
+            ? AppColors.whiteColor
+            : AppColors.inputsColor,
+      ),
+      child: Text(
+        context.tr('skip'),
+        style: Theme.of(context).textTheme.labelMedium,
+      ),
+    );
+  }
+}
+
+/*
+
+GestureDetector(
       child: Container(
         padding: EdgeInsets.all(4),
         decoration: BoxDecoration(
@@ -22,8 +51,7 @@ class SkipButtonWidget extends StatelessWidget {
                 : AppColors.strokeDarkColor,
           ),
         ),
-        child: Text(context.tr('skip')),
+        child: Text(context.tr('skip'), style: Theme.of(context).textTheme.labelMedium,),
       ),
-    );
-  }
-}
+    )
+ */

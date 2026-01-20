@@ -1,5 +1,3 @@
-import 'package:evently/on_boarding/widget/back_button.dart';
-import 'package:evently/on_boarding/widget/skip_button_widget.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +23,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               : AppAssets.eventlyLogoDark,
         ),
         centerTitle: true,
-        leading: BackButtonWidget(),
+
         leadingWidth: context.width * 0.085,
-        actions: [SkipButtonWidget()],
       ),
     );
   }
