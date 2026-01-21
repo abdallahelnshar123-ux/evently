@@ -6,10 +6,12 @@ import 'package:evently/on_boarding/widget/dot_indicator.dart';
 import 'package:evently/on_boarding/widget/skip_button_widget.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../provider/app_theme_provider.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/screen_size.dart';
+import '../../utils/shared_prefs.dart';
 
 class OnBoardingScreen2 extends StatefulWidget {
   OnBoardingScreen2({super.key});
@@ -84,11 +86,14 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
           Visibility(
             visible: currentIndex != 2,
             child: SkipButtonWidget(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pushReplacementNamed(
                   context,
                   AppRoutes.homeRouteName,
                 );
+                SharedPreferences sharedPreferences =
+                await SharedPreferences.getInstance();
+                sharedPreferences.setBool(SharedPrefsKeys.onBoardingKey, false);
                 setState(() {});
               },
             ),
@@ -106,8 +111,9 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 4,
+                  SizedBox(
+                    height: context.height * 0.4,
+                    width: double.infinity,
                     child: PageView.builder(
                       onPageChanged: (index) {
                         currentIndex = index;
@@ -117,18 +123,24 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
                       controller: _pageController,
                       itemBuilder: (context, index) => Image.asset(
                         onBoardingList[index].image,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       ),
                       itemCount: onBoardingList.length,
                     ),
                   ),
-                  Row(
-                    children: [
-                      DotIndicator(active: currentIndex == 0 ? true : false),
-                      DotIndicator(active: currentIndex == 1 ? true : false),
-                      DotIndicator(active: currentIndex == 2 ? true : false),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      spacing: 10,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DotIndicator(active: currentIndex == 0 ? true : false),
+                        DotIndicator(active: currentIndex == 1 ? true : false),
+                        DotIndicator(active: currentIndex == 2 ? true : false),
+                      ],
+                    ),
                   ),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text(
@@ -149,7 +161,7 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
               ),
             ),
             CustomElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 switch (currentIndex) {
                   case 0:
                     _pageController.animateToPage(
@@ -169,7 +181,12 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
                     Navigator.pushReplacementNamed(
                       context,
                       AppRoutes.homeRouteName,
+
                     );
+                    SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
+                    sharedPreferences.setBool(
+                        SharedPrefsKeys.onBoardingKey, false);
                   default:
                     break;
                 }
@@ -183,26 +200,3 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
   }
 }
 
-/*
-PageView.builder(
-
-            itemBuilder: (context, index) =>
-                Image.asset(onBoardingList[index].image , fit: BoxFit.fitHeight,),
-            itemCount: onBoardingList.length,
-
-          ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                context.tr(onBoardingList[index].title),
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-            Expanded(child: SingleChildScrollView(
-              child: Text(
-                context.tr(onBoardingList[index].description),
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            )),
-
- */
