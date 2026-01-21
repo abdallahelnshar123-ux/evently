@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
+    popupMenuTheme: PopupMenuThemeData(color: AppColors.mainDarkModeColor),
     textTheme: TextTheme(
+      labelLarge: AppStyles.medium16MainText,
+
+      /// 16 medium main text
+      labelSmall: AppStyles.regular14sexText,
+
+      /// 14 regular sex text
       labelMedium: AppStyles.sBold14Main,
 
       /// 14s bold main
@@ -35,7 +42,14 @@ class AppTheme {
   );
 
   static final ThemeData darkTheme = ThemeData(
+    popupMenuTheme: PopupMenuThemeData(color: AppColors.mainDarkModeColor),
     textTheme: TextTheme(
+      labelLarge: AppStyles.medium16white,
+
+      /// 16 medium white
+      labelSmall: AppStyles.regular14sexTextDark,
+
+      /// 14 regular sex text dark
       labelMedium: AppStyles.sBold14White,
 
       /// 14s bold white

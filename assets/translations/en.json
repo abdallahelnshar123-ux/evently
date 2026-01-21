@@ -17,6 +17,8 @@
   "theme": "Theme",
   "lets_start": "Let’s start",
   "next": "Next",
-  "get_started": "Get started"
+  "get_started": "Get started",
+  "dark_mode": "Dark mode",
+  "logout": "Logout"
 
 }

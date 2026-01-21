@@ -17,4 +17,5 @@ class AppColors {
   static const Color strokeDarkColor = Color(0xFF002D8F);
   static const Color mainDarkModeColor = Color(0xFF457AED);
   static const Color inputsColor = Color(0xFF001440);
+  static const Color grayColor = Color(0xFFE9EAEB);
 }
