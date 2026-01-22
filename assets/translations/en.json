@@ -19,6 +19,22 @@
   "next": "Next",
   "get_started": "Get started",
   "dark_mode": "Dark mode",
-  "logout": "Logout"
+  "logout": "Logout",
+  "login_to_your_account": "Login to your account",
+  "enter_your_email": "Enter your email",
+  "enter_your_password": "Enter your password",
+  "forget_password": "Forget Password",
+  "login": "Login",
+  "do_not_have_an_account": "Don’t have an account ? ",
+  "signup": "Signup",
+  "or": "  Or  ",
+  "login_with_google": "Login with Google",
+  "create_your_account": "Create your account",
+  "enter_your_name": "Enter your name",
+  "confirm_your_password": "Confirm your password",
+  "already_have_an_account": "Already have an account ? ",
+  "sign_up_with_google": "Sign up with Google",
+  "reset_password": "Reset password"
+
 
 }

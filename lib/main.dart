@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:evently/authentication/screen/forget_password_screen.dart';
 import 'package:evently/home_screen/home_screen.dart';
 import 'package:evently/on_boarding/screen/screen_1.dart';
 import 'package:evently/provider/app_theme_provider.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'authentication/screen/login_screen.dart';
+import 'authentication/screen/signup_screen.dart';
 import 'on_boarding/screen/screen_2.dart';
 
 void main() async {
@@ -54,6 +57,9 @@ class MyApp extends StatelessWidget {
         AppRoutes.homeRouteName: (context) => HomeScreen(),
         AppRoutes.onBoardingScreen1RouteName: (context) => OnBoardingScreen1(),
         AppRoutes.onBoardingScreen2RouteName: (context) => OnBoardingScreen2(),
+        AppRoutes.loginRouteName: (context) => LoginScreen(),
+        AppRoutes.signupRouteName: (context) => SignupScreen(),
+        AppRoutes.forgetPasswordRouteName: (context) => ForgetPasswordScreen(),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

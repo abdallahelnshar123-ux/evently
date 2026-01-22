@@ -19,6 +19,10 @@ class AppAssets {
   static const String onBoarding4Dark =
       'assets/images/onboarding_image4_dark.png';
   static const String profileImage = 'assets/images/profile_image.png';
+  static const String forgetPasswordDarkImage =
+      'assets/images/forget_password_image_dark.png';
+  static const String forgetPasswordLightImage =
+      'assets/images/forget_password_image_light.png';
 
   ///  icons =============================================================
   static const String homeSelectedIcon = 'assets/icons/home_selected_icon.svg';
@@ -40,4 +44,7 @@ class AppAssets {
       'assets/icons/moon_unselected_icon.svg';
   static const String arrowBackIcon = 'assets/icons/arrow_back_icon.svg';
   static const String logoutIcon = 'assets/icons/logout_icon.svg';
+  static const String smsIcon = 'assets/icons/sms_icon.svg';
+  static const String lockIcon = 'assets/icons/lock_icon.svg';
+  static const String googleIcon = 'assets/icons/google_icon.svg';
 }
