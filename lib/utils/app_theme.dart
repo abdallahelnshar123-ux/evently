@@ -4,8 +4,15 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+    ),
+    dividerTheme: DividerThemeData(color: AppColors.strokeColor, thickness: 1),
     popupMenuTheme: PopupMenuThemeData(color: AppColors.mainDarkModeColor),
     textTheme: TextTheme(
+      titleLarge: AppStyles.sBold24Main,
+
+      /// 24 s bold main
       labelLarge: AppStyles.medium16MainText,
 
       /// 16 medium main text
@@ -24,9 +31,16 @@ class AppTheme {
       bodySmall: AppStyles.regular16SexText,
 
       /// 16 regular sec text
+      displaySmall: AppStyles.sBold14Main,
+
+      /// 14 s bold main
     ),
     scaffoldBackgroundColor: AppColors.backgroundColor,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      selectedLabelStyle: AppStyles.regular12Main,
+      selectedItemColor: AppColors.mainColor,
+      unselectedItemColor: AppColors.disableColor,
+      unselectedLabelStyle: AppStyles.regular12Disable,
       backgroundColor: AppColors.whiteColor,
       selectedIconTheme: IconThemeData(color: AppColors.mainColor),
       unselectedIconTheme: IconThemeData(color: AppColors.disableColor),
@@ -38,12 +52,23 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.backgroundColor,
       toolbarHeight: 80,
+      leadingWidth: 70,
     ),
   );
 
   static final ThemeData darkTheme = ThemeData(
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+    ),
+    dividerTheme: DividerThemeData(
+      color: AppColors.strokeDarkColor,
+      thickness: 1,
+    ),
     popupMenuTheme: PopupMenuThemeData(color: AppColors.mainDarkModeColor),
     textTheme: TextTheme(
+      titleLarge: AppStyles.sBold24White,
+
+      /// 24 s bold white
       labelLarge: AppStyles.medium16white,
 
       /// 16 medium white
@@ -62,9 +87,16 @@ class AppTheme {
       bodySmall: AppStyles.regular16SexTextDark,
 
       /// 16 regular sec text
+      displaySmall: AppStyles.sBold14MainDark,
+
+      /// 14 s bold main dark
     ),
     scaffoldBackgroundColor: AppColors.bgDarkModeColor,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      unselectedLabelStyle: AppStyles.regular12Disable,
+      selectedItemColor: AppColors.mainDarkModeColor,
+      unselectedItemColor: AppColors.disableColor,
+      selectedLabelStyle: AppStyles.regular12MainDark,
       backgroundColor: AppColors.bgDarkModeColor,
       selectedIconTheme: IconThemeData(color: AppColors.mainDarkModeColor),
       unselectedIconTheme: IconThemeData(color: AppColors.disableColor),
@@ -76,6 +108,7 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.bgDarkModeColor,
       toolbarHeight: 80,
+      leadingWidth: 70,
     ),
   );
 }

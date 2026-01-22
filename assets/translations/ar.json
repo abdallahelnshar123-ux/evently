@@ -19,5 +19,20 @@
   "next": "التالي",
   "get_started": "ابدأ",
   "dark_mode": "الوضع الليلي",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+  "login_to_your_account": "تسجيل الدخول إلى حسابك",
+  "enter_your_email": "أدخل بريدك الإلكتروني",
+  "enter_your_password": "أدخل كلمة المرور الخاصة بك",
+  "forget_password": "نسيت كلمة المرور",
+  "login": "تسجيل الدخول",
+  "do_not_have_an_account": "ليس لديك حساب؟ ",
+  "signup": "اشتراك",
+  "or": "  أو  ",
+  "login_with_google": "تسجيل الدخول من خلال جوجل",
+  "create_your_account": "أنشئ حسابك",
+  "enter_your_name": "أدخل اسمك",
+  "confirm_your_password": "قم بتأكيد كلمة المرور الخاصة بك",
+  "already_have_an_account": "هل لديك حساب بالفعل ؟ ",
+  "sign_up_with_google": "قم بالتسجيل من خلال جوجل",
+  "reset_password": "إعادة تعيين كلمة المرور"
 }

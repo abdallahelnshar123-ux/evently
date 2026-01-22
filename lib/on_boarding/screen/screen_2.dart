@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../provider/app_theme_provider.dart';
 import '../../utils/app_assets.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_styles.dart';
 import '../../utils/screen_size.dart';
 import '../../utils/shared_prefs.dart';
 
@@ -92,7 +94,7 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
                   AppRoutes.homeRouteName,
                 );
                 SharedPreferences sharedPreferences =
-                await SharedPreferences.getInstance();
+                    await SharedPreferences.getInstance();
                 sharedPreferences.setBool(SharedPrefsKeys.onBoardingKey, false);
                 setState(() {});
               },
@@ -161,6 +163,9 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
               ),
             ),
             CustomElevatedButton(
+              backgroundColor: context.isLight
+                  ? AppColors.mainColor
+                  : AppColors.mainDarkModeColor,
               onPressed: () async {
                 switch (currentIndex) {
                   case 0:
@@ -181,17 +186,21 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
                     Navigator.pushReplacementNamed(
                       context,
                       AppRoutes.homeRouteName,
-
                     );
                     SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
+                        await SharedPreferences.getInstance();
                     sharedPreferences.setBool(
-                        SharedPrefsKeys.onBoardingKey, false);
+                      SharedPrefsKeys.onBoardingKey,
+                      false,
+                    );
                   default:
                     break;
                 }
               },
-              text: onBoardingList[currentIndex].buttonText,
+              child: Text(
+                context.tr(onBoardingList[currentIndex].buttonText),
+                style: AppStyles.sBold20White,
+              ),
             ),
           ],
         ),
@@ -199,4 +208,3 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
     );
   }
 }
-

@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/app_styles.dart';
+
 class OnBoardingScreen1 extends StatefulWidget {
   OnBoardingScreen1({super.key});
 
@@ -167,7 +169,13 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
 
             /// start button ==================================================
             CustomElevatedButton(
-              text: 'lets_start',
+              backgroundColor: context.isLight
+                  ? AppColors.mainColor
+                  : AppColors.mainDarkModeColor,
+              child: Text(
+                context.tr('lets_start'),
+                style: AppStyles.sBold20White,
+              ),
               onPressed: () {
                 Navigator.pushReplacementNamed(
                   context,

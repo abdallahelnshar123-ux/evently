@@ -7,11 +7,18 @@ class AppStyles {
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: AppColors.mainColor,
+
+
   );
   static TextStyle sBold14White = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: AppColors.whiteColor,
+  );
+  static TextStyle sBold14MainDark = GoogleFonts.poppins(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.mainDarkModeColor,
   );
   static TextStyle sBold20MainText = GoogleFonts.poppins(
     fontSize: 20,
@@ -73,6 +80,31 @@ class AppStyles {
     fontSize: 16,
     fontWeight: FontWeight.w500,
     color: AppColors.whiteColor,
+  );
+  static TextStyle sBold24Main = GoogleFonts.poppins(
+    fontSize: 24,
+    fontWeight: FontWeight.w600,
+    color: AppColors.mainColor,
+  );
+  static TextStyle sBold24White = GoogleFonts.poppins(
+    fontSize: 24,
+    fontWeight: FontWeight.w600,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle regular12Main = GoogleFonts.poppins(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.mainColor,
+  );
+  static TextStyle regular12MainDark = GoogleFonts.poppins(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.mainDarkModeColor,
+  );
+  static TextStyle regular12Disable = GoogleFonts.poppins(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.disableColor,
   );
 
 }
