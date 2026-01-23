@@ -34,5 +34,18 @@
   "confirm_your_password": "قم بتأكيد كلمة المرور الخاصة بك",
   "already_have_an_account": "هل لديك حساب بالفعل ؟ ",
   "sign_up_with_google": "قم بالتسجيل من خلال جوجل",
-  "reset_password": "إعادة تعيين كلمة المرور"
+  "reset_password": "إعادة تعيين كلمة المرور",
+  "welcome_back": "مرحباً بعودتك",
+  "en": "ع",
+  "all": "الكل",
+  "sport": "رياضة",
+  "birthday": "عيد ميلاد",
+  "meeting": "مقابلة",
+  "gaming": "الألعاب",
+  "workshop": "ورشة عمل",
+  "book_club": "نادي الكتاب",
+  "exhibition": "معرض",
+  "holiday": "عطلة",
+  "eating": "الأكل",
+  "search_for_event": "إبحث عن حدث"
 }

@@ -34,6 +34,9 @@ class AppTheme {
       displaySmall: AppStyles.sBold14Main,
 
       /// 14 s bold main
+      headlineMedium: AppStyles.medium20MainText,
+
+      /// 20 medium main text
     ),
     scaffoldBackgroundColor: AppColors.backgroundColor,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -90,6 +93,9 @@ class AppTheme {
       displaySmall: AppStyles.sBold14MainDark,
 
       /// 14 s bold main dark
+      headlineMedium: AppStyles.medium20White,
+
+      /// 20 medium white
     ),
     scaffoldBackgroundColor: AppColors.bgDarkModeColor,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(

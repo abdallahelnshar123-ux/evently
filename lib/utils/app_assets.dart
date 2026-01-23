@@ -23,6 +23,23 @@ class AppAssets {
       'assets/images/forget_password_image_dark.png';
   static const String forgetPasswordLightImage =
       'assets/images/forget_password_image_light.png';
+  static const String birthdayImageDark =
+      'assets/images/birthday_image_dark.png';
+  static const String birthdayImageLight =
+      'assets/images/birthday_image_light.png';
+  static const String bookClubImageDark =
+      'assets/images/bookclub_image_dark.png';
+  static const String bookClubImageLight =
+      'assets/images/bookclub_image_light.png';
+  static const String exhibitionImageDark =
+      'assets/images/exhibition_image_dark.png';
+  static const String exhibitionImageLight =
+      'assets/images/exhibition_image_light.png';
+  static const String meetingImageDark = 'assets/images/meeting_image_dark.png';
+  static const String meetingImageLight =
+      'assets/images/meeting_image_light.png';
+  static const String sportImageDark = 'assets/images/sport_image_dark.png';
+  static const String sportImageLight = 'assets/images/sport_image_light.png';
 
   ///  icons =============================================================
   static const String homeSelectedIcon = 'assets/icons/home_selected_icon.svg';

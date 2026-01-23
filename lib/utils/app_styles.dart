@@ -56,11 +56,12 @@ class AppStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.whiteColor,
   );
-  static TextStyle medium20Main = GoogleFonts.poppins(
-    fontSize: 20,
-    fontWeight: FontWeight.w500,
-    color: AppColors.whiteColor,
-  );
+
+  // static TextStyle medium20Main = GoogleFonts.poppins(
+  //   fontSize: 20,
+  //   fontWeight: FontWeight.w500,
+  //   color: AppColors.whiteColor,
+  // );
   static TextStyle regular14sexText = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w400,
@@ -106,6 +107,17 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.disableColor,
   );
+  static TextStyle medium20MainText = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: AppColors.mainTextColor,
+  );
+  static TextStyle medium20White = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteColor,
+  );
+
 
 }
 
