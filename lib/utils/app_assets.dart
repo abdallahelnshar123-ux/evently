@@ -23,6 +23,24 @@ class AppAssets {
       'assets/images/forget_password_image_dark.png';
   static const String forgetPasswordLightImage =
       'assets/images/forget_password_image_light.png';
+  static const String birthdayImageDark =
+      'assets/images/birthday_image_dark.png';
+  static const String birthdayImageLight =
+      'assets/images/birthday_image_light.png';
+  static const String forgetPasswordLightImage =
+      'assets/images/forget_password_image_light.png';
+  static const String forgetPasswordLightImage =
+      'assets/images/forget_password_image_light.png';
+  static const String forgetPasswordLightImage =
+      'assets/images/forget_password_image_light.png';
+  static const String forgetPasswordLightImage =
+      'assets/images/forget_password_image_light.png';
+  static const String forgetPasswordLightImage =
+      'assets/images/forget_password_image_light.png';
+  static const String forgetPasswordLightImage =
+      'assets/images/forget_password_image_light.png';
+  static const String forgetPasswordLightImage =
+      'assets/images/forget_password_image_light.png';
 
   ///  icons =============================================================
   static const String homeSelectedIcon = 'assets/icons/home_selected_icon.svg';

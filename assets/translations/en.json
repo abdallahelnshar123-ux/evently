@@ -34,7 +34,17 @@
   "confirm_your_password": "Confirm your password",
   "already_have_an_account": "Already have an account ? ",
   "sign_up_with_google": "Sign up with Google",
-  "reset_password": "Reset password"
-
-
+  "reset_password": "Reset password",
+  "welcome_back": "Welcome Back",
+  "en": "EN",
+  "all": "All",
+  "sport": "Sport",
+  "birthday": "Birthday",
+  "meeting": "Meeting",
+  "gaming": "Gaming",
+  "workshop": "WorkShop",
+  "book_club": "Book Club",
+  "exhibition": "Exhibition",
+  "holiday": "Holiday",
+  "eating": "Eating"
 }
