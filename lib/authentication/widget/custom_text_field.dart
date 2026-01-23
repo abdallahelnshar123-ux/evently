@@ -52,7 +52,7 @@ class CustomTextField extends StatelessWidget {
         hintStyle: hintStyle,
         labelText: labelText,
         labelStyle: labelStyle,
-        contentPadding: EdgeInsets.symmetric(vertical: 14),
+        contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
       ),
     );
   }
