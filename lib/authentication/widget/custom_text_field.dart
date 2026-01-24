@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   TextStyle? labelStyle;
   TextStyle? dataStyle;
   bool obscureText;
+  int? maxLines;
 
   CustomTextField({
     super.key,
@@ -30,11 +31,13 @@ class CustomTextField extends StatelessWidget {
     required this.generalBorderColor,
     this.obscureText = false,
     this.dataStyle,
+    this.maxLines = 1,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxLines,
       style: dataStyle,
       obscuringCharacter: '*',
       obscureText: obscureText,

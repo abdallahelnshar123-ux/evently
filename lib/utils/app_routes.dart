@@ -5,4 +5,5 @@ class AppRoutes {
   static const loginRouteName = 'screen';
   static const signupRouteName = 'signup_screen';
   static const forgetPasswordRouteName = 'forget_password_screen';
+  static const addEventRouteName = 'add_event_screen';
 }

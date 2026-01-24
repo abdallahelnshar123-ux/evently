@@ -1,9 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../provider/app_theme_provider.dart';
 
@@ -22,7 +19,7 @@ class BackButtonWidget extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.all(0),
+              padding: EdgeInsetsDirectional.fromSTEB(9, 0, 0, 0),
               elevation: 0,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
@@ -36,16 +33,27 @@ class BackButtonWidget extends StatelessWidget {
                   ? AppColors.whiteColor
                   : AppColors.inputsColor,
             ),
-            child: Transform.flip(
-              flipX: context.savedLocale?.languageCode == 'ar',
-              child: SvgPicture.asset(
-                AppAssets.arrowBackIcon,
-                colorFilter: ColorFilter.mode(
-                  context.isLight ? AppColors.mainColor : AppColors.whiteColor,
-                  BlendMode.srcIn,
-                ),
+            child: Icon(
+              size: 24,
+              IconData(
+                Icons.arrow_back_ios.codePoint,
+                matchTextDirection: true,
+                fontFamily: Icons.arrow_forward_ios.fontFamily,
               ),
+              color: context.isLight
+                  ? AppColors.mainDarkModeColor
+                  : AppColors.whiteColor,
             ),
+            // Transform.flip(
+            //   flipX: context.savedLocale?.languageCode == 'ar',
+            //   child: SvgPicture.asset(
+            //     AppAssets.arrowBackIcon,
+            //     colorFilter: ColorFilter.mode(
+            //       context.isLight ? AppColors.mainColor : AppColors.whiteColor,
+            //       BlendMode.srcIn,
+            //     ),
+            //   ),
+            // ),
           ),
         ),
       ),
