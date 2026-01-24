@@ -6,7 +6,7 @@ import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class TabWidget extends StatelessWidget {
+class TabBarWidget extends StatelessWidget {
   bool isSelected;
   String eventName;
   IconData icon;
@@ -37,7 +37,7 @@ class TabWidget extends StatelessWidget {
     Icons.fastfood_outlined,
   ];
 
-  TabWidget({
+  TabBarWidget({
     super.key,
     required this.isSelected,
     required this.eventName,

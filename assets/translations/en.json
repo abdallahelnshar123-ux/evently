@@ -47,5 +47,15 @@
   "exhibition": "Exhibition",
   "holiday": "Holiday",
   "eating": "Eating",
-  "search_for_event": "Search for event"
+  "search_for_event": "Search for event",
+  "add_event": "Add event",
+  "title": "Title",
+  "event_title": "Event Title",
+  "description": "Description",
+  "event_description": "Event Description . . . .",
+  "event_date": "Event Date",
+  "event_time": "Event Time",
+  "choose_date": "Choose date",
+  "choose_time": "Choose time"
+
 }

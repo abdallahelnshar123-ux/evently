@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/home_screen/tabs/home_tab/widget/event_widget.dart';
-import 'package:evently/home_screen/tabs/home_tab/widget/tab_widget.dart';
+import 'package:evently/home_screen/tabs/home_tab/widget/tab_bar_widget.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
@@ -143,7 +143,7 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                   tabs: eventsNameList
                       .map(
-                        (eventName) => TabWidget(
+                        (eventName) => TabBarWidget(
                           icon:
                               selectedIndex == eventsNameList.indexOf(eventName)
                               ? selectedIcons[eventsNameList.indexOf(eventName)]

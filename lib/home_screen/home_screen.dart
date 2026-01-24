@@ -4,6 +4,7 @@ import 'package:evently/home_screen/tabs/home_tab/home_tab.dart';
 import 'package:evently/home_screen/tabs/profile_tab/profile_tab.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
+import 'package:evently/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -22,7 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoutes.addEventRouteName);
+        },
         child: Icon(Icons.add, size: 30, color: AppColors.whiteColor),
       ),
 
