@@ -4,38 +4,11 @@ import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_styles.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class TabBarWidget extends StatelessWidget {
   bool isSelected;
   String eventName;
   IconData icon;
-
-  List<IconData> selectedIcons = [
-    AntDesign.windows_fill,
-    Clarity.bicycle_solid,
-    Icons.cake,
-    Icons.group,
-    Icons.videogame_asset_rounded,
-    Icons.group_work,
-    Clarity.book_solid,
-    Clarity.image_gallery_solid,
-    Clarity.on_holiday_solid,
-    Icons.fastfood,
-  ];
-
-  List<IconData> unSelectedIcons = [
-    AntDesign.windows_outline,
-    Clarity.bicycle_line,
-    Icons.cake_outlined,
-    Icons.group_outlined,
-    Icons.videogame_asset_outlined,
-    Icons.group_work_outlined,
-    Clarity.book_line,
-    Clarity.image_gallery_line,
-    Clarity.on_holiday_line,
-    Icons.fastfood_outlined,
-  ];
 
   TabBarWidget({
     super.key,

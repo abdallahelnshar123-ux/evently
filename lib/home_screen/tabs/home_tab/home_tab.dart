@@ -7,7 +7,6 @@ import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 import '../../../utils/app_data.dart';
 
@@ -91,7 +90,7 @@ class _HomeTabState extends State<HomeTab> {
                 ],
               ),
               DefaultTabController(
-                length: data.eventsNameList.length,
+                length: data.homeEventsNameList.length,
                 child: TabBar(
                   onTap: (index) {
                     selectedIndex = index;
@@ -107,22 +106,20 @@ class _HomeTabState extends State<HomeTab> {
                   labelPadding: EdgeInsets.symmetric(
                     horizontal: context.width * 0.01,
                   ),
-                  tabs: data.eventsNameList
+                  tabs: data.homeEventsNameList
                       .map(
                         (eventName) => TabBarWidget(
-                          icon:
-                              selectedIndex ==
-                                  data.eventsNameList.indexOf(eventName)
-                              ? data.selectedIcons[data.eventsNameList.indexOf(
-                                  eventName,
-                                )]
-                              : data.unselectedIcons[data.eventsNameList
-                                    .indexOfeventName,
-                                )],
                           isSelected:
                               selectedIndex ==
-                                  data.eventsNameList.indexOf(eventName),
+                              data.homeEventsNameList.indexOf(eventName),
                           eventName: eventName,
+                          icon:
+                              selectedIndex ==
+                                  data.homeEventsNameList.indexOf(eventName)
+                              ? data.homeSelectedIcons[data.homeEventsNameList
+                                    .indexOf(eventName)]
+                              : data.homeUnselectedIcons[data.homeEventsNameList
+                                    .indexOf(eventName)],
                         ),
                       )
                       .toList(),
