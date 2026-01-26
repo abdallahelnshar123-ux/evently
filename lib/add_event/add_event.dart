@@ -4,8 +4,8 @@ import 'package:evently/on_boarding/widget/back_button_widget.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
+import 'package:evently/utils/app_data.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 import '../authentication/widget/custom_text_field.dart';
 import '../home_screen/tabs/home_tab/widget/tab_bar_widget.dart';
@@ -22,42 +22,7 @@ class AddEventScreen extends StatefulWidget {
 
 class _AddEventScreenState extends State<AddEventScreen> {
   int selectedIndex = 0;
-
-  List<String> eventsNameList = [
-    'sport',
-    'birthday',
-    'meeting',
-    'gaming',
-    'workshop',
-    'book_club',
-    'exhibition',
-    'holiday',
-    'eating',
-  ];
-
-  List<IconData> selectedIcons = [
-    MingCute.football_fill,
-    Icons.cake,
-    Icons.group,
-    Icons.videogame_asset_rounded,
-    Icons.group_work,
-    Bootstrap.book_fill,
-    Clarity.image_gallery_solid,
-    Clarity.on_holiday_solid,
-    Icons.fastfood,
-  ];
-
-  List<IconData> unSelectedIcons = [
-    MingCute.football_line,
-    Icons.cake_outlined,
-    Icons.group_outlined,
-    Icons.videogame_asset_outlined,
-    Icons.group_work_outlined,
-    Bootstrap.book,
-    Clarity.image_gallery_line,
-    Clarity.on_holiday_line,
-    Icons.fastfood_outlined,
-  ];
+  AppDataClass data = AppDataClass();
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +70,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
               ),
             ),
             DefaultTabController(
-              length: eventsNameList.length,
+              length: data.eventsNameList.length,
               child: TabBar(
                 onTap: (index) {
                   selectedIndex = index;
@@ -119,16 +84,18 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 labelPadding: EdgeInsets.symmetric(
                   horizontal: context.width * 0.01,
                 ),
-                tabs: eventsNameList
+                tabs: data.eventsNameList
                     .map(
                       (eventName) => TabBarWidget(
-                        icon: selectedIndex == eventsNameList.indexOf(eventName)
-                            ? selectedIcons[eventsNameList.indexOf(eventName)]
-                            : unSelectedIcons[eventsNameList.indexOf(
+                        icon: selectedIndex ==
+                            data.eventsNameList.indexOf(eventName)
+                            ? data.selectedIcons[data.eventsNameList.indexOf(
+                            eventName)]
+                            : data.unselectedIcons[data.eventsNameList.indexOf(
                                 eventName,
                               )],
                         isSelected:
-                            selectedIndex == eventsNameList.indexOf(eventName),
+                        selectedIndex == data.eventsNameList.indexOf(eventName),
                         eventName: eventName,
                       ),
                     )

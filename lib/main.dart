@@ -7,17 +7,22 @@ import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_theme.dart';
 import 'package:evently/utils/shared_prefs.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'authentication/screen/login_screen.dart';
 import 'authentication/screen/signup_screen.dart';
+import 'firebase_options.dart';
 import 'on_boarding/screen/screen_2.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final sharedPreferences = await SharedPreferences.getInstance();
   final int appTheme =
       sharedPreferences.getInt(SharedPrefsKeys.appThemeKey) ?? 1;

@@ -9,52 +9,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+import '../../../utils/app_data.dart';
+
 class HomeTab extends StatefulWidget {
+  const HomeTab({super.key});
+
   @override
   State<HomeTab> createState() => _HomeTabState();
 }
 
 class _HomeTabState extends State<HomeTab> {
   int selectedIndex = 0;
-
-  List<String> eventsNameList = [
-    'all',
-    'sport',
-    'birthday',
-    'meeting',
-    'gaming',
-    'workshop',
-    'book_club',
-    'exhibition',
-    'holiday',
-    'eating',
-  ];
-
-  List<IconData> selectedIcons = [
-    Icons.window,
-    MingCute.football_fill,
-    Icons.cake,
-    Icons.group,
-    Icons.videogame_asset_rounded,
-    Icons.group_work,
-    Bootstrap.book_fill,
-    Clarity.image_gallery_solid,
-    Clarity.on_holiday_solid,
-    Icons.fastfood,
-  ];
-
-  List<IconData> unSelectedIcons = [
-    Icons.window,
-    MingCute.football_line,
-    Icons.cake_outlined,
-    Icons.group_outlined,
-    Icons.videogame_asset_outlined,
-    Icons.group_work_outlined,
-    Bootstrap.book,
-    Clarity.image_gallery_line,
-    Clarity.on_holiday_line,
-    Icons.fastfood_outlined,
-  ];
+  AppDataClass data = AppDataClass();
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +91,7 @@ class _HomeTabState extends State<HomeTab> {
                 ],
               ),
               DefaultTabController(
-                length: eventsNameList.length,
+                length: data.eventsNameList.length,
                 child: TabBar(
                   onTap: (index) {
                     selectedIndex = index;
@@ -141,18 +107,21 @@ class _HomeTabState extends State<HomeTab> {
                   labelPadding: EdgeInsets.symmetric(
                     horizontal: context.width * 0.01,
                   ),
-                  tabs: eventsNameList
+                  tabs: data.eventsNameList
                       .map(
                         (eventName) => TabBarWidget(
                           icon:
-                              selectedIndex == eventsNameList.indexOf(eventName)
-                              ? selectedIcons[eventsNameList.indexOf(eventName)]
-                              : unSelectedIcons[eventsNameList.indexOf(
+                              selectedIndex ==
+                                  data.eventsNameList.indexOf(eventName)
+                              ? data.selectedIcons[data.eventsNameList.indexOf(
                                   eventName,
+                                )]
+                              : data.unselectedIcons[data.eventsNameList
+                                    .indexOfeventName,
                                 )],
                           isSelected:
                               selectedIndex ==
-                              eventsNameList.indexOf(eventName),
+                                  data.eventsNameList.indexOf(eventName),
                           eventName: eventName,
                         ),
                       )
