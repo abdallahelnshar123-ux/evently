@@ -2,6 +2,9 @@ import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
+typedef OnChanged = void Function(String)?;
+typedef ValidatorFunction = String? Function(String?)?;
+
 class CustomTextField extends StatelessWidget {
   bool? filled;
   Color? fillColor;
@@ -16,6 +19,9 @@ class CustomTextField extends StatelessWidget {
   TextStyle? dataStyle;
   bool obscureText;
   int? maxLines;
+  OnChanged? onChanged;
+
+  ValidatorFunction? validator;
 
   CustomTextField({
     super.key,
@@ -32,11 +38,15 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.dataStyle,
     this.maxLines = 1,
+    this.validator,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
+      onChanged: onChanged,
       maxLines: maxLines,
       style: dataStyle,
       obscuringCharacter: '*',
