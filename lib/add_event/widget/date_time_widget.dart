@@ -8,19 +8,22 @@ class DateTimeWidget extends StatelessWidget {
   IconData icon;
   String labelText;
   String hyperText;
+  VoidCallback onPressed;
 
   DateTimeWidget.date({
     super.key,
     this.icon = Iconsax.calendar_add_outline,
     this.labelText = 'event_date',
-    this.hyperText = 'choose_date',
+    required this.hyperText,
+    required this.onPressed
   });
 
   DateTimeWidget.time({
     super.key,
     this.icon = Bootstrap.clock,
     this.labelText = 'event_time',
-    this.hyperText = 'choose_time',
+    required this.hyperText,
+    required this.onPressed
   });
 
   @override
@@ -41,9 +44,9 @@ class DateTimeWidget extends StatelessWidget {
         ),
         Spacer(),
         TextButton(
-          onPressed: () {},
+          onPressed: onPressed,
           child: Text(
-            context.tr(hyperText),
+            hyperText,
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
               decoration: TextDecoration.underline,
               decorationColor: context.isLight

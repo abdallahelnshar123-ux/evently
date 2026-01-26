@@ -49,7 +49,7 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                       Text(
                         'Abdallah Elnshar',
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
                   ),

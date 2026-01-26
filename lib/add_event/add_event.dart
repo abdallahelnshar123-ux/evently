@@ -23,6 +23,7 @@ class AddEventScreen extends StatefulWidget {
 class _AddEventScreenState extends State<AddEventScreen> {
   int selectedIndex = 0;
   AppDataClass data = AppDataClass();
+  DateTime? selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -87,15 +88,18 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 tabs: data.eventsNameList
                     .map(
                       (eventName) => TabBarWidget(
-                        icon: selectedIndex ==
+                        icon:
+                        selectedIndex ==
                             data.eventsNameList.indexOf(eventName)
                             ? data.selectedIcons[data.eventsNameList.indexOf(
-                            eventName)]
+                          eventName,
+                        )]
                             : data.unselectedIcons[data.eventsNameList.indexOf(
                                 eventName,
                               )],
                         isSelected:
-                        selectedIndex == data.eventsNameList.indexOf(eventName),
+                        selectedIndex ==
+                            data.eventsNameList.indexOf(eventName),
                         eventName: eventName,
                       ),
                     )
@@ -152,8 +156,17 @@ class _AddEventScreenState extends State<AddEventScreen> {
             ),
             SizedBox(height: context.height * 0.004),
 
-            DateTimeWidget.date(),
-            DateTimeWidget.time(),
+            DateTimeWidget.date(
+              onPressed: pickDate,
+              hyperText: selectedDate == null
+                  ? context.tr('choose_date')
+                  : DateFormat('MMM d, yyyy', Intl.defaultLocale).format(
+                  selectedDate!),
+            ),
+            DateTimeWidget.time(
+              onPressed: pickDate,
+              hyperText: context.tr('choose_time'),
+            ),
             SizedBox(height: context.height * 0.01),
 
             CustomElevatedButton(
@@ -170,5 +183,17 @@ class _AddEventScreenState extends State<AddEventScreen> {
         ),
       ),
     );
+  }
+
+  void pickDate() async {
+    var chooseDate = await showDatePicker(
+      locale: Locale(Intl.defaultLocale!),
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
+      initialDate: DateTime.now(),
+    );
+    selectedDate = chooseDate;
+    setState(() {});
   }
 }

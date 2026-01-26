@@ -23,6 +23,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   final sharedPreferences = await SharedPreferences.getInstance();
   final int appTheme =
       sharedPreferences.getInt(SharedPrefsKeys.appThemeKey) ?? 1;
@@ -35,7 +36,8 @@ void main() async {
         appTheme: appTheme == 1 ? ThemeMode.dark : ThemeMode.light,
       ),
       child: EasyLocalization(
-        supportedLocales: [Locale('en'), Locale('ar')],
+
+      supportedLocales: [Locale('en'), Locale('ar')],
         path: 'assets/translations',
         startLocale: Locale('en'),
         saveLocale: true,
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeProviderObject = Provider.of<AppThemeProvider>(context);
-
+    // Intl.defaultLocale = context.savedLocale!.languageCode ;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: showIntro
