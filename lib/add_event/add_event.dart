@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:evently/add_event/widget/alert_dialog_widget.dart';
 import 'package:evently/add_event/widget/date_time_widget.dart';
 import 'package:evently/firebase_utils.dart';
 import 'package:evently/model/app_data.dart';
@@ -191,7 +192,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     ? context.tr('choose_date')
                     : DateFormat(
                         'MMM d, yyyy',
-                        Intl.defaultLocale,
+                        Intl.defaultLocale ?? context.locale.languageCode,
                       ).format(selectedDate!),
               ),
               DateTimeWidget.time(
@@ -244,20 +245,23 @@ class _AddEventScreenState extends State<AddEventScreen> {
     if (selectedDate == null) {
       showDialog(
         context: context,
-        builder: (context) =>
-            AlertDialog(content: Text(context.tr('please_choose_event_date'))),
+        builder: (context) => AlertDialogWidget(
+          title: 'date_error',
+          errorMessage: 'please_choose_event_date',
+        ),
       );
       return;
     }
-    // if (selectedTime == null) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => ErrorWidget.withDetails(
-    //       message: context.tr('please_choose_event_time'),
-    //     ),
-    //   );
-    //   return;
-    // }
+    if (selectedTime == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogWidget(
+          title: 'time_error',
+          errorMessage: 'please_choose_event_time',
+        ),
+      );
+      return;
+    }
     if (formKey.currentState!.validate()) {
       Event event = Event(
         eventName: selectedEventName,

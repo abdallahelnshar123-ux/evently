@@ -32,7 +32,7 @@ class Event {
         eventTitle: data['event_title'],
         eventDescription: data['event_description'],
         eventDate: DateTime.fromMillisecondsSinceEpoch(data['event_date']),
-        eventTime: data['event_time'],
+        eventTime: data['event_time'] as TimeOfDay,
         isFavorite: data['is_favorite'],
       );
 
@@ -44,7 +44,7 @@ class Event {
       'event_title': eventTitle,
       'event_description': eventDescription,
       'event_date': eventDate.millisecondsSinceEpoch,
-      'event_time': eventTime,
+      'event_time': eventTime.toString(),
       'is_favorite': isFavorite,
     };
   }
