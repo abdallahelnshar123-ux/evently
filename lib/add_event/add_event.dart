@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/add_event/widget/date_time_widget.dart';
+import 'package:evently/firebase_utils.dart';
+import 'package:evently/model/app_data.dart';
+import 'package:evently/model/event.dart';
 import 'package:evently/on_boarding/widget/back_button_widget.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/utils/app_colors.dart';
-import 'package:evently/utils/app_data.dart';
 import 'package:flutter/material.dart';
 
 import '../authentication/widget/custom_text_field.dart';
@@ -32,8 +34,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    selectedImage = context.isLight ?
-    data.eventImagesLight[selectedIndex] : data.eventImagesDark[selectedIndex];
+    selectedImage = context.isLight
+        ? data.eventImagesLight[selectedIndex]
+        : data.eventImagesDark[selectedIndex];
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -65,9 +68,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage(
-                      selectedImage,
-                    ),
+                    image: AssetImage(selectedImage),
                   ),
                   border: Border.all(
                     color: context.isLight
@@ -82,11 +83,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 child: TabBar(
                   onTap: (index) {
                     selectedIndex = index;
+                    selectedEventName = data.eventsNameList[selectedIndex];
                     setState(() {});
                   },
                   tabAlignment: TabAlignment.start,
                   padding: EdgeInsets.symmetric(
-                      vertical: context.height * 0.029),
+                    vertical: context.height * 0.029,
+                  ),
                   isScrollable: true,
                   dividerColor: AppColors.transparentColor,
                   indicatorColor: AppColors.transparentColor,
@@ -95,52 +98,40 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   ),
                   tabs: data.eventsNameList
                       .map(
-                        (eventName) =>
-                        TabBarWidget(
+                        (eventName) => TabBarWidget(
                           icon:
-                          selectedIndex ==
-                              data.eventsNameList.indexOf(eventName)
+                              selectedIndex ==
+                                  data.eventsNameList.indexOf(eventName)
                               ? data.selectedIcons[data.eventsNameList.indexOf(
-                            eventName,
-                          )]
+                                  eventName,
+                                )]
                               : data.unselectedIcons[data.eventsNameList
-                              .indexOf(
-                            eventName,
-                          )],
+                                    .indexOf(eventName)],
                           isSelected:
-                          selectedIndex ==
+                              selectedIndex ==
                               data.eventsNameList.indexOf(eventName),
                           eventName: eventName,
                         ),
-                  )
+                      )
                       .toList(),
                 ),
               ),
               Text(
                 context.tr('title'),
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .labelLarge,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               CustomTextField(
                 onChanged: (text) {
                   eventTitle = text;
                 },
                 validator: (text) {
-                  if (text
-                      ?.trim()
-                      .isEmpty ?? true) {
+                  if (text?.trim().isEmpty ?? true) {
                     return context.tr('please_enter_event_title');
                   }
                   return null;
                 },
 
-                dataStyle: Theme
-                    .of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(
+                dataStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.none,
@@ -151,10 +142,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     : AppColors.inputsColor,
 
                 hintText: context.tr('search_for_event'),
-                hintStyle: Theme
-                    .of(context)
-                    .textTheme
-                    .labelSmall,
+                hintStyle: Theme.of(context).textTheme.labelSmall,
 
                 errorBorderColor: AppColors.redColor,
                 generalBorderColor: context.isLight
@@ -164,16 +152,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
               SizedBox(height: context.height * 0.004),
               Text(
                 context.tr('event_title'),
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .labelLarge,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               CustomTextField(
                 validator: (text) {
-                  if (text
-                      ?.trim()
-                      .isEmpty ?? true) {
+                  if (text?.trim().isEmpty ?? true) {
                     return context.tr('please_enter_event_description');
                   }
                   return null;
@@ -182,11 +165,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   eventDescription = text;
                 },
                 maxLines: 6,
-                dataStyle: Theme
-                    .of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(
+                dataStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.none,
@@ -197,10 +176,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     : AppColors.inputsColor,
 
                 hintText: context.tr('event_description'),
-                hintStyle: Theme
-                    .of(context)
-                    .textTheme
-                    .labelSmall,
+                hintStyle: Theme.of(context).textTheme.labelSmall,
 
                 errorBorderColor: AppColors.redColor,
                 generalBorderColor: context.isLight
@@ -214,9 +190,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 hyperText: selectedDate == null
                     ? context.tr('choose_date')
                     : DateFormat(
-                  'MMM d, yyyy',
-                  Intl.defaultLocale,
-                ).format(selectedDate!),
+                        'MMM d, yyyy',
+                        Intl.defaultLocale,
+                      ).format(selectedDate!),
               ),
               DateTimeWidget.time(
                 onPressed: pickTime,
@@ -227,7 +203,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
               SizedBox(height: context.height * 0.01),
 
               CustomElevatedButton(
-                onPressed: () {},
+                onPressed: addEvent,
                 backgroundColor: context.isLight
                     ? AppColors.mainColor
                     : AppColors.mainDarkModeColor,
@@ -262,5 +238,38 @@ class _AddEventScreenState extends State<AddEventScreen> {
     );
     selectedTime = chooseTime;
     setState(() {});
+  }
+
+  void addEvent() {
+    if (selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(content: Text(context.tr('please_choose_event_date'))),
+      );
+      return;
+    }
+    // if (selectedTime == null) {
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) => ErrorWidget.withDetails(
+    //       message: context.tr('please_choose_event_time'),
+    //     ),
+    //   );
+    //   return;
+    // }
+    if (formKey.currentState!.validate()) {
+      Event event = Event(
+        eventName: selectedEventName,
+        eventDescription: eventDescription,
+        eventTitle: eventTitle,
+        eventImage: selectedImage,
+        eventDate: selectedDate!,
+        eventTime: selectedTime!,
+      );
+      FirebaseUtils.addEventsToFirestore(
+        event,
+      ).timeout(Duration(seconds: 1), onTimeout: () => debugPrint('done'));
+    }
   }
 }

@@ -8,7 +8,7 @@ import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../utils/app_data.dart';
+import '../../../model/app_data.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});

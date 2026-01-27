@@ -58,6 +58,8 @@
   "choose_date": "اختر التاريخ",
   "choose_time": "اختر الوقت",
   "please_enter_event_title": "من فضلك ادخل عنوان الحدث",
-  "please_enter_event_description": "من فضلك ادخل وصف الحدث"
+  "please_enter_event_description": "من فضلك ادخل وصف الحدث",
+  "please_choose_event_date": "من فضلك اختر تاريخ الحدث",
+  "please_choose_event_time": "من فضلك اختر وقت الحدث"
 
 }

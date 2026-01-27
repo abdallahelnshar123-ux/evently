@@ -58,6 +58,8 @@
   "choose_date": "Choose date",
   "choose_time": "Choose time",
   "please_enter_event_title": "Please Enter Event Title",
-  "please_enter_event_description": "Please Enter Event Description"
+  "please_enter_event_description": "Please Enter Event Description",
+  "please_choose_event_date": "please Choose event Date",
+  "please_choose_event_time": "please Choose event Time"
 
 }
