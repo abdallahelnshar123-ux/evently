@@ -63,7 +63,8 @@
   "please_choose_event_time": "please Choose event Time",
   "date_error": "Date Error",
   "time_error": "Time Error",
-  "ok": "Ok"
+  "ok": "Ok",
+  "no_events_yet": "No Events Yet"
 
 
 }

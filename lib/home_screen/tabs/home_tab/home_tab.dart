@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../model/app_data.dart';
+import '../../../model/event.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -18,8 +19,16 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getEventsFromFirestore();
+  }
+
   int selectedIndex = 0;
   AppDataClass data = AppDataClass();
+  List<Event> eventList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -126,12 +135,20 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               ),
               Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) => EventWidget(),
-                  separatorBuilder: (context, index) =>
-                      SizedBox(height: context.height * 0.019),
-                  itemCount: 10,
-                ),
+                child: eventList.isEmpty
+                    ? Center(
+                        child: Text(
+                          context.tr('no_events_yet'),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      )
+                    : ListView.separated(
+                        itemBuilder: (context, index) =>
+                            EventWidget(event: eventList[index]),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: context.height * 0.019),
+                        itemCount: eventList.length,
+                      ),
               ),
             ],
           ),
@@ -139,4 +156,6 @@ class _HomeTabState extends State<HomeTab> {
       ),
     );
   }
+
+  void getEventsFromFirestore() {}
 }

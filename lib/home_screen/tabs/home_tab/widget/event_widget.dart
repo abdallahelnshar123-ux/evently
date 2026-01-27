@@ -1,12 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/home_screen/tabs/home_tab/widget/Container_child.dart';
+import 'package:evently/model/event.dart';
 import 'package:evently/provider/app_theme_provider.dart';
-import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
 
 class EventWidget extends StatelessWidget {
-  const EventWidget({super.key});
+  final Event event;
+
+  const EventWidget({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +22,8 @@ class EventWidget extends StatelessWidget {
           fit: BoxFit.cover,
           image: AssetImage(
             context.isLight
-                ? AppAssets.meetingImageLight
-                : AppAssets.meetingImageDark,
+                ? event.eventImage.replaceAll('dark', 'light')
+                : event.eventImage.replaceAll('light', 'dark'),
           ),
         ),
         border: Border.all(
@@ -36,7 +39,7 @@ class EventWidget extends StatelessWidget {
         children: [
           ContainerChild(
             child: Text(
-              '21 Jan',
+              DateFormat('d MMM').format(event.eventDate),
               style: Theme.of(
                 context,
               ).textTheme.displaySmall!.copyWith(fontSize: 16),
@@ -47,7 +50,7 @@ class EventWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Event Description',
+                  event.eventTitle,
                   style: Theme.of(
                     context,
                   ).textTheme.labelLarge!.copyWith(fontSize: 14),
@@ -58,7 +61,7 @@ class EventWidget extends StatelessWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   selectedIcon: Icon(Icons.favorite_rounded),
-                  isSelected: false,
+                  isSelected: event.isFavorite,
                   padding: EdgeInsets.zero,
                   iconSize: 30,
                   color: context.isLight

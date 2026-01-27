@@ -6,7 +6,6 @@ import 'package:icons_plus/icons_plus.dart';
 import '../../../provider/app_theme_provider.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/screen_size.dart';
-import '../home_tab/widget/event_widget.dart';
 
 class FavoriteTab extends StatelessWidget {
   @override
@@ -51,7 +50,7 @@ class FavoriteTab extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.separated(
-                  itemBuilder: (context, index) => EventWidget(),
+                  itemBuilder: (context, index) => Container(),
                   separatorBuilder: (context, index) =>
                       SizedBox(height: context.height * 0.019),
                   itemCount: 10,

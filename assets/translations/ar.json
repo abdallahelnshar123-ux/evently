@@ -63,5 +63,7 @@
   "please_choose_event_time": "من فضلك اختر وقت الحدث",
   "date_error": "خطأ في التاريخ",
   "time_error": "خطأ في الوقت",
-  "ok": "حسناً"
+  "ok": "حسناً",
+  "no_events_yet": "لا أحداث بعد"
+
 }
