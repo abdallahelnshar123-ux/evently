@@ -11,6 +11,7 @@ class LanguageWidget extends StatelessWidget {
       onSelected: (value) {
         if (context.locale.languageCode == value) return;
         context.setLocale(Locale(value));
+        Intl.defaultLocale = value;
       },
       iconSize: 28,
       padding: EdgeInsets.zero,

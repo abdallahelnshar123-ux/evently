@@ -1,3 +1,6 @@
+import 'dart:core';
+
+import 'package:evently/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -102,5 +105,37 @@ class AppDataClass {
 
   List<IconData> get homeUnselectedIcons {
     return _homeUnselectedIcons;
+  }
+
+  final List<String> _eventImagesLight = [
+    AppAssets.sportImageLight,
+    AppAssets.birthdayImageLight,
+    AppAssets.meetingImageLight,
+    AppAssets.meetingImageLight,
+    AppAssets.meetingImageLight,
+    AppAssets.bookClubImageLight,
+    AppAssets.exhibitionImageLight,
+    AppAssets.meetingImageLight,
+    AppAssets.meetingImageLight,
+  ];
+
+  List<String> get eventImagesLight {
+    return _eventImagesLight;
+  }
+
+  final List<String> _eventImagesDark = [
+    AppAssets.sportImageDark,
+    AppAssets.birthdayImageDark,
+    AppAssets.meetingImageDark,
+    AppAssets.meetingImageDark,
+    AppAssets.meetingImageDark,
+    AppAssets.bookClubImageDark,
+    AppAssets.exhibitionImageDark,
+    AppAssets.meetingImageDark,
+    AppAssets.meetingImageDark,
+  ];
+
+  List<String> get eventImagesDark {
+    return _eventImagesDark;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/add_event/add_event.dart';
 import 'package:evently/authentication/screen/forget_password_screen.dart';
@@ -17,12 +18,15 @@ import 'authentication/screen/signup_screen.dart';
 import 'firebase_options.dart';
 import 'on_boarding/screen/screen_2.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseFirestore.instance.disableNetwork();
+
   final sharedPreferences = await SharedPreferences.getInstance();
   final int appTheme =
       sharedPreferences.getInt(SharedPrefsKeys.appThemeKey) ?? 1;
@@ -35,7 +39,8 @@ void main() async {
         appTheme: appTheme == 1 ? ThemeMode.dark : ThemeMode.light,
       ),
       child: EasyLocalization(
-        supportedLocales: [Locale('en'), Locale('ar')],
+
+      supportedLocales: [Locale('en'), Locale('ar')],
         path: 'assets/translations',
         startLocale: Locale('en'),
         saveLocale: true,
@@ -53,7 +58,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeProviderObject = Provider.of<AppThemeProvider>(context);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: showIntro

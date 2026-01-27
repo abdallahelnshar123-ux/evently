@@ -4,6 +4,165 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
+    dialogTheme: DialogThemeData(
+      backgroundColor: AppColors.backgroundColor,
+      alignment: Alignment.center,
+    ),
+    timePickerTheme: TimePickerThemeData(
+      inputDecorationTheme: InputDecorationThemeData(
+        filled: true,
+        fillColor: WidgetStateColor.resolveWith((state) {
+          if (state.contains(WidgetState.selected)) {
+            return AppColors.mainColor;
+          }
+          return AppColors.whiteColor;
+        }),
+
+        activeIndicatorBorder: BorderSide(color: AppColors.mainColor),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainColor),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor),
+        ),
+      ),
+      backgroundColor: AppColors.backgroundColor,
+      cancelButtonStyle: TextButton.styleFrom(
+        foregroundColor: AppColors.mainColor,
+      ),
+      confirmButtonStyle: TextButton.styleFrom(
+        foregroundColor: AppColors.mainColor,
+      ),
+      dayPeriodBorderSide: BorderSide(color: AppColors.mainColor),
+      dayPeriodColor: AppColors.mainColor,
+      dayPeriodTextColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.whiteColor;
+        }
+        return AppColors.mainColor;
+      }),
+      dialBackgroundColor: AppColors.mainColor,
+      dialHandColor: AppColors.whiteColor,
+      entryModeIconColor: AppColors.mainColor,
+      dialTextColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainColor;
+        }
+        return AppColors.whiteColor;
+      }),
+      timeSelectorSeparatorColor: WidgetStatePropertyAll(AppColors.mainColor),
+      hourMinuteColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainColor;
+        }
+        return AppColors.whiteColor;
+      }),
+      hourMinuteTextColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.whiteColor;
+        }
+        return AppColors.mainColor;
+      }),
+      hourMinuteShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: WidgetStateColor.resolveWith((state) {
+            if (state.contains(WidgetState.selected)) {
+              return AppColors.whiteColor;
+            }
+            return AppColors.mainColor;
+          }),
+        ),
+      ),
+    ),
+
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: AppColors.backgroundColor,
+      dividerColor: AppColors.mainColor,
+      cancelButtonStyle: TextButton.styleFrom(
+        foregroundColor: AppColors.mainColor,
+      ),
+      confirmButtonStyle: TextButton.styleFrom(
+        foregroundColor: AppColors.mainColor,
+      ),
+
+      headerBackgroundColor: AppColors.mainColor,
+      headerForegroundColor: AppColors.whiteColor,
+      rangePickerHeaderForegroundColor: AppColors.mainColor,
+      subHeaderForegroundColor: AppColors.mainTextColor,
+      yearForegroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainColor;
+        }
+        if (state.contains(WidgetState.disabled)) {
+          return AppColors.disableColor.withAlpha(99);
+        }
+        return AppColors.mainColor;
+      }),
+      yearBackgroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.backgroundColor;
+        }
+        return AppColors.backgroundColor;
+      }),
+      dayForegroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.whiteColor;
+        }
+        if (state.contains(WidgetState.disabled)) {
+          return AppColors.disableColor.withAlpha(99);
+        }
+        return AppColors.mainColor;
+      }),
+      dayBackgroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainColor;
+        }
+        return AppColors.backgroundColor;
+      }),
+      todayBackgroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainColor;
+        }
+        return AppColors.backgroundColor;
+      }),
+      todayForegroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.whiteColor;
+        }
+        return AppColors.mainColor;
+      }),
+      weekdayStyle: AppStyles.medium16MainText,
+      inputDecorationTheme: InputDecorationThemeData(
+        activeIndicatorBorder: BorderSide(color: AppColors.mainColor),
+        labelStyle: TextStyle(color: AppColors.mainColor),
+        hintStyle: TextStyle(color: AppColors.disableColor),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainColor),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor),
+        ),
+      ),
+    ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(tapTargetSize: MaterialTapTargetSize.shrinkWrap),
     ),
@@ -34,7 +193,7 @@ class AppTheme {
       displaySmall: AppStyles.sBold14Main,
 
       /// 14 s bold main
-      headlineMedium: AppStyles.medium20MainText,
+      bodyLarge: AppStyles.medium20MainText,
 
       /// 20 medium main text
     ),
@@ -59,7 +218,152 @@ class AppTheme {
     ),
   );
 
+  /// =======================================================================
   static final ThemeData darkTheme = ThemeData(
+    dialogTheme: DialogThemeData(
+      backgroundColor: AppColors.bgDarkModeColor,
+      alignment: Alignment.center,
+    ),
+    timePickerTheme: TimePickerThemeData(
+      inputDecorationTheme: InputDecorationThemeData(
+        filled: true,
+        fillColor: WidgetStateColor.resolveWith((state) {
+          if (state.contains(WidgetState.selected)) {
+            return AppColors.mainDarkModeColor;
+          }
+          return AppColors.whiteColor;
+        }),
+
+        activeIndicatorBorder: BorderSide(color: AppColors.mainDarkModeColor),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainDarkModeColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainDarkModeColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainDarkModeColor),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor),
+        ),
+      ),
+      backgroundColor: AppColors.bgDarkModeColor,
+      cancelButtonStyle: TextButton.styleFrom(
+        foregroundColor: AppColors.whiteColor,
+      ),
+      confirmButtonStyle: TextButton.styleFrom(
+        foregroundColor: AppColors.whiteColor,
+      ),
+      dayPeriodBorderSide: BorderSide(color: AppColors.mainDarkModeColor),
+      dayPeriodColor: AppColors.mainDarkModeColor,
+      dayPeriodTextColor: AppColors.whiteColor,
+      dialBackgroundColor: AppColors.mainDarkModeColor,
+      dialHandColor: AppColors.whiteColor,
+      entryModeIconColor: AppColors.whiteColor,
+      dialTextColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainDarkModeColor;
+        }
+        return AppColors.whiteColor;
+      }),
+      timeSelectorSeparatorColor: WidgetStatePropertyAll(
+        AppColors.mainDarkModeColor,
+      ),
+      hourMinuteColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainDarkModeColor;
+        }
+        return AppColors.whiteColor;
+      }),
+      hourMinuteTextColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.whiteColor;
+        }
+        return AppColors.mainDarkModeColor;
+      }),
+    ),
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: AppColors.bgDarkModeColor,
+      dividerColor: AppColors.whiteColor,
+      cancelButtonStyle: TextButton.styleFrom(
+        foregroundColor: AppColors.whiteColor,
+      ),
+      confirmButtonStyle: TextButton.styleFrom(
+        foregroundColor: AppColors.whiteColor,
+      ),
+
+      headerBackgroundColor: AppColors.mainDarkModeColor,
+      headerForegroundColor: AppColors.whiteColor,
+      rangePickerHeaderForegroundColor: AppColors.whiteColor,
+      subHeaderForegroundColor: AppColors.whiteColor,
+      yearForegroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.whiteColor;
+        }
+        if (state.contains(WidgetState.disabled)) {
+          return AppColors.disableColor.withAlpha(99);
+        }
+        return AppColors.mainDarkModeColor;
+      }),
+      yearBackgroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainDarkModeColor;
+        }
+        return AppColors.bgDarkModeColor;
+      }),
+      dayForegroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.whiteColor;
+        }
+        if (state.contains(WidgetState.disabled)) {
+          return AppColors.disableColor.withAlpha(99);
+        }
+        return AppColors.mainDarkModeColor;
+      }),
+      dayBackgroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainDarkModeColor;
+        }
+        return AppColors.bgDarkModeColor;
+      }),
+      todayBackgroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.mainDarkModeColor;
+        }
+        return AppColors.bgDarkModeColor;
+      }),
+      todayForegroundColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.selected)) {
+          return AppColors.whiteColor;
+        }
+        return AppColors.mainDarkModeColor;
+      }),
+      weekdayStyle: AppStyles.medium16white,
+      inputDecorationTheme: InputDecorationThemeData(
+        activeIndicatorBorder: BorderSide(color: AppColors.mainDarkModeColor),
+        labelStyle: TextStyle(color: AppColors.mainDarkModeColor),
+        hintStyle: TextStyle(color: AppColors.disableColor),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainDarkModeColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainDarkModeColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainDarkModeColor),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor),
+        ),
+      ),
+    ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(tapTargetSize: MaterialTapTargetSize.shrinkWrap),
     ),
@@ -93,7 +397,7 @@ class AppTheme {
       displaySmall: AppStyles.sBold14MainDark,
 
       /// 14 s bold main dark
-      headlineMedium: AppStyles.medium20White,
+      bodyLarge: AppStyles.medium20White,
 
       /// 20 medium white
     ),
