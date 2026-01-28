@@ -26,11 +26,11 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      eventsProvider.getEventsFromFirestore();
+      // eventsProvider.getEventsFromFirestore();
 
-      // Future.delayed(const Duration(seconds: 1), () {
-      //   eventsProvider.getEventsFromFirestore();
-      // });
+      Future.delayed(const Duration(seconds: 1), () {
+        eventsProvider.getEventsFromFirestore();
+      });
     });
   }
 

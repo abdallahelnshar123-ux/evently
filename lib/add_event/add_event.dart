@@ -245,7 +245,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     setState(() {});
   }
 
-  void addEvent() {
+  void addEvent() async {
     if (selectedDate == null) {
       showDialog(
         context: context,
@@ -275,9 +275,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
         eventDate: selectedDate!,
         eventTime: selectedTime!,
       );
-      FirebaseUtils.addEventsToFirestore(
+      await FirebaseUtils.addEventsToFirestore(
         event,
-      ).timeout(Duration(seconds: 2), onTimeout: () => debugPrint('faild'),);
+      ).timeout(Duration(seconds: 2), onTimeout: () => debugPrint('failed'),);
+      if (!mounted) return;
       eventsProvider.getEventsFromFirestore();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
