@@ -5,6 +5,7 @@ import 'package:evently/authentication/screen/forget_password_screen.dart';
 import 'package:evently/home_screen/home_screen.dart';
 import 'package:evently/on_boarding/screen/screen_1.dart';
 import 'package:evently/provider/app_theme_provider.dart';
+import 'package:evently/provider/events_provider.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_theme.dart';
 import 'package:evently/utils/shared_prefs.dart';
@@ -18,13 +19,10 @@ import 'authentication/screen/signup_screen.dart';
 import 'firebase_options.dart';
 import 'on_boarding/screen/screen_2.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseFirestore.instance.disableNetwork();
 
   final sharedPreferences = await SharedPreferences.getInstance();
@@ -34,13 +32,17 @@ void main() async {
       sharedPreferences.getBool(SharedPrefsKeys.onBoardingKey) ?? true;
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AppThemeProvider(
-        appTheme: appTheme == 1 ? ThemeMode.dark : ThemeMode.light,
-      ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => AppThemeProvider(
+            appTheme: appTheme == 1 ? ThemeMode.dark : ThemeMode.light,
+          ),
+        ),
+        ChangeNotifierProvider(create: (context) => EventsProvider()),
+      ],
       child: EasyLocalization(
-
-      supportedLocales: [Locale('en'), Locale('ar')],
+        supportedLocales: [Locale('en'), Locale('ar')],
         path: 'assets/translations',
         startLocale: Locale('en'),
         saveLocale: true,
@@ -51,9 +53,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  bool showIntro;
+  final bool showIntro;
 
-  MyApp({super.key, required this.showIntro});
+  const MyApp({super.key, required this.showIntro});
 
   @override
   Widget build(BuildContext context) {

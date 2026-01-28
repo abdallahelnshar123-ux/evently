@@ -2,14 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/home_screen/tabs/home_tab/widget/event_widget.dart';
 import 'package:evently/home_screen/tabs/home_tab/widget/tab_bar_widget.dart';
 import 'package:evently/provider/app_theme_provider.dart';
+import 'package:evently/provider/events_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../model/app_data.dart';
-import '../../../model/event.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -19,19 +20,26 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  late EventsProvider eventsProvider;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getEventsFromFirestore();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      eventsProvider.getEventsFromFirestore();
+
+      // Future.delayed(const Duration(seconds: 1), () {
+      //   eventsProvider.getEventsFromFirestore();
+      // });
+    });
   }
 
   int selectedIndex = 0;
   AppDataClass data = AppDataClass();
-  List<Event> eventList = [];
 
   @override
   Widget build(BuildContext context) {
+    eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -135,7 +143,7 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               ),
               Expanded(
-                child: eventList.isEmpty
+                child: eventsProvider.eventList.isEmpty
                     ? Center(
                         child: Text(
                           context.tr('no_events_yet'),
@@ -144,10 +152,10 @@ class _HomeTabState extends State<HomeTab> {
                       )
                     : ListView.separated(
                         itemBuilder: (context, index) =>
-                            EventWidget(event: eventList[index]),
+                            EventWidget(event: eventsProvider.eventList[index]),
                         separatorBuilder: (context, index) =>
                             SizedBox(height: context.height * 0.019),
-                        itemCount: eventList.length,
+                        itemCount: eventsProvider.eventList.length,
                       ),
               ),
             ],
@@ -156,6 +164,4 @@ class _HomeTabState extends State<HomeTab> {
       ),
     );
   }
-
-  void getEventsFromFirestore() {}
 }

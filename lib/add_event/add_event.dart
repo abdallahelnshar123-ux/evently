@@ -6,8 +6,10 @@ import 'package:evently/model/app_data.dart';
 import 'package:evently/model/event.dart';
 import 'package:evently/on_boarding/widget/back_button_widget.dart';
 import 'package:evently/provider/app_theme_provider.dart';
+import 'package:evently/provider/events_provider.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../authentication/widget/custom_text_field.dart';
 import '../home_screen/tabs/home_tab/widget/tab_bar_widget.dart';
@@ -23,6 +25,7 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
+  late EventsProvider eventsProvider;
   int selectedIndex = 0;
   AppDataClass data = AppDataClass();
   DateTime? selectedDate;
@@ -35,6 +38,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    eventsProvider = Provider.of<EventsProvider>(context);
     selectedImage = context.isLight
         ? data.eventImagesLight[selectedIndex]
         : data.eventImagesDark[selectedIndex];
@@ -192,7 +196,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     ? context.tr('choose_date')
                     : DateFormat(
                         'MMM d, yyyy',
-                        Intl.defaultLocale ?? context.locale.languageCode,
+                  context.locale.toString(),
                       ).format(selectedDate!),
               ),
               DateTimeWidget.time(
@@ -222,7 +226,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   void pickDate() async {
     var chooseDate = await showDatePicker(
-      locale: Locale(Intl.defaultLocale ?? context.locale.languageCode),
+      locale: context.locale,
       context: context,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
@@ -273,7 +277,14 @@ class _AddEventScreenState extends State<AddEventScreen> {
       );
       FirebaseUtils.addEventsToFirestore(
         event,
-      ).timeout(Duration(seconds: 1), onTimeout: () => debugPrint('done'));
+      ).timeout(Duration(seconds: 2), onTimeout: () => debugPrint('faild'),);
+      eventsProvider.getEventsFromFirestore();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("تمت العملية بنجاح"),
+        ),
+      );
+      Navigator.pop(context);
     }
   }
 }
