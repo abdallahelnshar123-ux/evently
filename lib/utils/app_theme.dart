@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: AppColors.mainTextColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentTextStyle: AppStyles.medium16white,
+      behavior: SnackBarBehavior.floating,
+    ),
     dialogTheme: DialogThemeData(
       backgroundColor: AppColors.backgroundColor,
       alignment: Alignment.center,
@@ -220,6 +226,12 @@ class AppTheme {
 
   /// =======================================================================
   static final ThemeData darkTheme = ThemeData(
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: AppColors.whiteColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentTextStyle: AppStyles.medium16MainText,
+      behavior: SnackBarBehavior.floating,
+    ),
     dialogTheme: DialogThemeData(
       backgroundColor: AppColors.bgDarkModeColor,
       alignment: Alignment.center,

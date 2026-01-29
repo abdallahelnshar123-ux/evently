@@ -64,6 +64,7 @@
   "date_error": "خطأ في التاريخ",
   "time_error": "خطأ في الوقت",
   "ok": "حسناً",
-  "no_events_yet": "لا أحداث بعد"
+  "no_events_yet": "لا أحداث بعد",
+  "event_was_added_successfully": "تم اضافه الحدث بنجاح"
 
 }

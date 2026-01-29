@@ -291,9 +291,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
       ).timeout(Duration(seconds: 2), onTimeout: () => debugPrint('failed'));
       if (!mounted) return;
       eventsProvider.getEvents();
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("تمت العملية بنجاح")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.tr('event_was_added_successfully'))),
+      );
       Navigator.pop(context);
     }
   }

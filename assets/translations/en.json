@@ -64,7 +64,9 @@
   "date_error": "Date Error",
   "time_error": "Time Error",
   "ok": "Ok",
-  "no_events_yet": "No Events Yet"
+  "no_events_yet": "No Events Yet",
+  "event_was_added_successfully": "Event Was Added Successfully"
+
 
 
 }
