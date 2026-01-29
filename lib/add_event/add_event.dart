@@ -279,7 +279,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         event,
       ).timeout(Duration(seconds: 2), onTimeout: () => debugPrint('failed'),);
       if (!mounted) return;
-      eventsProvider.getEventsFromFirestore();
+      eventsProvider.getAllEventsFromFirestore();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("تمت العملية بنجاح"),

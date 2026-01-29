@@ -29,7 +29,7 @@ class _HomeTabState extends State<HomeTab> {
       // eventsProvider.getEventsFromFirestore();
 
       Future.delayed(const Duration(seconds: 1), () {
-        eventsProvider.getEventsFromFirestore();
+        eventsProvider.getAllEventsFromFirestore();
       });
     });
   }
@@ -111,6 +111,10 @@ class _HomeTabState extends State<HomeTab> {
                 child: TabBar(
                   onTap: (index) {
                     selectedIndex = index;
+                    eventsProvider.getFilterEventsFromFirestore(
+                      selectedIndex,
+                      data.homeEventsNameList[selectedIndex],
+                    );
                     setState(() {});
                   },
                   tabAlignment: TabAlignment.start,
@@ -143,7 +147,7 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               ),
               Expanded(
-                child: eventsProvider.eventList.isEmpty
+                child: eventsProvider.filterEventList.isEmpty
                     ? Center(
                         child: Text(
                           context.tr('no_events_yet'),
@@ -152,10 +156,11 @@ class _HomeTabState extends State<HomeTab> {
                       )
                     : ListView.separated(
                         itemBuilder: (context, index) =>
-                            EventWidget(event: eventsProvider.eventList[index]),
+                            EventWidget(
+                                event: eventsProvider.filterEventList[index]),
                         separatorBuilder: (context, index) =>
                             SizedBox(height: context.height * 0.019),
-                        itemCount: eventsProvider.eventList.length,
+                  itemCount: eventsProvider.filterEventList.length,
                       ),
               ),
             ],

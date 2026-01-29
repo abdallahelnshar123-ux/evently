@@ -91,7 +91,7 @@ class AppDataClass {
   }
 
   final List<IconData> _homeUnselectedIcons = [
-    Icons.wind_power_outlined,
+    Icons.window_outlined,
     MingCute.football_line,
     Icons.cake_outlined,
     Icons.group_outlined,
