@@ -37,6 +37,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
   var formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedEventName = data.eventsNameList[selectedIndex];
+  }
+
+  @override
   Widget build(BuildContext context) {
     eventsProvider = Provider.of<EventsProvider>(context);
     selectedImage = context.isLight
@@ -196,7 +203,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     ? context.tr('choose_date')
                     : DateFormat(
                         'MMM d, yyyy',
-                  context.locale.toString(),
+                        context.locale.toString(),
                       ).format(selectedDate!),
               ),
               DateTimeWidget.time(
@@ -277,14 +284,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
       );
       await FirebaseUtils.addEventsToFirestore(
         event,
-      ).timeout(Duration(seconds: 2), onTimeout: () => debugPrint('failed'),);
+      ).timeout(Duration(seconds: 2), onTimeout: () => debugPrint('failed'));
       if (!mounted) return;
-      eventsProvider.getAllEventsFromFirestore();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("تمت العملية بنجاح"),
-        ),
-      );
+      eventsProvider.getEvents();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("تمت العملية بنجاح")));
       Navigator.pop(context);
     }
   }

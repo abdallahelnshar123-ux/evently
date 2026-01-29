@@ -26,15 +26,10 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // eventsProvider.getEventsFromFirestore();
-
-      Future.delayed(const Duration(seconds: 1), () {
-        eventsProvider.getAllEventsFromFirestore();
-      });
+      eventsProvider.getEvents();
     });
   }
 
-  int selectedIndex = 0;
   AppDataClass data = AppDataClass();
 
   @override
@@ -110,12 +105,7 @@ class _HomeTabState extends State<HomeTab> {
                 length: data.homeEventsNameList.length,
                 child: TabBar(
                   onTap: (index) {
-                    selectedIndex = index;
-                    eventsProvider.getFilterEventsFromFirestore(
-                      selectedIndex,
-                      data.homeEventsNameList[selectedIndex],
-                    );
-                    setState(() {});
+                    eventsProvider.setIndex(index);
                   },
                   tabAlignment: TabAlignment.start,
                   padding: EdgeInsets.symmetric(
@@ -131,11 +121,11 @@ class _HomeTabState extends State<HomeTab> {
                       .map(
                         (eventName) => TabBarWidget(
                           isSelected:
-                              selectedIndex ==
+                              eventsProvider.selectedIndex ==
                               data.homeEventsNameList.indexOf(eventName),
                           eventName: eventName,
                           icon:
-                              selectedIndex ==
+                              eventsProvider.selectedIndex ==
                                   data.homeEventsNameList.indexOf(eventName)
                               ? data.homeSelectedIcons[data.homeEventsNameList
                                     .indexOf(eventName)]
@@ -155,12 +145,12 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       )
                     : ListView.separated(
-                        itemBuilder: (context, index) =>
-                            EventWidget(
-                                event: eventsProvider.filterEventList[index]),
+                        itemBuilder: (context, index) => EventWidget(
+                          event: eventsProvider.filterEventList[index],
+                        ),
                         separatorBuilder: (context, index) =>
                             SizedBox(height: context.height * 0.019),
-                  itemCount: eventsProvider.filterEventList.length,
+                        itemCount: eventsProvider.filterEventList.length,
                       ),
               ),
             ],
