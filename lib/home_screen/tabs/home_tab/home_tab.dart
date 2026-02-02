@@ -145,6 +145,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       )
                     : ListView.separated(
+                        padding: EdgeInsets.only(bottom: context.height * 0.1),
                         itemBuilder: (context, index) => EventWidget(
                           event: eventsProvider.filterEventList[index],
                         ),

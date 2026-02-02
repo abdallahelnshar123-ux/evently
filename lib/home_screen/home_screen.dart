@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: selectedIndex,
         onTap: (index) {
           selectedIndex = index;
+
           setState(() {});
         },
         items: [

@@ -65,6 +65,16 @@
   "time_error": "خطأ في الوقت",
   "ok": "حسناً",
   "no_events_yet": "لا أحداث بعد",
-  "event_was_added_successfully": "تم اضافه الحدث بنجاح"
+  "event_was_added_successfully": "تم اضافه الحدث بنجاح",
+  "no_fav_events_yet": "لم تتم اضافه احدث مفضله بعد",
+  "added_favorite": "تم الاضافه الي المفضله",
+  "removed_favorite": "تم الازاله من المفضله",
+  "please_enter_email": "من فضلك ادخل البريد الكتروني",
+  "please_enter_valid_email": "من فضلك ادخل بريد إلكتروني صالح",
+  "please_enter_password": "من فضلك ادخل كلمة السر",
+  "password_must_be_at_least": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+  "you_must_enter_name": "يجب ان تدخل الاسم",
+  "please_confirm_password": "من فضلك ادخل قم بتاكيد كلمه السر",
+  "password_do_not_match": "كلمة المرور غير متطابقة"
 
 }

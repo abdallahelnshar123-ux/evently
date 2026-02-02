@@ -62,9 +62,11 @@ class MyApp extends StatelessWidget {
     var themeProviderObject = Provider.of<AppThemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: showIntro
-          ? AppRoutes.onBoardingScreen1RouteName
-          : AppRoutes.homeRouteName,
+      initialRoute: AppRoutes.loginRouteName,
+
+      // showIntro
+      //     ? AppRoutes.onBoardingScreen1RouteName
+      //     : AppRoutes.homeRouteName,
       routes: {
         AppRoutes.homeRouteName: (context) => HomeScreen(),
         AppRoutes.onBoardingScreen1RouteName: (context) => OnBoardingScreen1(),

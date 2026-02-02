@@ -2,9 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/home_screen/tabs/home_tab/widget/Container_child.dart';
 import 'package:evently/model/event.dart';
 import 'package:evently/provider/app_theme_provider.dart';
+import 'package:evently/provider/events_provider.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EventWidget extends StatelessWidget {
   final Event event;
@@ -13,6 +15,7 @@ class EventWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var eventsProvider = Provider.of<EventsProvider>(context);
     return Container(
       padding: EdgeInsets.all(context.width * 0.02),
       width: double.infinity,
@@ -67,7 +70,21 @@ class EventWidget extends StatelessWidget {
                   color: context.isLight
                       ? AppColors.mainColor
                       : AppColors.mainDarkModeColor,
-                  onPressed: () {},
+                  onPressed: () {
+                    eventsProvider.updateIsFavorite(event);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        duration: Duration(seconds: 3),
+                        content: Text(
+                          context.tr(
+                            event.isFavorite
+                                ? 'removed_favorite'
+                                : 'added_favorite',
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                   icon: Icon(Icons.favorite_border_rounded),
                 ),
               ],

@@ -65,7 +65,16 @@
   "time_error": "Time Error",
   "ok": "Ok",
   "no_events_yet": "No Events Yet",
-  "event_was_added_successfully": "Event Was Added Successfully"
+  "event_was_added_successfully": "Event Was Added Successfully",
+  "no_fav_events_yet": "No Favorite Events Yet",
+  "removed_favorite": "Removed From Favorite",
+  "please_enter_email": "Please Enter Email",
+  "please_enter_valid_email": "Please Enter Valid Email",
+  "please_enter_password": "Please Enter Password",
+  "password_must_be_at_least": "Password Must Be At Least 6 Characters",
+  "you_must_enter_name": "You Must Enter Name",
+  "please_confirm_password": "Please Confirm Password",
+  "password_do_not_match": "Password Do Not Match"
 
 
 

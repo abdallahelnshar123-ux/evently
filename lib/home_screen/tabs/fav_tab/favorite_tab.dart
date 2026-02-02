@@ -1,15 +1,35 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/authentication/widget/custom_text_field.dart';
+import 'package:evently/home_screen/tabs/home_tab/widget/event_widget.dart';
+import 'package:evently/provider/events_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:provider/provider.dart';
 
 import '../../../provider/app_theme_provider.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/screen_size.dart';
 
-class FavoriteTab extends StatelessWidget {
+class FavoriteTab extends StatefulWidget {
+  @override
+  State<FavoriteTab> createState() => _FavoriteTabState();
+}
+
+class _FavoriteTabState extends State<FavoriteTab> {
+  late EventsProvider eventsProvider;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => eventsProvider.getFavoriteEvents(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -49,12 +69,23 @@ class FavoriteTab extends StatelessWidget {
                     : AppColors.strokeDarkColor,
               ),
               Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) => Container(),
-                  separatorBuilder: (context, index) =>
-                      SizedBox(height: context.height * 0.019),
-                  itemCount: 10,
-                ),
+                child: eventsProvider.favoriteEventsList.isEmpty
+                    ? Center(
+                        child: Text(
+                          context.tr('no_fav_events_yet'),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      )
+                    : ListView.separated(
+                        padding: EdgeInsets.only(bottom: context.height * 0.1),
+
+                        itemBuilder: (context, index) => EventWidget(
+                          event: eventsProvider.favoriteEventsList[index],
+                        ),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: context.height * 0.019),
+                        itemCount: eventsProvider.favoriteEventsList.length,
+                      ),
               ),
             ],
           ),
