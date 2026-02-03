@@ -74,7 +74,12 @@
   "please_enter_password": "من فضلك ادخل كلمة السر",
   "password_must_be_at_least": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
   "you_must_enter_name": "يجب ان تدخل الاسم",
-  "please_confirm_password": "من فضلك ادخل قم بتاكيد كلمه السر",
-  "password_do_not_match": "كلمة المرور غير متطابقة"
-
+  "please_confirm_password": "من فضلك قم بتاكيد كلمه السر",
+  "password_do_not_match": "كلمة المرور غير متطابقة",
+  "loading": "يتم التحميل ...",
+  "register_successfully": "تم التسجيل بنجاح",
+  "success": "نجاح !",
+  "weak_password": "كلمه السر ضعيفه",
+  "error": "خطأ",
+  "email_already_in_use": "البريد الالكتروني مستخدم بالفعل"
 }

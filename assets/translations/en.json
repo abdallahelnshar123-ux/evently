@@ -74,8 +74,11 @@
   "password_must_be_at_least": "Password Must Be At Least 6 Characters",
   "you_must_enter_name": "You Must Enter Name",
   "please_confirm_password": "Please Confirm Password",
-  "password_do_not_match": "Password Do Not Match"
-
-
-
+  "password_do_not_match": "Password Do Not Match",
+  "loading": "Loading ....",
+  "register_successfully": "Register Successfully",
+  "success": "Success !",
+  "weak-password": "Weak Password",
+  "error": "Error",
+  "email-already-in-use": "Email Already In Use"
 }

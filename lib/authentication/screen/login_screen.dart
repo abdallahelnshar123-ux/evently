@@ -5,19 +5,29 @@ import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
+import 'package:evently/utils/dialog_utils.dart';
 import 'package:evently/utils/screen_size.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../utils/app_styles.dart';
 
-class LoginScreen extends StatelessWidget {
-  bool obscure = true;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool obscurePassword = true;
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +71,7 @@ class LoginScreen extends StatelessWidget {
                   }
                   return null;
                 },
+                keyBoardType: TextInputType.emailAddress,
                 errorBorderColor: AppColors.redColor,
                 generalBorderColor: context.isLight
                     ? AppColors.strokeColor
@@ -102,6 +113,8 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: SvgPicture.asset(AppAssets.lockIcon),
                 ),
+                obscureText: obscurePassword,
+                keyBoardType: TextInputType.text,
                 filled: true,
                 fillColor: context.isLight
                     ? AppColors.whiteColor
@@ -114,11 +127,17 @@ class LoginScreen extends StatelessWidget {
                   decoration: TextDecoration.none,
                 ),
                 suffixIcon: IconButton(
-                  onPressed: () {},
+                  isSelected: !obscurePassword,
+                  selectedIcon: Icon(
+                    Icons.visibility_outlined,
+                    color: AppColors.disableColor,
+                  ),
+                  onPressed: () {
+                    obscurePassword = !obscurePassword;
+                    setState(() {});
+                  },
                   icon: Icon(
-                    obscure
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
+                    Icons.visibility_off_outlined,
                     color: AppColors.disableColor,
                   ),
                 ),
@@ -152,9 +171,34 @@ class LoginScreen extends StatelessWidget {
 
               /// login button ================================================
               CustomElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState?.validate() == true) {
-                    // todo: login
+                    DialogUtils.showLoading(context: context);
+                    try {
+                      final credential = await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                      DialogUtils.hideLoading(context: context);
+                      DialogUtils.showMessage(
+                        context: context,
+                        message: 'register_successfully',
+                        title: 'success',
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        DialogUtils.hideLoading(context: context);
+                        DialogUtils.showMessage(
+                          context: context,
+                          message: 'register_successfully',
+                          title: 'success',
+                        );
+                        print('No user found for that email.');
+                      } else if (e.code == 'wrong-password') {
+                        print('Wrong password provided for that user.');
+                      }
+                    }
                   }
                 },
                 backgroundColor: context.isLight

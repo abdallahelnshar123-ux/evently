@@ -6,20 +6,33 @@ import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/screen_size.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../utils/app_styles.dart';
+import '../../utils/dialog_utils.dart';
 
-class SignupScreen extends StatelessWidget {
-  bool obscure = true;
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  bool obscurePassword = true;
+  bool obscureRePassword = true;
+
   TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController rePasswordController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  SignupScreen({super.key});
+  TextEditingController nameController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
+
+  TextEditingController rePasswordController = TextEditingController();
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +62,12 @@ class SignupScreen extends StatelessWidget {
 
               /// name text field ===============================================
               CustomTextField(
+                keyBoardType: TextInputType.name,
                 controller: nameController,
                 validator: (text) {
                   if (text?.trim().isEmpty ?? true) {
                     return context.tr('you_must_enter_name');
                   }
-
                   return null;
                 },
                 errorBorderColor: AppColors.redColor,
@@ -80,6 +93,7 @@ class SignupScreen extends StatelessWidget {
 
               /// email text field ============================================
               CustomTextField(
+                keyBoardType: TextInputType.emailAddress,
                 controller: emailController,
                 validator: (text) {
                   if (text?.trim().isEmpty ?? true) {
@@ -116,6 +130,8 @@ class SignupScreen extends StatelessWidget {
 
               /// password text field ==========================================
               CustomTextField(
+                keyBoardType: TextInputType.text,
+                obscureText: obscurePassword,
                 validator: (text) {
                   if (text?.trim().isEmpty ?? true) {
                     return context.tr('please_enter_password');
@@ -146,11 +162,17 @@ class SignupScreen extends StatelessWidget {
                   decoration: TextDecoration.none,
                 ),
                 suffixIcon: IconButton(
-                  onPressed: () {},
+                  selectedIcon: Icon(
+                    Icons.visibility_outlined,
+                    color: AppColors.disableColor,
+                  ),
+                  isSelected: !obscurePassword,
+                  onPressed: () {
+                    obscurePassword = !obscurePassword;
+                    setState(() {});
+                  },
                   icon: Icon(
-                    obscure
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
+                    Icons.visibility_off_outlined,
                     color: AppColors.disableColor,
                   ),
                 ),
@@ -158,6 +180,8 @@ class SignupScreen extends StatelessWidget {
 
               /// re password text field =======================================
               CustomTextField(
+                obscureText: obscureRePassword,
+                keyBoardType: TextInputType.text,
                 controller: rePasswordController,
                 validator: (text) {
                   if (text?.trim().isEmpty ?? true) {
@@ -188,11 +212,18 @@ class SignupScreen extends StatelessWidget {
                   decoration: TextDecoration.none,
                 ),
                 suffixIcon: IconButton(
-                  onPressed: () {},
+                  selectedIcon: Icon(
+                    Icons.visibility_outlined,
+                    color: AppColors.disableColor,
+                  ),
+                  isSelected: !obscureRePassword,
+                  onPressed: () {
+                    obscureRePassword = !obscureRePassword;
+                    setState(() {});
+                  },
                   icon: Icon(
-                    obscure
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
+                    Icons.visibility_off_outlined,
+
                     color: AppColors.disableColor,
                   ),
                 ),
@@ -202,9 +233,49 @@ class SignupScreen extends StatelessWidget {
 
               /// signup button ================================================
               CustomElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState?.validate() == true) {
-                    // todo: signup
+                    DialogUtils.showLoading(context: context);
+                    try {
+                      final credential = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                      DialogUtils.hideLoading(context: context);
+                      DialogUtils.showMessage(
+                        context: context,
+                        message: 'register_successfully',
+                        title: 'success',
+                        posActionText: 'ok',
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak_password') {
+                        DialogUtils.hideLoading(context: context);
+                        DialogUtils.showMessage(
+                          context: context,
+                          message: 'weak-password',
+                          title: 'error',
+                          posActionText: 'ok',
+                        );
+                      } else if (e.code == 'email-already-in-use') {
+                        DialogUtils.hideLoading(context: context);
+                        DialogUtils.showMessage(
+                          context: context,
+                          message: 'email_already_in_use',
+                          title: 'error',
+                          posActionText: 'ok',
+                        );
+                      }
+                    } catch (e) {
+                      DialogUtils.hideLoading(context: context);
+                      DialogUtils.showMessage(
+                        context: context,
+                        message: e.toString(),
+                        title: 'error',
+                        posActionText: 'ok',
+                      );
+                    }
                   }
                 },
                 backgroundColor: context.isLight
