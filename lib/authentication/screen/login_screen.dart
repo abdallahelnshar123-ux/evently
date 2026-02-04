@@ -183,20 +183,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       DialogUtils.hideLoading(context: context);
                       DialogUtils.showMessage(
                         context: context,
-                        message: 'register_successfully',
+                        message: 'login_successfully',
                         title: 'success',
+                        posActionText: 'ok',
+                        posAction: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.homeRouteName,
+                          );
+                        },
                       );
                     } on FirebaseAuthException catch (e) {
-                      if (e.code == 'user-not-found') {
+                      if (e.code == 'invalid-credential') {
                         DialogUtils.hideLoading(context: context);
                         DialogUtils.showMessage(
                           context: context,
-                          message: 'register_successfully',
-                          title: 'success',
+                            message: 'email_address_or_password_are_incorrect',
+                            title: 'error',
+                            posActionText: 'ok'
                         );
-                        print('No user found for that email.');
-                      } else if (e.code == 'wrong-password') {
-                        print('Wrong password provided for that user.');
                       }
                     }
                   }

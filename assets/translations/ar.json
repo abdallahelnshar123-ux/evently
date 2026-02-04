@@ -81,5 +81,9 @@
   "success": "نجاح !",
   "weak_password": "كلمه السر ضعيفه",
   "error": "خطأ",
-  "email_already_in_use": "البريد الالكتروني مستخدم بالفعل"
+  "email_already_in_use": "البريد الالكتروني مستخدم بالفعل",
+  "login_successfully": "تم تسجيل الدخول بنجاح",
+  "email_address_or_password_are_incorrect": "عنوان البريد الإلكتروني أو كلمة المرور غير صحيحة\n"
+
+
 }
