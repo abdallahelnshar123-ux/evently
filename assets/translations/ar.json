@@ -77,13 +77,13 @@
   "please_confirm_password": "من فضلك قم بتاكيد كلمه السر",
   "password_do_not_match": "كلمة المرور غير متطابقة",
   "loading": "يتم التحميل ...",
-  "register_successfully": "تم التسجيل بنجاح",
+  "register_successfully": "تم التسجيل بنجاح\nمن فضلك قم بتسجيل الدخول الي حسابك",
   "success": "نجاح !",
   "weak_password": "كلمه السر ضعيفه",
   "error": "خطأ",
   "email_already_in_use": "البريد الالكتروني مستخدم بالفعل",
   "login_successfully": "تم تسجيل الدخول بنجاح",
-  "email_address_or_password_are_incorrect": "عنوان البريد الإلكتروني أو كلمة المرور غير صحيحة\n"
+  "email_address_or_password_are_incorrect": "عنوان البريد الإلكتروني أو كلمة المرور غير صحيحة"
 
 
 }

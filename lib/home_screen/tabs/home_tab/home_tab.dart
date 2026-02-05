@@ -3,6 +3,7 @@ import 'package:evently/home_screen/tabs/home_tab/widget/event_widget.dart';
 import 'package:evently/home_screen/tabs/home_tab/widget/tab_bar_widget.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/provider/events_provider.dart';
+import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/screen_size.dart';
@@ -34,6 +35,8 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
+
     eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(
       child: Scaffold(
@@ -60,7 +63,7 @@ class _HomeTabState extends State<HomeTab> {
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                       Text(
-                        'Abdallah Elnshar',
+                        userProvider.currentUser!.name,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],

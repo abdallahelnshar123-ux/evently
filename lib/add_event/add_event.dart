@@ -38,7 +38,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectedEventName = data.eventsNameList[selectedIndex];
   }

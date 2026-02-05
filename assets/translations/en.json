@@ -76,7 +76,7 @@
   "please_confirm_password": "Please Confirm Password",
   "password_do_not_match": "Password Do Not Match",
   "loading": "Loading ....",
-  "register_successfully": "Register Successfully",
+  "register_successfully": "Register Successfully\nPlease login to Your Account",
   "success": "Success !",
   "weak-password": "Weak Password",
   "error": "Error",

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/add_event/add_event.dart';
 import 'package:evently/authentication/screen/forget_password_screen.dart';
@@ -6,6 +5,7 @@ import 'package:evently/home_screen/home_screen.dart';
 import 'package:evently/on_boarding/screen/screen_1.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/provider/events_provider.dart';
+import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_theme.dart';
 import 'package:evently/utils/shared_prefs.dart';
@@ -23,7 +23,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseFirestore.instance.disableNetwork();
+  // await FirebaseFirestore.instance.disableNetwork();
 
   final sharedPreferences = await SharedPreferences.getInstance();
   final int appTheme =
@@ -40,6 +40,7 @@ void main() async {
           ),
         ),
         ChangeNotifierProvider(create: (context) => EventsProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: EasyLocalization(
         supportedLocales: [Locale('en'), Locale('ar')],

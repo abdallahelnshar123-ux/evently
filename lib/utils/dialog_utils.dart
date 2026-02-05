@@ -87,5 +87,6 @@ class DialogUtils {
         actions: actions,
       ),
     );
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 }
