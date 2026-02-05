@@ -7,6 +7,7 @@ import 'package:evently/model/event.dart';
 import 'package:evently/on_boarding/widget/back_button_widget.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/provider/events_provider.dart';
+import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class AddEventScreen extends StatefulWidget {
 
 class _AddEventScreenState extends State<AddEventScreen> {
   late EventsProvider eventsProvider;
+  late UserProvider userProvider;
   int selectedIndex = 0;
   AppDataClass data = AppDataClass();
   DateTime? selectedDate;
@@ -45,6 +47,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   @override
   Widget build(BuildContext context) {
     eventsProvider = Provider.of<EventsProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
     selectedImage = context.isLight
         ? data.eventImagesLight[selectedIndex]
         : data.eventImagesDark[selectedIndex];
@@ -287,13 +290,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
       );
       await FirebaseUtils.addEventsToFirestore(
         event,
-      ).timeout(Duration(seconds: 2), onTimeout: () => debugPrint('failed'));
-      if (!mounted) return;
-      eventsProvider.getEvents();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.tr('event_was_added_successfully'))),
-      );
-      Navigator.pop(context);
+        userProvider.currentUser!.id,
+      ).then((value) {
+        if (!mounted) return;
+        eventsProvider.getEvents(userProvider.currentUser!.id);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.tr('event_was_added_successfully'))),
+        );
+        Navigator.pop(context);
+      });
     }
   }
 }

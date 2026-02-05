@@ -3,8 +3,9 @@ import 'package:evently/model/event.dart';
 import 'package:evently/model/my_user.dart';
 
 class FirebaseUtils {
-  static CollectionReference<Event> getEventsCollection() {
-    return FirebaseFirestore.instance
+  static CollectionReference<Event> getEventsCollection(String uId) {
+    return getUSersCollection()
+        .doc(uId)
         .collection(Event.collectionName)
         .withConverter<Event>(
           fromFirestore: (snapshot, options) =>
@@ -32,8 +33,8 @@ class FirebaseUtils {
     return querySnapshot.data();
   }
 
-  static Future<void> addEventsToFirestore(Event event) {
-    var collection = getEventsCollection();
+  static Future<void> addEventsToFirestore(Event event, String uId) {
+    var collection = getEventsCollection(uId);
     var document = collection.doc();
     event.id = document.id;
     return document.set(event);

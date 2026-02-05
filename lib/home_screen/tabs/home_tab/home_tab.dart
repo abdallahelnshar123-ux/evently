@@ -22,12 +22,13 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   late EventsProvider eventsProvider;
+  late UserProvider userProvider;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      eventsProvider.getEvents();
+      eventsProvider.getEvents(userProvider.currentUser!.id);
     });
   }
 
@@ -35,7 +36,7 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
 
     eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(

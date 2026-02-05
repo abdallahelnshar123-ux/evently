@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/authentication/widget/custom_text_field.dart';
 import 'package:evently/home_screen/tabs/home_tab/widget/event_widget.dart';
 import 'package:evently/provider/events_provider.dart';
+import 'package:evently/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
@@ -17,19 +18,21 @@ class FavoriteTab extends StatefulWidget {
 
 class _FavoriteTabState extends State<FavoriteTab> {
   late EventsProvider eventsProvider;
+  late UserProvider userProvider;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => eventsProvider.getFavoriteEvents(),
+      (_) => eventsProvider.getFavoriteEvents(userProvider.currentUser!.id),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     eventsProvider = Provider.of<EventsProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(

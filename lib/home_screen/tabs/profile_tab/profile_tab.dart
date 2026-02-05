@@ -1,6 +1,7 @@
 import 'package:evently/home_screen/tabs/profile_tab/widget/language_widget.dart';
 import 'package:evently/home_screen/tabs/profile_tab/widget/profile_item_widget.dart';
 import 'package:evently/home_screen/tabs/profile_tab/widget/switch_widget.dart';
+import 'package:evently/provider/events_provider.dart';
 import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_routes.dart';
@@ -14,6 +15,8 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var eventsProvider = Provider.of<EventsProvider>(context);
+
     var userProvider = Provider.of<UserProvider>(context);
     return SafeArea(
       child: Scaffold(
@@ -51,6 +54,7 @@ class ProfileTab extends StatelessWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   onPressed: () {
+                    eventsProvider.emptyLists();
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       AppRoutes.loginRouteName,

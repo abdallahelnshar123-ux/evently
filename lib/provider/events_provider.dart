@@ -12,8 +12,13 @@ class EventsProvider extends ChangeNotifier {
 
   AppDataClass data = AppDataClass();
 
-  Future<void> getEvents() async {
-    var querySnapshots = await FirebaseUtils.getEventsCollection().get();
+  void emptyLists() {
+    filterEventList = [];
+    favoriteEventsList = [];
+  }
+
+  Future<void> getEvents(String uId) async {
+    var querySnapshots = await FirebaseUtils.getEventsCollection(uId).get();
     eventList = querySnapshots.docs.map((doc) => doc.data()).toList();
     filterEvents();
   }
@@ -33,21 +38,26 @@ class EventsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateIsFavorite(Event event) async {
-    await FirebaseUtils.getEventsCollection()
+  Future<void> updateIsFavorite(Event event, String uId) async {
+    await FirebaseUtils.getEventsCollection(uId)
         .doc(event.id)
         .update({'is_favorite': !event.isFavorite})
-        .timeout(
-          Duration(milliseconds: 500),
-          onTimeout: () {
-            getEvents();
-            getFavoriteEvents();
-          },
-        );
+        .then((value) {
+      getEvents(uId);
+      getFavoriteEvents(uId);
+    });
+
+    // .timeout(
+    //   Duration(milliseconds: 500),
+    //   onTimeout: () {
+    //     getEvents();
+    //     getFavoriteEvents();
+    //   },
+    // );
   }
 
-  void getFavoriteEvents() async {
-    var querySnapShots = await FirebaseUtils.getEventsCollection()
+  void getFavoriteEvents(String uId) async {
+    var querySnapShots = await FirebaseUtils.getEventsCollection(uId)
         .orderBy('event_date')
         .where('is_favorite', isEqualTo: true)
         .get();

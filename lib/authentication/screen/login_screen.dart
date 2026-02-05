@@ -3,6 +3,7 @@ import 'package:evently/authentication/widget/custom_text_field.dart';
 import 'package:evently/firebase_utils.dart';
 import 'package:evently/on_boarding/widget/custom_elevated_button.dart';
 import 'package:evently/provider/app_theme_provider.dart';
+import 'package:evently/provider/events_provider.dart';
 import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
@@ -196,6 +197,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         var user = await FirebaseUtils.getUserFromFirestore(
                           credential.user?.uid ?? '',
                         );
+                        var eventsProvider = Provider.of<EventsProvider>(
+                          context,
+                          listen: false,
+                        );
+                        eventsProvider.setIndex(0);
                         if (user == null) return;
 
                         // todo : add user to provider
