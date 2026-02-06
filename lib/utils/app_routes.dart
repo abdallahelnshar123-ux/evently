@@ -7,4 +7,5 @@ class AppRoutes {
   static const forgetPasswordRouteName = 'forget_password_screen';
   static const addEventRouteName = 'add_event_screen';
   static const editEventRouteName = 'edit_event_screen';
+  static const eventDetailsRouteName = 'event_details_screen';
 }

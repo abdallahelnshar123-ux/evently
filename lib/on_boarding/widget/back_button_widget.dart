@@ -44,53 +44,9 @@ class BackButtonWidget extends StatelessWidget {
                   ? AppColors.mainDarkModeColor
                   : AppColors.whiteColor,
             ),
-            // Transform.flip(
-            //   flipX: context.savedLocale?.languageCode == 'ar',
-            //   child: SvgPicture.asset(
-            //     AppAssets.arrowBackIcon,
-            //     colorFilter: ColorFilter.mode(
-            //       context.isLight ? AppColors.mainColor : AppColors.whiteColor,
-            //       BlendMode.srcIn,
-            //     ),
-            //   ),
-            // ),
           ),
         ),
       ),
     );
   }
 }
-
-/*
-Center(
-      child: GestureDetector(
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: Container(
-            padding: EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: context.isLight
-                  ? AppColors.whiteColor
-                  : AppColors.inputsColor,
-              borderRadius: BorderRadius.circular(8),
-              border: BoxBorder.all(
-                width: 1,
-                color: themeProviderObject.isLight()
-                    ? AppColors.strokeColor
-                    : AppColors.strokeDarkColor,
-              ),
-            ),
-            child: SvgPicture.asset(
-              AppAssets.arrowBackIcon,
-              colorFilter: ColorFilter.mode(
-                themeProviderObject.isLight()
-                    ? AppColors.mainColor
-                    : AppColors.whiteColor,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
-        ),
-      ),
-    )
- */

@@ -43,7 +43,12 @@ class FirebaseUtils {
   static Future<void> updateEvents(Event event, String userId) {
     var collection = getEventsCollection(userId);
     var document = collection.doc(event.id);
-    // event.id = document.id;
     return document.update(event.toFireStore());
+  }
+
+  static Future<void> deleteEvent(Event event, String userId) {
+    var collection = getEventsCollection(userId);
+    var document = collection.doc(event.id);
+    return document.delete();
   }
 }

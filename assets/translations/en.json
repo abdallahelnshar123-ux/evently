@@ -85,5 +85,13 @@
   "email_address_or_password_are_incorrect": "Email Address or Password are Incorrect",
   "edit_event": "Edit event",
   "update_event": "Update event",
-  "event_was_updated_successfully": "Event Was Updated Successfully"
+  "event_was_updated_successfully": "Event Was Updated Successfully",
+  "event_details": "Event details",
+  "are_you_sure_you_want_to_delete_this_event": "Are your sure you want to delete this event ?",
+  "yes": "Yes",
+  "no": "No",
+  "event_was_deleted_successfully": "Event was deleted Successfully",
+  "added_favorite": "Added to favorite",
+  "warning": "Warning"
+
 }

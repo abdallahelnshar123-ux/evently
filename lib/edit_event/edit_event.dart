@@ -306,6 +306,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
         eventImage: selectedImage,
         eventDate: selectedDate!,
         eventTime: selectedTime!,
+          isFavorite: event.isFavorite
       );
       await FirebaseUtils.updateEvents(
         newEvent,
@@ -313,6 +314,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
       ).then((value) {
         if (!mounted) return;
         eventsProvider.getEvents(userProvider.currentUser!.id);
+        eventsProvider.getFavoriteEvents(userProvider.currentUser!.id);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(context.tr('event_was_updated_successfully'))),
         );

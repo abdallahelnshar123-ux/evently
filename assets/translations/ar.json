@@ -86,9 +86,11 @@
   "email_address_or_password_are_incorrect": "عنوان البريد الإلكتروني أو كلمة المرور غير صحيحة",
   "edit_event": "تعدبل الحدث",
   "update_event": "حدث الحدث",
-  "event_was_updated_successfully": "تم تعديل الحدث بنجاح"
-
-
-
-
+  "event_was_updated_successfully": "تم تعديل الحدث بنجاح",
+  "event_details": "تفاصيل الحدث",
+  "are_you_sure_you_want_to_delete_this_event": "هل انت متأكد من انك تريد حذف هذا الحدث؟",
+  "yes": "نعم",
+  "no": "لا",
+  "event_was_deleted_successfully": "تم حذف الحدث بنجاح",
+  "warning": "تحذير"
 }

@@ -23,7 +23,7 @@ class EventWidget extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          AppRoutes.editEventRouteName,
+          AppRoutes.eventDetailsRouteName,
           arguments: event,
         );
       },

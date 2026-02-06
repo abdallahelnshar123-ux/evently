@@ -259,6 +259,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   }
 
   void addEvent() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     if (selectedDate == null) {
       showDialog(
         context: context,

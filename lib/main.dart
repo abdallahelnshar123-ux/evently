@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/add_event/add_event.dart';
 import 'package:evently/authentication/screen/forget_password_screen.dart';
 import 'package:evently/edit_event/edit_event.dart';
+import 'package:evently/event_details/event_details.dart';
 import 'package:evently/home_screen/home_screen.dart';
 import 'package:evently/on_boarding/screen/screen_1.dart';
 import 'package:evently/provider/app_theme_provider.dart';
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.forgetPasswordRouteName: (context) => ForgetPasswordScreen(),
         AppRoutes.addEventRouteName: (context) => AddEventScreen(),
         AppRoutes.editEventRouteName: (context) => EditEventScreen(),
+        AppRoutes.eventDetailsRouteName: (context) => EventDetailsScreen(),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
