@@ -83,7 +83,12 @@
   "error": "خطأ",
   "email_already_in_use": "البريد الالكتروني مستخدم بالفعل",
   "login_successfully": "تم تسجيل الدخول بنجاح",
-  "email_address_or_password_are_incorrect": "عنوان البريد الإلكتروني أو كلمة المرور غير صحيحة"
+  "email_address_or_password_are_incorrect": "عنوان البريد الإلكتروني أو كلمة المرور غير صحيحة",
+  "edit_event": "تعدبل الحدث",
+  "update_event": "حدث الحدث",
+  "event_was_updated_successfully": "تم تعديل الحدث بنجاح"
+
+
 
 
 }

@@ -22,7 +22,7 @@ class CustomTextField extends StatelessWidget {
   OnChanged? onChanged;
   TextEditingController? controller;
   TextInputType? keyBoardType;
-
+  String? initialValue;
   ValidatorFunction? validator;
 
   CustomTextField({
@@ -44,11 +44,13 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.keyBoardType,
+    this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       keyboardType: keyBoardType,
       controller: controller,
       validator: validator,

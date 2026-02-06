@@ -82,5 +82,8 @@
   "error": "Error",
   "email-already-in-use": "Email Already In Use",
   "login_successfully": "Login Successfully",
-  "email_address_or_password_are_incorrect": "Email Address or Password are Incorrect"
+  "email_address_or_password_are_incorrect": "Email Address or Password are Incorrect",
+  "edit_event": "Edit event",
+  "update_event": "Update event",
+  "event_was_updated_successfully": "Event Was Updated Successfully"
 }

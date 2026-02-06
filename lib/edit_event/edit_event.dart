@@ -18,30 +18,50 @@ import '../on_boarding/widget/custom_elevated_button.dart';
 import '../utils/app_styles.dart';
 import '../utils/screen_size.dart';
 
-class AddEventScreen extends StatefulWidget {
-  const AddEventScreen({super.key});
+class EditEventScreen extends StatefulWidget {
+  const EditEventScreen({super.key});
 
   @override
-  State<AddEventScreen> createState() => _AddEventScreenState();
+  State<EditEventScreen> createState() => _EditEventScreenState();
 }
 
-class _AddEventScreenState extends State<AddEventScreen> {
+class _EditEventScreenState extends State<EditEventScreen> {
+  late Event event;
   late EventsProvider eventsProvider;
   late UserProvider userProvider;
-  int selectedIndex = 0;
+  late int selectedIndex;
+
   AppDataClass data = AppDataClass();
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
   String selectedEventName = '';
-  String selectedImage = '';
+  late String selectedImage;
+
   String eventTitle = '';
   String eventDescription = '';
+
+  bool _isInitialized = false;
   var formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    if (_isInitialized) return;
+    event = ModalRoute.of(context)!.settings.arguments as Event;
+    selectedIndex = data.eventsNameList.indexOf(event.eventName);
     selectedEventName = data.eventsNameList[selectedIndex];
+    selectedDate = event.eventDate;
+    selectedTime = event.eventTime;
+    eventDescription = event.eventDescription;
+    eventTitle = event.eventTitle;
+    _isInitialized = true;
   }
 
   @override
@@ -57,7 +77,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            context.tr('add_event'),
+            context.tr('edit_event'),
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
               color: context.isLight
                   ? AppColors.mainTextColor
@@ -136,6 +156,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 CustomTextField(
+                  initialValue: event.eventTitle,
                   onChanged: (text) {
                     eventTitle = text;
                   },
@@ -170,6 +191,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 CustomTextField(
+                  initialValue: event.eventDescription,
                   validator: (text) {
                     if (text?.trim().isEmpty ?? true) {
                       return context.tr('please_enter_event_description');
@@ -202,28 +224,24 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
                 DateTimeWidget.date(
                   onPressed: pickDate,
-                  hyperText: selectedDate == null
-                      ? context.tr('choose_date')
-                      : DateFormat(
-                          'MMM d, yyyy',
-                          context.locale.toString(),
-                        ).format(selectedDate!),
+                  hyperText: DateFormat(
+                    'MMM d, yyyy',
+                    context.locale.toString(),
+                  ).format(selectedDate!),
                 ),
                 DateTimeWidget.time(
                   onPressed: pickTime,
-                  hyperText: selectedTime == null
-                      ? context.tr('choose_time')
-                      : selectedTime!.format(context),
+                  hyperText: selectedTime!.format(context),
                 ),
                 SizedBox(height: context.height * 0.01),
 
                 CustomElevatedButton(
-                  onPressed: addEvent,
+                  onPressed: updateEvent,
                   backgroundColor: context.isLight
                       ? AppColors.mainColor
                       : AppColors.mainDarkModeColor,
                   child: Text(
-                    context.tr('add_event'),
+                    context.tr('update_event'),
                     style: AppStyles.sBold20White,
                   ),
                 ),
@@ -241,7 +259,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
       context: context,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
-      initialDate: DateTime.now(),
+      initialDate: selectedDate,
     );
     selectedDate = chooseDate;
     FocusManager.instance.primaryFocus?.unfocus();
@@ -251,14 +269,14 @@ class _AddEventScreenState extends State<AddEventScreen> {
   void pickTime() async {
     var chooseTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: selectedTime!,
     );
     selectedTime = chooseTime;
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() {});
   }
 
-  void addEvent() async {
+  void updateEvent() async {
     if (selectedDate == null) {
       showDialog(
         context: context,
@@ -280,7 +298,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
       return;
     }
     if (formKey.currentState!.validate()) {
-      Event event = Event(
+      Event newEvent = Event(
+        id: event.id,
         eventName: selectedEventName,
         eventDescription: eventDescription,
         eventTitle: eventTitle,
@@ -288,14 +307,14 @@ class _AddEventScreenState extends State<AddEventScreen> {
         eventDate: selectedDate!,
         eventTime: selectedTime!,
       );
-      await FirebaseUtils.addEventsToFirestore(
-        event,
+      await FirebaseUtils.updateEvents(
+        newEvent,
         userProvider.currentUser!.id,
       ).then((value) {
         if (!mounted) return;
         eventsProvider.getEvents(userProvider.currentUser!.id);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.tr('event_was_added_successfully'))),
+          SnackBar(content: Text(context.tr('event_was_updated_successfully'))),
         );
         Navigator.pop(context);
       });

@@ -33,10 +33,17 @@ class FirebaseUtils {
     return querySnapshot.data();
   }
 
-  static Future<void> addEventsToFirestore(Event event, String uId) {
-    var collection = getEventsCollection(uId);
+  static Future<void> addEventsToFirestore(Event event, String userId) {
+    var collection = getEventsCollection(userId);
     var document = collection.doc();
     event.id = document.id;
     return document.set(event);
+  }
+
+  static Future<void> updateEvents(Event event, String userId) {
+    var collection = getEventsCollection(userId);
+    var document = collection.doc(event.id);
+    // event.id = document.id;
+    return document.update(event.toFireStore());
   }
 }
