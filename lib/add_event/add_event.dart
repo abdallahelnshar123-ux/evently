@@ -52,6 +52,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         ? data.eventImagesLight[selectedIndex]
         : data.eventImagesDark[selectedIndex];
     return GestureDetector(
+      /// to unfocus text fields ============================================
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
@@ -78,6 +79,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
               spacing: context.height * 0.005,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /// event image ============================================
                 Container(
                   width: double.infinity,
                   height: context.height * 0.24,
@@ -94,6 +96,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     borderRadius: BorderRadius.circular(24),
                   ),
                 ),
+
+                /// event names ============================================
                 DefaultTabController(
                   length: data.eventsNameList.length,
                   child: TabBar(
@@ -131,6 +135,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         .toList(),
                   ),
                 ),
+
+                /// event title  ===========================================
                 Text(
                   context.tr('title'),
                   style: Theme.of(context).textTheme.labelLarge,
@@ -165,6 +171,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       : AppColors.strokeDarkColor,
                 ),
                 SizedBox(height: context.height * 0.004),
+
+                /// event description ======================================
                 Text(
                   context.tr('description'),
                   style: Theme.of(context).textTheme.labelLarge,
@@ -200,6 +208,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 ),
                 SizedBox(height: context.height * 0.004),
 
+                /// date picker ============================================
                 DateTimeWidget.date(
                   onPressed: pickDate,
                   hyperText: selectedDate == null
@@ -209,6 +218,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           context.locale.toString(),
                         ).format(selectedDate!),
                 ),
+
+                /// time picker ============================================
                 DateTimeWidget.time(
                   onPressed: pickTime,
                   hyperText: selectedTime == null
@@ -217,6 +228,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 ),
                 SizedBox(height: context.height * 0.01),
 
+                /// add event button =======================================
                 CustomElevatedButton(
                   onPressed: addEvent,
                   backgroundColor: context.isLight
