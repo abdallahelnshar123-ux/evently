@@ -6,7 +6,6 @@ import '../../on_boarding/widget/custom_elevated_button.dart';
 import '../../provider/app_theme_provider.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/app_routes.dart';
 import '../../utils/app_styles.dart';
 import '../../utils/screen_size.dart';
 
@@ -53,12 +52,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 context.tr('reset_password'),
                 style: AppStyles.sBold20White,
               ),
-              onPressed: () {
-                Navigator.pushReplacementNamed(
-                  context,
-                  AppRoutes.onBoardingScreen2RouteName,
-                );
-              },
+              onPressed: () {},
             ),
           ],
         ),

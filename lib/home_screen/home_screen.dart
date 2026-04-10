@@ -28,13 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Icon(Icons.add, size: 30, color: AppColors.whiteColor),
       ),
-
       body: tabs[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (index) {
           selectedIndex = index;
-
           setState(() {});
         },
         items: [

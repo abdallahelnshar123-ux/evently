@@ -46,14 +46,6 @@ class EventsProvider extends ChangeNotifier {
       getEvents(uId);
       getFavoriteEvents(uId);
     });
-
-    // .timeout(
-    //   Duration(milliseconds: 500),
-    //   onTimeout: () {
-    //     getEvents();
-    //     getFavoriteEvents();
-    //   },
-    // );
   }
 
   void getFavoriteEvents(String uId) async {

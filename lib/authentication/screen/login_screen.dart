@@ -20,7 +20,7 @@ import 'package:provider/provider.dart';
 import '../../utils/app_styles.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -34,6 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       return context.tr('please_enter_email');
                     }
                     final bool emailValid = RegExp(
-                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                      r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                     ).hasMatch(text!);
                     if (!emailValid) {
                       return context.tr('please_enter_valid_email');
@@ -188,7 +195,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       // todo: sign in
                       try {
                         FocusManager.instance.primaryFocus?.unfocus();
-
                         final credential = await FirebaseAuth.instance
                             .signInWithEmailAndPassword(
                               email: emailController.text,
@@ -199,6 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         var user = await FirebaseUtils.getUserFromFirestore(
                           credential.user?.uid ?? '',
                         );
+                        if (!context.mounted) return;
                         var eventsProvider = Provider.of<EventsProvider>(
                           context,
                           listen: false,
@@ -211,13 +218,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         userProvider.changeUser(user);
 
                         DialogUtils.hideLoading(context: context);
+
                         DialogUtils.showMessage(
                           context: context,
                           message: 'login_successfully',
                           title: 'success',
                         );
                         Future.delayed(Duration(seconds: 2), () {
-                          DialogUtils.hideLoading(context: context);
+                          if (!context.mounted) return;
+                          // DialogUtils.hideLoading(context: context);
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             AppRoutes.homeRouteName,
@@ -295,7 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
 
-                /// login with google button ======================================
+                /// login with google button ==================================
                 CustomElevatedButton(
                   onPressed: () {},
                   borderColor: context.isLight
