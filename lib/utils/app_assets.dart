@@ -31,15 +31,30 @@ class AppAssets {
       'assets/images/bookclub_image_dark.png';
   static const String bookClubImageLight =
       'assets/images/bookclub_image_light.png';
+
+  static const String eatingImageDark = 'assets/images/eating_image_dark.png';
+  static const String eatingImageLight = 'assets/images/eating_image_light.png';
   static const String exhibitionImageDark =
       'assets/images/exhibition_image_dark.png';
   static const String exhibitionImageLight =
       'assets/images/exhibition_image_light.png';
+
+  static const String gamingImageDark = 'assets/images/gaming_image_dark.png';
+  static const String gamingImageLight = 'assets/images/gaming_image_light.png';
+
+  static const String holidayImageDark = 'assets/images/holiday_image_dark.png';
+  static const String holidayImageLight =
+      'assets/images/holiday_image_light.png';
   static const String meetingImageDark = 'assets/images/meeting_image_dark.png';
   static const String meetingImageLight =
       'assets/images/meeting_image_light.png';
   static const String sportImageDark = 'assets/images/sport_image_dark.png';
   static const String sportImageLight = 'assets/images/sport_image_light.png';
+
+  static const String workshopImageDark =
+      'assets/images/workshop_image_dark.png';
+  static const String workshopImageLight =
+      'assets/images/workshop_image_light.png';
 
   ///  icons =============================================================
   static const String homeSelectedIcon = 'assets/icons/home_selected_icon.svg';

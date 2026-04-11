@@ -111,12 +111,12 @@ class AppDataClass {
     AppAssets.sportImageLight,
     AppAssets.birthdayImageLight,
     AppAssets.meetingImageLight,
-    AppAssets.meetingImageLight,
-    AppAssets.meetingImageLight,
+    AppAssets.gamingImageLight,
+    AppAssets.workshopImageLight,
     AppAssets.bookClubImageLight,
     AppAssets.exhibitionImageLight,
-    AppAssets.meetingImageLight,
-    AppAssets.meetingImageLight,
+    AppAssets.holidayImageLight,
+    AppAssets.eatingImageLight,
   ];
 
   List<String> get eventImagesLight {
@@ -127,12 +127,12 @@ class AppDataClass {
     AppAssets.sportImageDark,
     AppAssets.birthdayImageDark,
     AppAssets.meetingImageDark,
-    AppAssets.meetingImageDark,
-    AppAssets.meetingImageDark,
+    AppAssets.gamingImageDark,
+    AppAssets.workshopImageDark,
     AppAssets.bookClubImageDark,
     AppAssets.exhibitionImageDark,
-    AppAssets.meetingImageDark,
-    AppAssets.meetingImageDark,
+    AppAssets.holidayImageDark,
+    AppAssets.eatingImageDark,
   ];
 
   List<String> get eventImagesDark {
