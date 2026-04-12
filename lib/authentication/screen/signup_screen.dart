@@ -47,6 +47,16 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    rePasswordController.dispose();
+    nameController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // var userProvider = Provider.of<UserProvider>(context);
     return GestureDetector(
@@ -265,6 +275,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           id: credential.user?.uid ?? '',
                           email: credential.user?.email ?? '',
                           name: credential.user?.displayName ?? '',
+                            provider: 'email'
                         );
                         await FirebaseUtils.addUserToFirestore(myUser);
 
@@ -415,6 +426,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
       if (googleAccount != null) {
         final String email = googleAccount.email;
+        final String displayName = googleAccount.displayName ?? '';
 
         // final credential = GoogleAuthProvider.credential(
         //   idToken: authenticationToken.idToken,
@@ -442,7 +454,8 @@ class _SignupScreenState extends State<SignupScreen> {
         final user = MyUser(
           id: firebaseUser.uid,
           email: firebaseUser.email ?? '',
-          name: firebaseUser.displayName ?? '',
+            name: displayName,
+            provider: 'google'
         );
         userProvider.currentUser = user;
 

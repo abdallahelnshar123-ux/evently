@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/authentication/widget/custom_text_field.dart';
 import 'package:evently/firebase_utils.dart';
-import 'package:evently/model/my_user.dart';
 import 'package:evently/on_boarding/widget/custom_elevated_button.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/provider/events_provider.dart';
@@ -378,15 +377,16 @@ class _LoginScreenState extends State<LoginScreen> {
         final firestoreUserData = await FirebaseUtils.getUserFromFirestore(
           firebaseUser.uid,
         );
-        final user = MyUser(
-          id: firebaseUser.uid,
-          email: firebaseUser.email ?? '',
-          name: firebaseUser.displayName ?? '',
-        );
-        userProvider.currentUser = user;
-        if (firestoreUserData == null) {
-          await FirebaseUtils.addUserToFirestore(user);
-        }
+        // final user = MyUser(
+        //   id: firebaseUser.uid,
+        //   email: firebaseUser.email ?? '',
+        //   name: firebaseUser.displayName ?? '',
+        //   provider: firestoreUserData?.provider ?? '' ,
+        // );
+        userProvider.currentUser = firestoreUserData;
+        // if (firestoreUserData == null) {
+        //   await FirebaseUtils.addUserToFirestore(user);
+        // }
         DialogUtils.hideLoading(context: context);
 
         DialogUtils.showMessage(
