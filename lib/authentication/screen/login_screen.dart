@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/authentication/widget/custom_text_field.dart';
 import 'package:evently/firebase_utils.dart';
+import 'package:evently/model/my_user.dart';
 import 'package:evently/on_boarding/widget/custom_elevated_button.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/provider/events_provider.dart';
@@ -15,6 +16,7 @@ import 'package:evently/utils/screen_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/app_styles.dart';
@@ -28,7 +30,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool obscurePassword = true;
-
+  late UserProvider userProvider;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
@@ -43,8 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void initState() {
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -306,7 +313,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 /// login with google button ==================================
                 CustomElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    signInWithGoogle();
+                  },
                   borderColor: context.isLight
                       ? AppColors.strokeColor
                       : AppColors.strokeDarkColor,
@@ -333,47 +342,75 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> loginWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     try {
-      emit(AuthLoginLoading());
-      final googleUserData = await FirebaseUtils.signInWithGoogle();
-
-      if (googleUserData == null) return;
-
-      final firestoreUserData = await FirebaseUtils.readUserFromFireStore(
-        googleUserData.user?.uid ?? '',
+      DialogUtils.showLoading(context: context);
+      final GoogleSignIn signIn = GoogleSignIn.instance;
+      await signIn.initialize(
+        clientId:
+            '952355362314-f27f5ubpkl9a3f08mkdp14bqmcuugtnn.apps.googleusercontent.com',
       );
+      final GoogleSignInAccount? googleAccount = await signIn.authenticate();
 
-      if (firestoreUserData == null) {
-        // emit(AuthLoginError('Email not found'));
-        // return;
-        final user = MyUser(
-          id: googleUserData.user?.uid ?? '',
-          name: googleUserData.user?.displayName ?? '',
-          email: googleUserData.user?.email ?? '',
-          avatarIndex: -1,
-          phone: googleUserData.user?.phoneNumber ?? '',
-          provider: AuthProviders.google,
+      if (googleAccount != null) {
+        final GoogleSignInAuthentication authenticationToken =
+            googleAccount.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          idToken: authenticationToken.idToken,
         );
-        await FirebaseUtils.addUserToFireStore(user);
-        currentUser = user;
-        emit(AuthAuthenticated());
-      } else {
-        final user = MyUser(
-          id: firestoreUserData.id,
-          name: firestoreUserData.name,
-          email: firestoreUserData.email,
-          avatarIndex: firestoreUserData.avatarIndex,
-          phone: firestoreUserData.phone,
-          provider: firestoreUserData.provider,
+        final userCredential = await FirebaseAuth.instance.signInWithCredential(
+          credential,
         );
-        currentUser = user;
-        emit(AuthAuthenticated());
+
+        final firebaseUser = userCredential.user;
+        if (firebaseUser == null) {
+          DialogUtils.hideLoading(context: context);
+
+          DialogUtils.showMessage(
+            context: context,
+            message: 'Something went wrong , please try again later',
+            title: 'Error',
+            posActionText: 'ok',
+          );
+          return;
+        }
+
+        final firestoreUserData = await FirebaseUtils.getUserFromFirestore(
+          firebaseUser.uid,
+        );
+        final user = MyUser(
+          id: firebaseUser.uid,
+          email: firebaseUser.email ?? '',
+          name: firebaseUser.displayName ?? '',
+        );
+        userProvider.currentUser = user;
+        if (firestoreUserData == null) {
+          await FirebaseUtils.addUserToFirestore(user);
+        }
+        DialogUtils.hideLoading(context: context);
+
+        DialogUtils.showMessage(
+          context: context,
+          message: 'login_successfully',
+          title: 'success',
+        );
+        Future.delayed(Duration(seconds: 2), () {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.homeRouteName,
+            (route) => false,
+          );
+        });
       }
     } catch (e) {
-      debugPrint(e.toString());
-
-      emit(AuthLoginError(e.toString()));
+      DialogUtils.hideLoading(context: context);
+      DialogUtils.showMessage(
+        context: context,
+        message: 'Some Thing went wrong ',
+        title: 'error',
+        posActionText: 'ok',
+      );
     }
   }
 }
