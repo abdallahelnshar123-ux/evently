@@ -12,6 +12,7 @@ import 'package:evently/utils/screen_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/app_styles.dart';
@@ -27,6 +28,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   bool obscurePassword = true;
   bool obscureRePassword = true;
+  late UserProvider userProvider;
 
   TextEditingController emailController = TextEditingController();
 
@@ -39,8 +41,14 @@ class _SignupScreenState extends State<SignupScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserProvider>(context);
+    // var userProvider = Provider.of<UserProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -255,8 +263,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         // todo: add user to firestore
                         MyUser myUser = MyUser(
                           id: credential.user?.uid ?? '',
-                          email: emailController.text,
-                          name: nameController.text,
+                          email: credential.user?.email ?? '',
+                          name: credential.user?.displayName ?? '',
                         );
                         await FirebaseUtils.addUserToFirestore(myUser);
 
@@ -366,7 +374,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 /// login with google button ======================================
                 CustomElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    registerWithGoogle();
+                  },
                   borderColor: context.isLight
                       ? AppColors.strokeColor
                       : AppColors.strokeDarkColor,
@@ -391,5 +401,86 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> registerWithGoogle() async {
+    try {
+      DialogUtils.showLoading(context: context);
+      final GoogleSignIn signIn = GoogleSignIn.instance;
+      await signIn.initialize(
+        clientId:
+            '952355362314-f27f5ubpkl9a3f08mkdp14bqmcuugtnn.apps.googleusercontent.com',
+      );
+      final GoogleSignInAccount? googleAccount = await signIn.authenticate();
+
+      if (googleAccount != null) {
+        final String email = googleAccount.email;
+
+        // final credential = GoogleAuthProvider.credential(
+        //   idToken: authenticationToken.idToken,
+        // );
+
+        final userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: email,
+              password: 'drowssap321',
+            );
+
+        final firebaseUser = userCredential.user;
+        if (firebaseUser == null) {
+          DialogUtils.hideLoading(context: context);
+
+          DialogUtils.showMessage(
+            context: context,
+            message: 'Something went wrong , please try again later',
+            title: 'Error',
+            posActionText: 'ok',
+          );
+          return;
+        }
+
+        final user = MyUser(
+          id: firebaseUser.uid,
+          email: firebaseUser.email ?? '',
+          name: firebaseUser.displayName ?? '',
+        );
+        userProvider.currentUser = user;
+
+        await FirebaseUtils.addUserToFirestore(user);
+
+        DialogUtils.hideLoading(context: context);
+
+        DialogUtils.showMessage(
+          context: context,
+          message: 'register_successfully',
+          title: 'success',
+        );
+        Future.delayed(Duration(seconds: 2), () {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.homeRouteName,
+            (route) => false,
+          );
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        DialogUtils.hideLoading(context: context);
+        DialogUtils.showMessage(
+          context: context,
+          message: 'email_already_in_use',
+          title: 'error',
+          posActionText: 'ok',
+        );
+      }
+    } catch (e) {
+      DialogUtils.hideLoading(context: context);
+      DialogUtils.showMessage(
+        context: context,
+        message: e.toString(),
+        title: 'error',
+        posActionText: 'ok',
+      );
+    }
   }
 }

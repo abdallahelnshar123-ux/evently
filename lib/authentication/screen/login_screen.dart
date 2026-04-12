@@ -353,16 +353,14 @@ class _LoginScreenState extends State<LoginScreen> {
       final GoogleSignInAccount? googleAccount = await signIn.authenticate();
 
       if (googleAccount != null) {
-        final GoogleSignInAuthentication authenticationToken =
-            googleAccount.authentication;
+        final String email = googleAccount.email;
 
-        final credential = GoogleAuthProvider.credential(
-          idToken: authenticationToken.idToken,
-        );
+        // final credential = GoogleAuthProvider.credential(
+        //   idToken: authenticationToken.idToken,
+        // );
 
-        final userCredential = await FirebaseAuth.instance.signInWithCredential(
-          credential,
-        );
+        final userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: 'drowssap321');
 
         final firebaseUser = userCredential.user;
         if (firebaseUser == null) {
@@ -404,14 +402,16 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         });
       }
-    } catch (e) {
-      DialogUtils.hideLoading(context: context);
-      DialogUtils.showMessage(
-        context: context,
-        message: 'Some Thing went wrong ',
-        title: 'error',
-        posActionText: 'ok',
-      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential') {
+        DialogUtils.hideLoading(context: context);
+        DialogUtils.showMessage(
+          context: context,
+          message: 'email_address_or_password_are_incorrect',
+          title: 'error',
+          posActionText: 'ok',
+        );
+      }
     }
   }
 }
