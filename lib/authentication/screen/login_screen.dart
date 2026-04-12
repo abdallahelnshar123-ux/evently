@@ -359,6 +359,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final credential = GoogleAuthProvider.credential(
           idToken: authenticationToken.idToken,
         );
+
         final userCredential = await FirebaseAuth.instance.signInWithCredential(
           credential,
         );
