@@ -6,8 +6,6 @@ class UserProvider extends ChangeNotifier {
 
   MyUser? get currentUser => _currentUser;
 
-  // UserProvider({required this.currentUser});
-
   void changeUser(MyUser? newUser) {
     _currentUser = newUser;
     notifyListeners();

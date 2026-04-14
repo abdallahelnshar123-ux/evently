@@ -6,7 +6,6 @@ import 'package:evently/model/app_data.dart';
 import 'package:evently/model/event.dart';
 import 'package:evently/on_boarding/widget/back_button_widget.dart';
 import 'package:evently/provider/app_theme_provider.dart';
-import 'package:evently/provider/events_provider.dart';
 import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,6 @@ class EditEventScreen extends StatefulWidget {
 
 class _EditEventScreenState extends State<EditEventScreen> {
   late Event event;
-  late EventsProvider eventsProvider;
   late UserProvider userProvider;
   late int selectedIndex;
 
@@ -44,13 +42,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   var formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
 
     if (_isInitialized) return;
@@ -66,7 +58,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    eventsProvider = Provider.of<EventsProvider>(context);
     userProvider = Provider.of<UserProvider>(context);
     selectedImage = context.isLight
         ? data.eventImagesLight[selectedIndex]
@@ -306,15 +297,13 @@ class _EditEventScreenState extends State<EditEventScreen> {
         eventImage: selectedImage,
         eventDate: selectedDate!,
         eventTime: selectedTime!,
-          isFavorite: event.isFavorite
+        isFavorite: event.isFavorite,
       );
       await FirebaseUtils.updateEvents(
         newEvent,
         userProvider.currentUser!.id,
       ).then((value) {
         if (!mounted) return;
-        // eventsProvider.eventsListener(userProvider.currentUser!.id);
-        // eventsProvider.getFavoriteEvents(userProvider.currentUser!.id);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(context.tr('event_was_updated_successfully'))),
         );

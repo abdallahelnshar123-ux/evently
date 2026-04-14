@@ -92,16 +92,6 @@ class EventsProvider extends ChangeNotifier {
     });
   }
 
-  // void getFavoriteEvents(String uId) async {
-  //   var querySnapShots = await FirebaseUtils.getEventsCollection(uId)
-  //       .orderBy('event_date')
-  //       .where('is_favorite', isEqualTo: true)
-  //       .get();
-  //   favoriteEventsList = querySnapShots.docs.map((doc) => doc.data()).toList();
-  //
-  //   notifyListeners();
-  // }
-
   Future<void> deleteEvent({
     required Event event,
     required String userId,

@@ -6,10 +6,14 @@ import 'package:flutter/material.dart';
 import '../../../../utils/screen_size.dart';
 
 class ProfileItemWidget extends StatelessWidget {
-  String text;
-  Widget itemWidget;
+  final String text;
+  final Widget itemWidget;
 
-  ProfileItemWidget({super.key, required this.text, required this.itemWidget});
+  const ProfileItemWidget({
+    super.key,
+    required this.text,
+    required this.itemWidget,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -30,26 +30,15 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   late int selectedIndex;
 
   AppDataClass data = AppDataClass();
-  DateTime? selectedDate;
-  TimeOfDay? selectedTime;
+
   late String selectedImage;
-
-  String eventTitle = '';
-  String eventDescription = '';
-
-  var formKey = GlobalKey<FormState>();
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
 
     event = ModalRoute.of(context)!.settings.arguments as Event;
     selectedIndex = data.eventsNameList.indexOf(event.eventName);
-    selectedDate = event.eventDate;
-    selectedTime = event.eventTime;
-    eventDescription = event.eventDescription;
-    eventTitle = event.eventTitle;
   }
 
   @override
@@ -262,32 +251,4 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       ),
     );
   }
-
-  // void deleteEvent() {
-  //   DialogUtils.showMessage(
-  //     title: 'warning',
-  //     context: context,
-  //     message: 'are_you_sure_you_want_to_delete_this_event',
-  //     posAction: () async {
-  //       DialogUtils.showLoading(context: context);
-  //       await FirebaseUtils.deleteEvent(
-  //         event,
-  //         userProvider.currentUser!.id,
-  //       ).then((value) {
-  //         if (!mounted) return;
-  //         DialogUtils.hideLoading(context: context);
-  //         eventsProvider.eventsListener(userProvider.currentUser!.id);
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             content: Text(context.tr('event_was_deleted_successfully')),
-  //           ),
-  //         );
-  //         Navigator.pop(context);
-  //       });
-  //     },
-  //     posActionText: 'yes',
-  //
-  //     negActionText: 'no',
-  //   );
-  // }
 }

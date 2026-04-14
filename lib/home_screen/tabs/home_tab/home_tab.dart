@@ -37,7 +37,6 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     userProvider = Provider.of<UserProvider>(context);
-
     eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(
       child: Scaffold(

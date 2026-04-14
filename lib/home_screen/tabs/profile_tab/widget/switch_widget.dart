@@ -23,14 +23,14 @@ class SwitchWidget extends StatelessWidget {
         trackOutlineColor: WidgetStatePropertyAll(AppColors.transparentColor),
         value: !context.isLight,
         onChanged: (newValue) {
-
           themeProviderObject.changeAppTheme(
             newValue ? ThemeMode.dark : ThemeMode.light,
           );
-          // saveAppTheme(newValue ? 1 : 2);
           LocalStorage().setTheme(
-              newValue ? AppThemeProvider.darkThemeKey : AppThemeProvider
-                  .lightThemeKey);
+            newValue
+                ? AppThemeProvider.darkThemeKey
+                : AppThemeProvider.lightThemeKey,
+          );
         },
       ),
     );
