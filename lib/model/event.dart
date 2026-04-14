@@ -9,7 +9,6 @@ class Event {
   String eventTitle;
   String eventDescription;
   DateTime eventDate;
-
   TimeOfDay eventTime;
   bool isFavorite;
 

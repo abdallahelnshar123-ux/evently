@@ -313,8 +313,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
         userProvider.currentUser!.id,
       ).then((value) {
         if (!mounted) return;
-        eventsProvider.getEvents(userProvider.currentUser!.id);
-        eventsProvider.getFavoriteEvents(userProvider.currentUser!.id);
+        // eventsProvider.eventsListener(userProvider.currentUser!.id);
+        // eventsProvider.getFavoriteEvents(userProvider.currentUser!.id);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(context.tr('event_was_updated_successfully'))),
         );

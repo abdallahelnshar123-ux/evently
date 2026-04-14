@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:evently/model/app_data.dart';
 import 'package:flutter/material.dart';
 
@@ -9,18 +11,29 @@ class EventsProvider extends ChangeNotifier {
   List<Event> filterEventList = [];
   List<Event> favoriteEventsList = [];
   int selectedIndex = 0;
-
+  StreamSubscription<List<Event>>? _eventsSubscription;
   AppDataClass data = AppDataClass();
+
+  @override
+  void dispose() {
+    _eventsSubscription?.cancel();
+    super.dispose();
+  }
 
   void emptyLists() {
     filterEventList = [];
     favoriteEventsList = [];
+    notifyListeners();
   }
 
-  Future<void> getEvents(String uId) async {
-    var querySnapshots = await FirebaseUtils.getEventsCollection(uId).get();
-    eventList = querySnapshots.docs.map((doc) => doc.data()).toList();
-    filterEvents();
+  void eventsListener(String userId) {
+    _eventsSubscription?.cancel();
+
+    _eventsSubscription =
+        FirebaseUtils.getEventsStream(userId).listen((events,) {
+          eventList = events;
+          filterEvents();
+        });
   }
 
   void filterEvents() {
@@ -35,27 +48,36 @@ class EventsProvider extends ChangeNotifier {
     filterEventList.sort((event1, event2) {
       return event1.eventDate.compareTo(event2.eventDate);
     });
+
+    favoriteEventsList = eventList.where((event) => event.isFavorite).toList();
+    favoriteEventsList.sort((event1, event2) {
+      return event1.eventDate.compareTo(event2.eventDate);
+    });
     notifyListeners();
   }
 
   Future<void> updateIsFavorite(Event event, String uId) async {
-    await FirebaseUtils.getEventsCollection(uId)
-        .doc(event.id)
-        .update({'is_favorite': !event.isFavorite})
-        .then((value) {
-      getEvents(uId);
-      getFavoriteEvents(uId);
+    await FirebaseUtils.getEventsCollection(
+      uId,
+    ).doc(event.id).update({'is_favorite': !event.isFavorite}).then((value) {
+      // eventsListener(uId);
+      // getFavoriteEvents(uId);
     });
   }
 
-  void getFavoriteEvents(String uId) async {
-    var querySnapShots = await FirebaseUtils.getEventsCollection(uId)
-        .orderBy('event_date')
-        .where('is_favorite', isEqualTo: true)
-        .get();
-    favoriteEventsList = querySnapShots.docs.map((doc) => doc.data()).toList();
+  // void getFavoriteEvents(String uId) async {
+  //   var querySnapShots = await FirebaseUtils.getEventsCollection(uId)
+  //       .orderBy('event_date')
+  //       .where('is_favorite', isEqualTo: true)
+  //       .get();
+  //   favoriteEventsList = querySnapShots.docs.map((doc) => doc.data()).toList();
+  //
+  //   notifyListeners();
+  // }
 
-    notifyListeners();
+  Future<void> deleteEvent(
+      {required Event event, required String userId}) async {
+    await FirebaseUtils.deleteEvent(event, userId);
   }
 
   void setIndex(int index) {

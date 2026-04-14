@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/edit_event/widget/action_button_widget.dart';
-import 'package:evently/firebase_utils.dart';
 import 'package:evently/model/app_data.dart';
 import 'package:evently/model/event.dart';
 import 'package:evently/on_boarding/widget/back_button_widget.dart';
@@ -74,7 +73,44 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             },
           ),
           SizedBox(width: context.width * 0.025),
-          ActionButtonWidget.delete(onPressed: deleteEvent),
+          ActionButtonWidget.delete(
+            onPressed: () {
+              DialogUtils.showMessage(
+                title: 'warning',
+                context: context,
+                message: 'are_you_sure_you_want_to_delete_this_event',
+                posActionText: 'yes',
+                negActionText: 'no',
+                posAction: () async {
+                  DialogUtils.showLoading(context: context);
+                  await eventsProvider
+                      .deleteEvent(
+                        event: event,
+                        userId: userProvider.currentUser!.id,
+                      )
+                      .then((value) {
+                        if (!context.mounted) return;
+                        DialogUtils.hideLoading(context: context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              context.tr('event_was_deleted_successfully'),
+                            ),
+                          ),
+                        );
+                        Navigator.pop(context);
+                      })
+                      .onError((error, stackTrace) {
+                        if (!context.mounted) return;
+                        DialogUtils.hideLoading(context: context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(error.toString())),
+                        );
+                      });
+                },
+              );
+            },
+          ),
         ],
         centerTitle: true,
         title: Text(
@@ -227,32 +263,31 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     );
   }
 
-  void deleteEvent() {
-    DialogUtils.showMessage(
-      title: 'warning',
-      context: context,
-      message: 'are_you_sure_you_want_to_delete_this_event',
-      posAction: () async {
-        DialogUtils.showLoading(context: context);
-        await FirebaseUtils.deleteEvent(
-          event,
-          userProvider.currentUser!.id,
-        ).then((value) {
-          if (!mounted) return;
-          DialogUtils.hideLoading(context: context);
-          eventsProvider.getEvents(userProvider.currentUser!.id);
-          eventsProvider.getFavoriteEvents(userProvider.currentUser!.id);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(context.tr('event_was_deleted_successfully')),
-            ),
-          );
-          Navigator.pop(context);
-        });
-      },
-      posActionText: 'yes',
-
-      negActionText: 'no',
-    );
-  }
+  // void deleteEvent() {
+  //   DialogUtils.showMessage(
+  //     title: 'warning',
+  //     context: context,
+  //     message: 'are_you_sure_you_want_to_delete_this_event',
+  //     posAction: () async {
+  //       DialogUtils.showLoading(context: context);
+  //       await FirebaseUtils.deleteEvent(
+  //         event,
+  //         userProvider.currentUser!.id,
+  //       ).then((value) {
+  //         if (!mounted) return;
+  //         DialogUtils.hideLoading(context: context);
+  //         eventsProvider.eventsListener(userProvider.currentUser!.id);
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(
+  //             content: Text(context.tr('event_was_deleted_successfully')),
+  //           ),
+  //         );
+  //         Navigator.pop(context);
+  //       });
+  //     },
+  //     posActionText: 'yes',
+  //
+  //     negActionText: 'no',
+  //   );
+  // }
 }

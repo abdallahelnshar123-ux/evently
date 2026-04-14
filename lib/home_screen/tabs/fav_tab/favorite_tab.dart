@@ -12,6 +12,7 @@ import '../../../utils/app_colors.dart';
 import '../../../utils/screen_size.dart';
 
 class FavoriteTab extends StatefulWidget {
+  const FavoriteTab({super.key});
   @override
   State<FavoriteTab> createState() => _FavoriteTabState();
 }
@@ -24,9 +25,6 @@ class _FavoriteTabState extends State<FavoriteTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => eventsProvider.getFavoriteEvents(userProvider.currentUser!.id),
-    );
   }
 
   @override

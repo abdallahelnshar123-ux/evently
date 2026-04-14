@@ -16,6 +16,17 @@ class FirebaseUtils {
         );
   }
 
+  static Stream<List<Event>> getEventsStream(String userId) {
+    return getEventsCollection(userId)
+        .orderBy('event_date')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
+
+
+
   static CollectionReference<MyUser> getUSersCollection() {
     return FirebaseFirestore.instance
         .collection(MyUser.usersCollectionName)

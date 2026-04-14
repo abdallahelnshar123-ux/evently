@@ -28,7 +28,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      eventsProvider.getEvents(userProvider.currentUser!.id);
+      eventsProvider.eventsListener(userProvider.currentUser!.id);
     });
   }
 
