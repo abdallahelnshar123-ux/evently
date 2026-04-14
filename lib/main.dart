@@ -4,6 +4,7 @@ import 'package:evently/authentication/screen/forget_password_screen.dart';
 import 'package:evently/edit_event/edit_event.dart';
 import 'package:evently/event_details/event_details.dart';
 import 'package:evently/home_screen/home_screen.dart';
+import 'package:evently/model/my_user.dart';
 import 'package:evently/on_boarding/screen/screen_1.dart';
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/provider/events_provider.dart';
@@ -26,10 +27,11 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SharedPrefsUtils.init();
-  // final sharedPreferences = await SharedPreferences.getInstance();
+
   final LocalStorage localStorage = LocalStorage();
   final String appTheme = localStorage.appTheme;
   final bool showIntro = localStorage.onboarding;
+  final MyUser? user = localStorage.getUser();
 
   runApp(
     MultiProvider(
@@ -42,14 +44,16 @@ void main() async {
           ),
         ),
         ChangeNotifierProvider(create: (context) => EventsProvider()),
-        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider()..initUser(user),
+        ),
       ],
       child: EasyLocalization(
         supportedLocales: [Locale('en'), Locale('ar')],
         path: 'assets/translations',
         startLocale: Locale('en'),
         saveLocale: true,
-        child: MyApp(showIntro: showIntro),
+        child: MyApp(showIntro: showIntro, user: user),
       ),
     ),
   );
@@ -57,18 +61,21 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final bool showIntro;
+  final MyUser? user;
 
-  const MyApp({super.key, required this.showIntro});
+  const MyApp({super.key, required this.showIntro, required this.user});
 
   @override
   Widget build(BuildContext context) {
     var themeProviderObject = Provider.of<AppThemeProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.loginRouteName,
-      // showIntro
-      //     ? AppRoutes.onBoardingScreen1RouteName
-      //     : AppRoutes.homeRouteName,
+      initialRoute: showIntro
+          ? AppRoutes.onBoardingScreen1RouteName
+          : user == null
+          ? AppRoutes.loginRouteName
+          : AppRoutes.homeRouteName,
       routes: {
         AppRoutes.homeRouteName: (context) => HomeScreen(),
         AppRoutes.onBoardingScreen1RouteName: (context) => OnBoardingScreen1(),

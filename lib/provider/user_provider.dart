@@ -2,10 +2,18 @@ import 'package:evently/model/my_user.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {
-  MyUser? currentUser;
+  MyUser? _currentUser;
+
+  MyUser? get currentUser => _currentUser;
+
+  // UserProvider({required this.currentUser});
 
   void changeUser(MyUser? newUser) {
-    currentUser = newUser;
+    _currentUser = newUser;
     notifyListeners();
+  }
+
+  void initUser(MyUser? newUser) {
+    _currentUser = newUser;
   }
 }

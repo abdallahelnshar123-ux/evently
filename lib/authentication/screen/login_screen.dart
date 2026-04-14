@@ -32,6 +32,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool obscurePassword = true;
   late UserProvider userProvider;
+  late EventsProvider eventsProvider;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
@@ -48,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     userProvider = Provider.of<UserProvider>(context, listen: false);
+    eventsProvider = Provider.of<EventsProvider>(context, listen: false);
     super.initState();
   }
 
@@ -214,10 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           credential.user?.uid ?? '',
                         );
                         if (!context.mounted) return;
-                        var eventsProvider = Provider.of<EventsProvider>(
-                          context,
-                          listen: false,
-                        );
+
                         eventsProvider.setIndex(0);
                         if (user == null) return;
 
@@ -391,7 +390,7 @@ class _LoginScreenState extends State<LoginScreen> {
           email: firebaseUser.email ?? '',
           name: firebaseUser.displayName ?? '',
         );
-        userProvider.currentUser = user;
+        userProvider.changeUser(user);
         LocalStorage localStorage = LocalStorage();
         localStorage.saveToken(
           userCredential.credential?.token.toString() ?? '',
@@ -400,6 +399,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (firestoreUserData == null) {
           await FirebaseUtils.addUserToFirestore(user);
         }
+        eventsProvider.setIndex(0);
         DialogUtils.hideLoading(context: context);
 
         DialogUtils.showMessage(

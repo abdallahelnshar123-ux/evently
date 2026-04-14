@@ -25,9 +25,6 @@ class SharedPrefsUtils {
     }
   }
 
-  // static Object? getData({required String key}) {
-  //   return sharedPreferences.get(key);
-  // }
   static T? getData<T>({required String key}) {
     final value = sharedPreferences.get(key);
 

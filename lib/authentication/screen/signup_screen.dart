@@ -12,10 +12,13 @@ import 'package:evently/utils/screen_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/events_provider.dart';
 import '../../utils/app_styles.dart';
 import '../../utils/dialog_utils.dart';
+import '../../utils/local_storage.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -37,10 +40,20 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController rePasswordController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late UserProvider userProvider;
+
+  late EventsProvider eventsProvider;
+
+  @override
+  void initState() {
+    eventsProvider = Provider.of<EventsProvider>(context, listen: false);
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -366,7 +379,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 /// login with google button ======================================
                 CustomElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    registerWithGoogle();
+                  },
                   borderColor: context.isLight
                       ? AppColors.strokeColor
                       : AppColors.strokeDarkColor,
@@ -391,5 +406,84 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> registerWithGoogle() async {
+    try {
+      DialogUtils.showLoading(context: context);
+      final GoogleSignIn signIn = GoogleSignIn.instance;
+      await signIn.initialize(
+        clientId:
+            '952355362314-f27f5ubpkl9a3f08mkdp14bqmcuugtnn.apps.googleusercontent.com',
+      );
+      final GoogleSignInAccount? googleAccount = await signIn.authenticate();
+
+      if (googleAccount != null) {
+        final GoogleSignInAuthentication authenticationToken =
+            googleAccount.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          idToken: authenticationToken.idToken,
+        );
+
+        final userCredential = await FirebaseAuth.instance.signInWithCredential(
+          credential,
+        );
+
+        final firebaseUser = userCredential.user;
+        if (firebaseUser == null) {
+          DialogUtils.hideLoading(context: context);
+
+          DialogUtils.showMessage(
+            context: context,
+            message: 'Something went wrong , please try again later',
+            title: 'Error',
+            posActionText: 'ok',
+          );
+          return;
+        }
+
+        final firestoreUserData = await FirebaseUtils.getUserFromFirestore(
+          firebaseUser.uid,
+        );
+        final user = MyUser(
+          id: firebaseUser.uid,
+          email: firebaseUser.email ?? '',
+          name: firebaseUser.displayName ?? '',
+        );
+        userProvider.changeUser(user);
+        LocalStorage localStorage = LocalStorage();
+        localStorage.saveToken(
+          userCredential.credential?.token.toString() ?? '',
+        );
+        localStorage.saveUser(user);
+        if (firestoreUserData == null) {
+          await FirebaseUtils.addUserToFirestore(user);
+        }
+        eventsProvider.setIndex(0);
+        DialogUtils.hideLoading(context: context);
+
+        DialogUtils.showMessage(
+          context: context,
+          message: 'registered_successfully',
+          title: 'success',
+        );
+        Future.delayed(Duration(seconds: 2), () {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.homeRouteName,
+            (route) => false,
+          );
+        });
+      }
+    } catch (e) {
+      DialogUtils.hideLoading(context: context);
+      DialogUtils.showMessage(
+        context: context,
+        message: 'Some Thing went wrong ',
+        title: 'error',
+        posActionText: 'ok',
+      );
+    }
   }
 }

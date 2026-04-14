@@ -13,6 +13,7 @@ import '../../../utils/screen_size.dart';
 
 class FavoriteTab extends StatefulWidget {
   const FavoriteTab({super.key});
+
   @override
   State<FavoriteTab> createState() => _FavoriteTabState();
 }
@@ -23,7 +24,6 @@ class _FavoriteTabState extends State<FavoriteTab> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -45,6 +45,7 @@ class _FavoriteTabState extends State<FavoriteTab> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CustomTextField(
+                onChanged: (text) => eventsProvider.searchFavoriteEvents(text),
                 dataStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,

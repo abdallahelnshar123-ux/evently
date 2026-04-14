@@ -6,16 +6,10 @@ import 'package:evently/utils/shared_prefs_keys.dart';
 import 'package:evently/utils/shared_prefs_utils.dart';
 
 class LocalStorage {
-  // SharedPreferences prefs = await SharedPreferences.getInstance() ;
-
-  // ---- FLAGS ----
-  // bool get onboardingDone => prefs.getBool('onboarding') ?? false;
   bool get onboarding =>
       SharedPrefsUtils.getData<bool>(key: SharedPrefsKeys.onBoardingKey) ??
       false;
 
-  // Future<void> setOnboardingDone() =>
-  //     prefs.setBool('onboarding', true);
   Future<void> setOnboardingDone() => SharedPrefsUtils.saveData(
     key: SharedPrefsKeys.onBoardingKey,
     value: true,
@@ -28,7 +22,6 @@ class LocalStorage {
   Future<void> setTheme(String value) =>
       SharedPrefsUtils.saveData(key: SharedPrefsKeys.appThemeKey, value: value);
 
-  // ---- TOKEN ----
   String? get token =>
       SharedPrefsUtils.getData<String>(key: SharedPrefsKeys.tokenKey);
 
@@ -38,7 +31,6 @@ class LocalStorage {
   Future<void> clearToken() =>
       SharedPrefsUtils.removeData(key: SharedPrefsKeys.tokenKey);
 
-  // ---- USER ----
   Future<void> saveUser(MyUser user) async {
     await SharedPrefsUtils.saveData(
       key: SharedPrefsKeys.userKey,

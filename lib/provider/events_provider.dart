@@ -12,10 +12,12 @@ class EventsProvider extends ChangeNotifier {
   List<Event> favoriteEventsList = [];
   int selectedIndex = 0;
   StreamSubscription<List<Event>>? _eventsSubscription;
+  Timer? _debounce;
   AppDataClass data = AppDataClass();
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _eventsSubscription?.cancel();
     super.dispose();
   }
@@ -23,17 +25,19 @@ class EventsProvider extends ChangeNotifier {
   void emptyLists() {
     filterEventList = [];
     favoriteEventsList = [];
+    _eventsSubscription?.pause();
     notifyListeners();
   }
 
   void eventsListener(String userId) {
     _eventsSubscription?.cancel();
 
-    _eventsSubscription =
-        FirebaseUtils.getEventsStream(userId).listen((events,) {
-          eventList = events;
-          filterEvents();
-        });
+    _eventsSubscription = FirebaseUtils.getEventsStream(userId).listen((
+      events,
+    ) {
+      eventList = events;
+      filterEvents();
+    });
   }
 
   void filterEvents() {
@@ -56,6 +60,29 @@ class EventsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void searchFavoriteEvents(String text) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      final baseList = eventList.where((event) => event.isFavorite).toList();
+
+      if (text.isEmpty) {
+        favoriteEventsList = baseList;
+      } else {
+        favoriteEventsList = baseList
+            .where(
+              (event) =>
+                  event.eventTitle.toLowerCase().contains(text.toLowerCase()),
+            )
+            .toList();
+      }
+
+      favoriteEventsList.sort((a, b) => a.eventDate.compareTo(b.eventDate));
+
+      notifyListeners();
+    });
+  }
+
   Future<void> updateIsFavorite(Event event, String uId) async {
     await FirebaseUtils.getEventsCollection(
       uId,
@@ -75,8 +102,10 @@ class EventsProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> deleteEvent(
-      {required Event event, required String userId}) async {
+  Future<void> deleteEvent({
+    required Event event,
+    required String userId,
+  }) async {
     await FirebaseUtils.deleteEvent(event, userId);
   }
 
