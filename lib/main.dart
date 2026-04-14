@@ -10,11 +10,11 @@ import 'package:evently/provider/events_provider.dart';
 import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_theme.dart';
-import 'package:evently/utils/shared_prefs.dart';
+import 'package:evently/utils/local_storage.dart';
+import 'package:evently/utils/shared_prefs_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'authentication/screen/login_screen.dart';
 import 'authentication/screen/signup_screen.dart';
@@ -25,20 +25,20 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // await FirebaseFirestore.instance.disableNetwork();
-
-  final sharedPreferences = await SharedPreferences.getInstance();
-  final int appTheme =
-      sharedPreferences.getInt(SharedPrefsKeys.appThemeKey) ?? 1;
-  final bool showIntro =
-      sharedPreferences.getBool(SharedPrefsKeys.onBoardingKey) ?? true;
+  await SharedPrefsUtils.init();
+  // final sharedPreferences = await SharedPreferences.getInstance();
+  final LocalStorage localStorage = LocalStorage();
+  final String appTheme = localStorage.appTheme;
+  final bool showIntro = localStorage.onboarding;
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => AppThemeProvider(
-            appTheme: appTheme == 1 ? ThemeMode.dark : ThemeMode.light,
+            appTheme: appTheme == AppThemeProvider.darkThemeKey
+                ? ThemeMode.dark
+                : ThemeMode.light,
           ),
         ),
         ChangeNotifierProvider(create: (context) => EventsProvider()),
@@ -66,7 +66,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.loginRouteName,
-
       // showIntro
       //     ? AppRoutes.onBoardingScreen1RouteName
       //     : AppRoutes.homeRouteName,

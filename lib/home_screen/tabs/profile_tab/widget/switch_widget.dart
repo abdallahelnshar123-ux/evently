@@ -1,6 +1,6 @@
 import 'package:evently/provider/app_theme_provider.dart';
 import 'package:evently/utils/app_colors.dart';
-import 'package:evently/utils/shared_prefs.dart';
+import 'package:evently/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,12 +23,14 @@ class SwitchWidget extends StatelessWidget {
         trackOutlineColor: WidgetStatePropertyAll(AppColors.transparentColor),
         value: !context.isLight,
         onChanged: (newValue) {
+
           themeProviderObject.changeAppTheme(
             newValue ? ThemeMode.dark : ThemeMode.light,
           );
-          saveAppTheme(newValue ? 1 : 2);
-
-          /// dark = 1    , light = 2
+          // saveAppTheme(newValue ? 1 : 2);
+          LocalStorage().setTheme(
+              newValue ? AppThemeProvider.darkThemeKey : AppThemeProvider
+                  .lightThemeKey);
         },
       ),
     );

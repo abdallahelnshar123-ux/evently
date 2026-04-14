@@ -5,6 +5,7 @@ import 'package:evently/model/event.dart';
 import 'package:evently/model/my_user.dart';
 
 class FirebaseUtils {
+  /// events ==============================================================
   static CollectionReference<Event> getEventsCollection(String uId) {
     return getUSersCollection()
         .doc(uId)
@@ -17,33 +18,11 @@ class FirebaseUtils {
   }
 
   static Stream<List<Event>> getEventsStream(String userId) {
-    return getEventsCollection(userId)
-        .orderBy('event_date')
-        .snapshots()
-        .map((snapshot) {
+    return getEventsCollection(userId).orderBy('event_date').snapshots().map((
+      snapshot,
+    ) {
       return snapshot.docs.map((doc) => doc.data()).toList();
     });
-  }
-
-
-
-  static CollectionReference<MyUser> getUSersCollection() {
-    return FirebaseFirestore.instance
-        .collection(MyUser.usersCollectionName)
-        .withConverter<MyUser>(
-          fromFirestore: (snapshot, options) =>
-              MyUser.fromFirestore(snapshot.data()!),
-          toFirestore: (user, options) => user.toFirestore(),
-        );
-  }
-
-  static Future<void> addUserToFirestore(MyUser user) {
-    return getUSersCollection().doc(user.id).set(user);
-  }
-
-  static Future<MyUser?> getUserFromFirestore(String userId) async {
-    var querySnapshot = await getUSersCollection().doc(userId).get();
-    return querySnapshot.data();
   }
 
   static Future<void> addEventsToFirestore(Event event, String userId) {
@@ -65,5 +44,23 @@ class FirebaseUtils {
     return document.delete();
   }
 
+  /// user =============================================================
+  static CollectionReference<MyUser> getUSersCollection() {
+    return FirebaseFirestore.instance
+        .collection(MyUser.usersCollectionName)
+        .withConverter<MyUser>(
+          fromFirestore: (snapshot, options) =>
+              MyUser.fromFirestore(snapshot.data()!),
+          toFirestore: (user, options) => user.toFirestore(),
+        );
+  }
 
+  static Future<void> addUserToFirestore(MyUser user) {
+    return getUSersCollection().doc(user.id).set(user);
+  }
+
+  static Future<MyUser?> getUserFromFirestore(String userId) async {
+    var querySnapshot = await getUSersCollection().doc(userId).get();
+    return querySnapshot.data();
+  }
 }

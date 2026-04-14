@@ -6,12 +6,12 @@ import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/screen_size.dart';
-import 'package:evently/utils/shared_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/app_styles.dart';
+import '../../utils/local_storage.dart';
 
 class OnBoardingScreen1 extends StatefulWidget {
   OnBoardingScreen1({super.key});
@@ -24,6 +24,7 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
   @override
   Widget build(BuildContext context) {
     var themeProviderObject = Provider.of<AppThemeProvider>(context);
+    LocalStorage localStorage = LocalStorage();
 
     return Scaffold(
       appBar: AppBar(
@@ -129,10 +130,8 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                             return;
                           }
                           themeProviderObject.changeAppTheme(ThemeMode.light);
-                          saveAppTheme(2);
-
-                          /// light = 2
-                          setState(() {});
+                          localStorage.setTheme(AppThemeProvider.lightThemeKey);
+                          // setState(() {});
                         },
                         selected: context.isLight,
                         child: builtIconWidget(
@@ -148,10 +147,9 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                             return;
                           }
                           themeProviderObject.changeAppTheme(ThemeMode.dark);
-                          saveAppTheme(1);
+                          localStorage.setTheme(AppThemeProvider.darkThemeKey);
 
-                          /// dark = 1
-                          setState(() {});
+                          // setState(() {});
                         },
                         selected: !context.isLight,
                         child: builtIconWidget(
@@ -181,7 +179,7 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                   context,
                   AppRoutes.onBoardingScreen2RouteName,
                 );
-                setState(() {});
+                // setState(() {});
               },
             ),
           ],

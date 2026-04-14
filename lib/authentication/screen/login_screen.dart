@@ -12,6 +12,7 @@ import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/dialog_utils.dart';
+import 'package:evently/utils/local_storage.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -223,6 +224,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         // todo : add user to provider
 
                         userProvider.changeUser(user);
+                        LocalStorage localStorage = LocalStorage();
+                        localStorage.saveToken(
+                          credential.credential?.token.toString() ?? '',
+                        );
+                        localStorage.saveUser(user);
 
                         DialogUtils.hideLoading(context: context);
 
@@ -386,6 +392,11 @@ class _LoginScreenState extends State<LoginScreen> {
           name: firebaseUser.displayName ?? '',
         );
         userProvider.currentUser = user;
+        LocalStorage localStorage = LocalStorage();
+        localStorage.saveToken(
+          userCredential.credential?.token.toString() ?? '',
+        );
+        localStorage.saveUser(user);
         if (firestoreUserData == null) {
           await FirebaseUtils.addUserToFirestore(user);
         }

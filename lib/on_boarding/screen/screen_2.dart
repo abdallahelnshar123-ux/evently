@@ -13,7 +13,7 @@ import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_styles.dart';
 import '../../utils/screen_size.dart';
-import '../../utils/shared_prefs.dart';
+import '../../utils/shared_prefs_keys.dart';
 
 class OnBoardingScreen2 extends StatefulWidget {
   OnBoardingScreen2({super.key});
