@@ -288,27 +288,36 @@ class _EditEventScreenState extends State<EditEventScreen> {
       );
       return;
     }
-    if (formKey.currentState!.validate()) {
-      Event newEvent = Event(
-        id: event.id,
-        eventName: selectedEventName,
-        eventDescription: eventDescription,
-        eventTitle: eventTitle,
-        eventImage: selectedImage,
-        eventDate: selectedDate!,
-        eventTime: selectedTime!,
-        isFavorite: event.isFavorite,
-      );
-      await FirebaseUtils.updateEvents(
-        newEvent,
-        userProvider.currentUser!.id,
-      ).then((value) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.tr('event_was_updated_successfully'))),
+    try {
+      if (formKey.currentState!.validate()) {
+        Event newEvent = Event(
+          id: event.id,
+          eventName: selectedEventName,
+          eventDescription: eventDescription,
+          eventTitle: eventTitle,
+          eventImage: selectedImage,
+          eventDate: selectedDate!,
+          eventTime: selectedTime!,
+          isFavorite: event.isFavorite,
         );
-        Navigator.pop(context);
-      });
+        await FirebaseUtils.updateEvents(
+          newEvent,
+          userProvider.currentUser!.id,
+        ).then((value) {
+          if (!mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(context.tr('event_was_updated_successfully')),
+            ),
+          );
+          Navigator.pop(context);
+        });
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
 }

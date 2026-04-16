@@ -86,10 +86,7 @@ class EventsProvider extends ChangeNotifier {
   Future<void> updateIsFavorite(Event event, String uId) async {
     await FirebaseUtils.getEventsCollection(
       uId,
-    ).doc(event.id).update({'is_favorite': !event.isFavorite}).then((value) {
-      // eventsListener(uId);
-      // getFavoriteEvents(uId);
-    });
+    ).doc(event.id).update({'is_favorite': !event.isFavorite});
   }
 
   Future<void> deleteEvent({

@@ -13,18 +13,12 @@ import 'package:provider/provider.dart';
 import '../../utils/app_styles.dart';
 import '../../utils/local_storage.dart';
 
-class OnBoardingScreen1 extends StatefulWidget {
-  OnBoardingScreen1({super.key});
+class OnBoardingScreen1 extends StatelessWidget {
+  const OnBoardingScreen1({super.key});
 
-  @override
-  State<OnBoardingScreen1> createState() => _OnBoardingScreen1State();
-}
-
-class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
   @override
   Widget build(BuildContext context) {
     var themeProviderObject = Provider.of<AppThemeProvider>(context);
-    LocalStorage localStorage = LocalStorage();
 
     return Scaffold(
       appBar: AppBar(
@@ -84,25 +78,24 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                         onTap: () {
                           if (context.locale == Locale('en')) return;
                           context.setLocale(Locale('en'));
-                          setState(() {});
                         },
                         selected: context.locale == Locale('en'),
                         child: builtTextWidget(
                           'english',
                           context.locale == Locale('en'),
+                          context,
                         ),
                       ),
                       SwitchButton(
                         onTap: () {
                           if (context.locale == Locale('ar')) return;
                           context.setLocale(Locale('ar'));
-
-                          setState(() {});
                         },
                         selected: context.locale == Locale('ar'),
                         child: builtTextWidget(
                           'arabic',
                           context.locale == Locale('ar'),
+                          context,
                         ),
                       ),
                     ],
@@ -130,8 +123,9 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                             return;
                           }
                           themeProviderObject.changeAppTheme(ThemeMode.light);
-                          localStorage.setTheme(AppThemeProvider.lightThemeKey);
-                          // setState(() {});
+                          LocalStorage.instance.setTheme(
+                            AppThemeProvider.lightThemeKey,
+                          );
                         },
                         selected: context.isLight,
                         child: builtIconWidget(
@@ -139,6 +133,7 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                           context.isLight
                               ? AppAssets.sunSelectedIcon
                               : AppAssets.sunUnselectedIcon,
+                          context,
                         ),
                       ),
                       SwitchButton(
@@ -147,9 +142,9 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                             return;
                           }
                           themeProviderObject.changeAppTheme(ThemeMode.dark);
-                          localStorage.setTheme(AppThemeProvider.darkThemeKey);
-
-                          // setState(() {});
+                          LocalStorage.instance.setTheme(
+                            AppThemeProvider.darkThemeKey,
+                          );
                         },
                         selected: !context.isLight,
                         child: builtIconWidget(
@@ -157,6 +152,7 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                           context.isLight
                               ? AppAssets.moonUnselectedIcon
                               : AppAssets.moonSelectedIcon,
+                          context,
                         ),
                       ),
                     ],
@@ -179,7 +175,6 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
                   context,
                   AppRoutes.onBoardingScreen2RouteName,
                 );
-                // setState(() {});
               },
             ),
           ],
@@ -188,7 +183,7 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
     );
   }
 
-  Widget builtTextWidget(String text, bool selected) {
+  Widget builtTextWidget(String text, bool selected, BuildContext context) {
     return Text(
       context.tr(text),
       style: context.isLight
@@ -203,7 +198,7 @@ class _OnBoardingScreen1State extends State<OnBoardingScreen1> {
     );
   }
 
-  Widget builtIconWidget(bool selected, String icon) {
+  Widget builtIconWidget(bool selected, String icon, BuildContext context) {
     return SvgPicture.asset(
       icon,
       colorFilter: ColorFilter.mode(

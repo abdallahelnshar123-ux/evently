@@ -18,11 +18,8 @@ class LanguageWidget extends StatelessWidget {
       iconSize: 28,
       padding: EdgeInsets.zero,
       icon: Icon(
-        IconData(
-          Icons.arrow_forward_ios.codePoint,
-          matchTextDirection: true,
-          fontFamily: Icons.arrow_forward_ios.fontFamily,
-        ),
+        Icons.arrow_forward_ios,
+        size: 24,
         color: context.isLight
             ? AppColors.mainDarkModeColor
             : AppColors.whiteColor,

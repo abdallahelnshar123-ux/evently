@@ -18,7 +18,8 @@ class AppAssets {
       'assets/images/onboarding_image3_dark.png';
   static const String onBoarding4Dark =
       'assets/images/onboarding_image4_dark.png';
-  static const String profileImage = 'assets/images/profile_image.png';
+  static const String fallbackUserImage =
+      'assets/images/fallback_user_image.png';
   static const String forgetPasswordDarkImage =
       'assets/images/forget_password_image_dark.png';
   static const String forgetPasswordLightImage =

@@ -259,13 +259,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       try {
                         FocusManager.instance.primaryFocus?.unfocus();
 
-                        //todo: add user to firebase auth
                         final credential = await FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                               email: emailController.text,
                               password: passwordController.text,
                             );
-                        // todo: add user to firestore
                         MyUser myUser = MyUser(
                           id: credential.user?.uid ?? '',
                           email: emailController.text,
@@ -273,9 +271,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         );
                         await FirebaseUtils.addUserToFirestore(myUser);
 
-                        // todo: add user to provider
-
                         userProvider.changeUser(myUser);
+                        if (!context.mounted) return;
 
                         DialogUtils.hideLoading(context: context);
                         DialogUtils.showMessage(
@@ -291,6 +288,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                         );
                       } on FirebaseAuthException catch (e) {
+                        if (!context.mounted) return;
                         if (e.code == 'weak_password') {
                           DialogUtils.hideLoading(context: context);
                           DialogUtils.showMessage(
@@ -309,6 +307,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           );
                         }
                       } catch (e) {
+                        if (!context.mounted) return;
                         DialogUtils.hideLoading(context: context);
                         DialogUtils.showMessage(
                           context: context,
@@ -432,6 +431,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
         final firebaseUser = userCredential.user;
         if (firebaseUser == null) {
+          if (!mounted) return;
           DialogUtils.hideLoading(context: context);
 
           DialogUtils.showMessage(
@@ -450,17 +450,19 @@ class _SignupScreenState extends State<SignupScreen> {
           id: firebaseUser.uid,
           email: firebaseUser.email ?? '',
           name: firebaseUser.displayName ?? '',
+          image: firestoreUserData?.image ?? '',
         );
         userProvider.changeUser(user);
-        LocalStorage localStorage = LocalStorage();
-        localStorage.saveToken(
+
+        LocalStorage.instance.saveToken(
           userCredential.credential?.token.toString() ?? '',
         );
-        localStorage.saveUser(user);
+        LocalStorage.instance.saveUser(user);
         if (firestoreUserData == null) {
           await FirebaseUtils.addUserToFirestore(user);
         }
         eventsProvider.setIndex(0);
+        if (!mounted) return;
         DialogUtils.hideLoading(context: context);
 
         DialogUtils.showMessage(
@@ -469,6 +471,7 @@ class _SignupScreenState extends State<SignupScreen> {
           title: 'success',
         );
         Future.delayed(Duration(seconds: 2), () {
+          if (!mounted) return;
           Navigator.pushNamedAndRemoveUntil(
             context,
             AppRoutes.homeRouteName,
@@ -477,6 +480,7 @@ class _SignupScreenState extends State<SignupScreen> {
         });
       }
     } catch (e) {
+      if (!mounted) return;
       DialogUtils.hideLoading(context: context);
       DialogUtils.showMessage(
         context: context,

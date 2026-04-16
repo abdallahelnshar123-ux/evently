@@ -1,19 +1,12 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:evently/firebase_utils.dart';
 import 'package:evently/home_screen/tabs/profile_tab/widget/language_widget.dart';
 import 'package:evently/home_screen/tabs/profile_tab/widget/profile_item_widget.dart';
 import 'package:evently/home_screen/tabs/profile_tab/widget/switch_widget.dart';
-import 'package:evently/model/my_user.dart';
 import 'package:evently/provider/events_provider.dart';
 import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
-import 'package:evently/utils/cloudinary_service.dart';
-import 'package:evently/utils/image_service.dart';
-import 'package:evently/utils/local_storage.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +16,6 @@ import 'package:provider/provider.dart';
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
 
-  // String? userImageUrl;
   @override
   Widget build(BuildContext context) {
     var eventsProvider = Provider.of<EventsProvider>(context);
@@ -39,26 +31,13 @@ class ProfileTab extends StatelessWidget {
               SizedBox(height: context.height * 0.030),
 
               GestureDetector(
-                onTap: () async {
-                  File? image = await ImageService.pickImage();
-                  if (image != null) {
-                    String? imageUrl = await CloudinaryService.uploadImage(
-                      image,
-                    );
-                    if (imageUrl == null) return;
-                    await FirebaseUtils.updateUserImage(
-                      userId: userProvider.currentUser?.id ?? '',
-                      imageUrl: imageUrl,
-                    );
-                    LocalStorage localStorage = LocalStorage();
-                    MyUser user = MyUser(
-                      id: userProvider.currentUser?.id ?? "",
-                      email: userProvider.currentUser?.email ?? "",
-                      name: userProvider.currentUser?.name ?? "",
-                      image: imageUrl,
-                    );
-                    localStorage.saveUser(user);
-                    userProvider.changeUser(user);
+                onTap: () {
+                  try {
+                    userProvider.changeUserAvatar();
+                  } catch (e) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(e.toString())));
                   }
                 },
                 child: Center(
@@ -74,7 +53,7 @@ class ProfileTab extends StatelessWidget {
                       fit: BoxFit.cover,
                       imageUrl: userProvider.currentUser?.image ?? '',
                       errorWidget: (context, url, error) =>
-                          Image.asset(AppAssets.profileImage),
+                          Image.asset(AppAssets.fallbackUserImage),
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) => Center(
                             child: CircularProgressIndicator(

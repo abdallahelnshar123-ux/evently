@@ -7,9 +7,9 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
-        android:label="evently"
+        android:icon="@mipmap/launcher_icon"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Evently">
         <activity
             android:name=".MainActivity"
             android:exported="true"

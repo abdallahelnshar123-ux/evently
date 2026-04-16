@@ -28,10 +28,9 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SharedPrefsUtils.init();
 
-  final LocalStorage localStorage = LocalStorage();
-  final String appTheme = localStorage.appTheme;
-  final bool showIntro = localStorage.onboarding;
-  final MyUser? user = localStorage.getUser();
+  final String appTheme = LocalStorage.instance.appTheme;
+  final bool showIntro = LocalStorage.instance.onboarding;
+  final MyUser? user = LocalStorage.instance.getUser();
 
   runApp(
     MultiProvider(

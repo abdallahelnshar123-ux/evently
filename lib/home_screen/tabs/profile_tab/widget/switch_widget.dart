@@ -26,7 +26,7 @@ class SwitchWidget extends StatelessWidget {
           themeProviderObject.changeAppTheme(
             newValue ? ThemeMode.dark : ThemeMode.light,
           );
-          LocalStorage().setTheme(
+          LocalStorage.instance.setTheme(
             newValue
                 ? AppThemeProvider.darkThemeKey
                 : AppThemeProvider.lightThemeKey,

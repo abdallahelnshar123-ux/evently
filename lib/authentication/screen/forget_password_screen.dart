@@ -122,7 +122,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     email: emailController.text.trim(),
                   );
 
-                  if (!mounted) return;
+                  if (!context.mounted) return;
                   DialogUtils.hideLoading(context: context);
 
                   DialogUtils.showMessage(

@@ -6,13 +6,19 @@ import 'package:evently/utils/shared_prefs_keys.dart';
 import 'package:evently/utils/shared_prefs_utils.dart';
 
 class LocalStorage {
+  LocalStorage._();
+
+  static final LocalStorage _instance = LocalStorage._();
+
+  static LocalStorage get instance => _instance;
+
   bool get onboarding =>
       SharedPrefsUtils.getData<bool>(key: SharedPrefsKeys.onBoardingKey) ??
-      false;
+      true;
 
   Future<void> setOnboardingDone() => SharedPrefsUtils.saveData(
     key: SharedPrefsKeys.onBoardingKey,
-    value: true,
+    value: false,
   );
 
   String get appTheme =>
