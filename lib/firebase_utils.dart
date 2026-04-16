@@ -63,4 +63,26 @@ class FirebaseUtils {
     var querySnapshot = await getUSersCollection().doc(userId).get();
     return querySnapshot.data();
   }
+
+  // static Future<String> uploadImage({
+  //   required File file,
+  //   required String userId,
+  // }) async {
+  //   final storageRef = FirebaseStorage.instance.ref().child(
+  //     'users/$userId/avatar.jpg',
+  //   );
+  //
+  //   await storageRef.putFile(file);
+  //
+  //   String downloadUrl = await storageRef.getDownloadURL();
+  //
+  //   return downloadUrl;
+  // }
+
+  static Future<void> updateUserImage({
+    required String userId,
+    required String imageUrl,
+  }) async {
+    await getUSersCollection().doc(userId).update({'image': imageUrl});
+  }
 }
