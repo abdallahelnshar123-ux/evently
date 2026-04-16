@@ -61,81 +61,30 @@ class ProfileTab extends StatelessWidget {
                     userProvider.changeUser(user);
                   }
                 },
-                child:
-                    // ClipRRect(
-                    //   borderRadius: BorderRadius.circular(100),
-                    //   clipBehavior: Clip.antiAlias,
-                    //   child: CachedNetworkImage(
-                    //     fit: BoxFit.cover,
-                    //     width: 100,
-                    //     height:100 ,
-                    //     imageUrl: userProvider.currentUser?.image ?? '',
-                    //     errorWidget: (context, url, error) =>
-                    //         Image.asset(AppAssets.profileImage),
-                    //     progressIndicatorBuilder:
-                    //         (context, url, downloadProgress) =>
-                    //         CircularProgressIndicator(
-                    //           value: downloadProgress.progress,
-                    //           color: AppColors.mainColor,
-                    //         ),
-                    //   ),
-                    // ),
-                    Container(
-                      width: 100,
-                      height: 100,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(300),
-                      ),
+                child: Center(
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(200),
+                    ),
+                    width: context.width / 3,
+                    height: context.width / 3,
 
-                      child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: userProvider.currentUser?.image ?? '',
-                    errorWidget: (context, url, error) =>
-                        Image.asset(AppAssets.profileImage),
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) =>
-                        CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                          color: AppColors.mainColor,
-                        ),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: userProvider.currentUser?.image ?? '',
+                      errorWidget: (context, url, error) =>
+                          Image.asset(AppAssets.profileImage),
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                            child: CircularProgressIndicator(
+                              value: downloadProgress.progress,
+                              color: AppColors.mainColor,
+                            ),
+                          ),
+                    ),
                   ),
                 ),
-                // CircleAvatar(
-                //
-                //   radius: context.width / 6,
-                //   child:
-                //
-                //   // backgroundImage:
-                //   //     (userProvider.currentUser?.image != null &&
-                //   //         userProvider.currentUser!.image!.isNotEmpty)
-                //   //     ? CachedNetworkImageProvider(
-                //   //         userProvider.currentUser!.image!,
-                //   //
-                //   //       )
-                //   //     : const AssetImage(AppAssets.profileImage)
-                //   //           as ImageProvider,
-                //
-                //   CachedNetworkImage(
-                //
-                //     imageUrl: userProvider.currentUser?.image ?? '',
-                //     errorWidget: (context, url, error) =>
-                //         Image.asset(AppAssets.profileImage),
-                //     progressIndicatorBuilder:
-                //         (context, url, downloadProgress) =>
-                //             CircularProgressIndicator(
-                //               value: downloadProgress.progress,
-                //               color: AppColors.mainColor,
-                //             ),
-                //   ),
-                //   // foregroundImage: userImageUrl != null
-                //   //     // ? FileImage(userImage!)
-                //   //     ? CachedNetworkImageProvider(
-                //   //         userProvider.currentUser?.image ?? '',
-                //   //       )
-                //   //     : AssetImage(AppAssets.profileImage) as ImageProvider,
-                // ),
               ),
               Text(
                 userProvider.currentUser!.name,
