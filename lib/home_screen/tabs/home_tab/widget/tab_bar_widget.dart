@@ -6,11 +6,11 @@ import 'package:evently/utils/screen_size.dart';
 import 'package:flutter/material.dart';
 
 class TabBarWidget extends StatelessWidget {
-  bool isSelected;
-  String eventName;
-  IconData icon;
+  final bool isSelected;
+  final String eventName;
+  final IconData icon;
 
-  TabBarWidget({
+  const TabBarWidget({
     super.key,
     required this.isSelected,
     required this.eventName,

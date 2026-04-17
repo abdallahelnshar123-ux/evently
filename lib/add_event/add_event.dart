@@ -307,7 +307,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         userProvider.currentUser!.id,
       ).then((value) {
         if (!mounted) return;
-        eventsProvider.getEvents(userProvider.currentUser!.id);
+        // eventsProvider.eventsListener(userProvider.currentUser!.id);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(context.tr('event_was_added_successfully'))),
         );

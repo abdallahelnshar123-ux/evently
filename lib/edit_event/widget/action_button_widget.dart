@@ -58,31 +58,5 @@ class ActionButtonWidget extends StatelessWidget {
         ),
       ),
     );
-
-    ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-
-        padding: EdgeInsetsDirectional.zero,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: context.isLight
-                ? AppColors.strokeColor
-                : AppColors.strokeDarkColor,
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        backgroundColor: context.isLight
-            ? AppColors.whiteColor
-            : AppColors.inputsColor,
-      ),
-      child: Icon(
-        size: 24,
-        icon,
-        color: context.isLight ? lightIconColor : darkIconColor,
-      ),
-    );
   }
 }

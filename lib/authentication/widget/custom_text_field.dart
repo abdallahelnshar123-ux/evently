@@ -6,26 +6,26 @@ typedef OnChanged = void Function(String)?;
 typedef ValidatorFunction = String? Function(String?)?;
 
 class CustomTextField extends StatelessWidget {
-  bool? filled;
-  Color? fillColor;
-  Color generalBorderColor;
-  Color errorBorderColor;
-  Widget? prefixIcon;
-  Widget? suffixIcon;
-  String? hintText;
-  String? labelText;
-  TextStyle? hintStyle;
-  TextStyle? labelStyle;
-  TextStyle? dataStyle;
-  bool obscureText;
-  int? maxLines;
-  OnChanged? onChanged;
-  TextEditingController? controller;
-  TextInputType? keyBoardType;
-  String? initialValue;
-  ValidatorFunction? validator;
+  final bool? filled;
+  final Color? fillColor;
+  final Color generalBorderColor;
+  final Color errorBorderColor;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final String? hintText;
+  final String? labelText;
+  final TextStyle? hintStyle;
+  final TextStyle? labelStyle;
+  final TextStyle? dataStyle;
+  final bool obscureText;
+  final int? maxLines;
+  final OnChanged? onChanged;
+  final TextEditingController? controller;
+  final TextInputType? keyBoardType;
+  final String? initialValue;
+  final ValidatorFunction? validator;
 
-  CustomTextField({
+  const CustomTextField({
     super.key,
     this.filled,
     this.fillColor,
@@ -50,6 +50,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enableInteractiveSelection: true,
       initialValue: initialValue,
       keyboardType: keyBoardType,
       controller: controller,
@@ -59,7 +60,9 @@ class CustomTextField extends StatelessWidget {
       style: dataStyle,
       obscuringCharacter: '*',
       obscureText: obscureText,
-      cursorColor: context.isLight ? AppColors.whiteColor : AppColors.mainColor,
+      cursorColor: context.isLight
+          ? AppColors.mainColor
+          : AppColors.mainDarkModeColor,
       decoration: InputDecoration(
         enabledBorder: builtDecorationBorder(generalBorderColor),
         focusedBorder: builtDecorationBorder(generalBorderColor),

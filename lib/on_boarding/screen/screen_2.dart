@@ -4,19 +4,20 @@ import 'package:evently/on_boarding/widget/back_button_widget.dart';
 import 'package:evently/on_boarding/widget/custom_elevated_button.dart';
 import 'package:evently/on_boarding/widget/dot_indicator.dart';
 import 'package:evently/on_boarding/widget/skip_button_widget.dart';
+import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_routes.dart';
+import 'package:evently/utils/local_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import '../../provider/app_theme_provider.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_styles.dart';
 import '../../utils/screen_size.dart';
-import '../../utils/shared_prefs.dart';
 
 class OnBoardingScreen2 extends StatefulWidget {
-  OnBoardingScreen2({super.key});
+  const OnBoardingScreen2({super.key});
 
   @override
   State<OnBoardingScreen2> createState() => _OnBoardingScreen2State();
@@ -27,6 +28,8 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
   List<OnBoardingModel> onBoardingList = [];
 
   int currentIndex = 0;
+
+  late var userProvider = Provider.of<UserProvider>(context, listen: false);
 
   @override
   void dispose() {
@@ -89,14 +92,14 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
             visible: currentIndex != 2,
             child: SkipButtonWidget(
               onPressed: () async {
+                await LocalStorage.instance.setOnboardingDone();
+                if (!context.mounted) return;
                 Navigator.pushReplacementNamed(
                   context,
-                  AppRoutes.homeRouteName,
+                  userProvider.currentUser == null
+                      ? AppRoutes.loginRouteName
+                      : AppRoutes.homeRouteName,
                 );
-                SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
-                sharedPreferences.setBool(SharedPrefsKeys.onBoardingKey, false);
-                setState(() {});
               },
             ),
           ),
@@ -183,15 +186,13 @@ class _OnBoardingScreen2State extends State<OnBoardingScreen2> {
                     );
                     break;
                   case 2:
+                    await LocalStorage.instance.setOnboardingDone();
+                    if (!context.mounted) return;
                     Navigator.pushReplacementNamed(
                       context,
-                      AppRoutes.homeRouteName,
-                    );
-                    SharedPreferences sharedPreferences =
-                        await SharedPreferences.getInstance();
-                    sharedPreferences.setBool(
-                      SharedPrefsKeys.onBoardingKey,
-                      false,
+                      userProvider.currentUser == null
+                          ? AppRoutes.loginRouteName
+                          : AppRoutes.homeRouteName,
                     );
                   default:
                     break;

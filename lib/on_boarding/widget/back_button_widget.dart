@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../../provider/app_theme_provider.dart';
 
 class BackButtonWidget extends StatelessWidget {
-  VoidCallback onPressed;
+  final VoidCallback onPressed;
 
-  BackButtonWidget({super.key, required this.onPressed});
+  const BackButtonWidget({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +34,8 @@ class BackButtonWidget extends StatelessWidget {
                   : AppColors.inputsColor,
             ),
             child: Icon(
+              Icons.arrow_back_ios,
               size: 24,
-              IconData(
-                Icons.arrow_back_ios.codePoint,
-                matchTextDirection: true,
-                fontFamily: Icons.arrow_forward_ios.fontFamily,
-              ),
               color: context.isLight
                   ? AppColors.mainDarkModeColor
                   : AppColors.whiteColor,

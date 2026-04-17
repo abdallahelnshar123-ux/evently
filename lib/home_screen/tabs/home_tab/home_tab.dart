@@ -28,7 +28,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      eventsProvider.getEvents(userProvider.currentUser!.id);
+      eventsProvider.eventsListener(userProvider.currentUser!.id);
     });
   }
 
@@ -37,7 +37,6 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     userProvider = Provider.of<UserProvider>(context);
-
     eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(
       child: Scaffold(

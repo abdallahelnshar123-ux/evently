@@ -3,8 +3,11 @@ import 'package:provider/provider.dart';
 
 class AppThemeProvider extends ChangeNotifier {
   ThemeMode appTheme;
+  static String lightThemeKey = 'light_theme';
+  static String darkThemeKey = 'dark_theme';
 
   AppThemeProvider({required this.appTheme});
+
   void changeAppTheme(ThemeMode newTheme) {
     if (appTheme == newTheme) return;
 

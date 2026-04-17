@@ -12,6 +12,7 @@ import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/dialog_utils.dart';
+import 'package:evently/utils/local_storage.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool obscurePassword = true;
   late UserProvider userProvider;
+  late EventsProvider eventsProvider;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
@@ -47,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     userProvider = Provider.of<UserProvider>(context, listen: false);
+    eventsProvider = Provider.of<EventsProvider>(context, listen: false);
     super.initState();
   }
 
@@ -213,16 +216,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           credential.user?.uid ?? '',
                         );
                         if (!context.mounted) return;
-                        var eventsProvider = Provider.of<EventsProvider>(
-                          context,
-                          listen: false,
-                        );
+
                         eventsProvider.setIndex(0);
                         if (user == null) return;
 
                         // todo : add user to provider
 
                         userProvider.changeUser(user);
+
+                        LocalStorage.instance.saveToken(
+                          credential.credential?.token.toString() ?? '',
+                        );
+                        LocalStorage.instance.saveUser(user);
 
                         DialogUtils.hideLoading(context: context);
 
@@ -366,6 +371,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         final firebaseUser = userCredential.user;
         if (firebaseUser == null) {
+          if (!mounted) return;
           DialogUtils.hideLoading(context: context);
 
           DialogUtils.showMessage(
@@ -384,19 +390,28 @@ class _LoginScreenState extends State<LoginScreen> {
           id: firebaseUser.uid,
           email: firebaseUser.email ?? '',
           name: firebaseUser.displayName ?? '',
+          image: firestoreUserData?.image ?? '',
         );
-        userProvider.currentUser = user;
         if (firestoreUserData == null) {
           await FirebaseUtils.addUserToFirestore(user);
         }
-        DialogUtils.hideLoading(context: context);
+        userProvider.changeUser(user);
 
+        LocalStorage.instance.saveToken(
+          userCredential.credential?.token.toString() ?? '',
+        );
+        LocalStorage.instance.saveUser(user);
+
+        eventsProvider.setIndex(0);
+        if (!mounted) return;
+        DialogUtils.hideLoading(context: context);
         DialogUtils.showMessage(
           context: context,
           message: 'login_successfully',
           title: 'success',
         );
         Future.delayed(Duration(seconds: 2), () {
+          if (!mounted) return;
           Navigator.pushNamedAndRemoveUntil(
             context,
             AppRoutes.homeRouteName,
@@ -405,6 +420,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
     } catch (e) {
+      if (!mounted) return;
       DialogUtils.hideLoading(context: context);
       DialogUtils.showMessage(
         context: context,

@@ -5,25 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class DateTimeWidget extends StatelessWidget {
-  IconData icon;
-  String labelText;
-  String hyperText;
-  VoidCallback onPressed;
+  final IconData icon;
+  final String labelText;
+  final String hyperText;
+  final VoidCallback onPressed;
 
-  DateTimeWidget.date({
+  const DateTimeWidget.date({
     super.key,
     this.icon = Iconsax.calendar_add_outline,
     this.labelText = 'event_date',
     required this.hyperText,
-    required this.onPressed
+    required this.onPressed,
   });
 
-  DateTimeWidget.time({
+  const DateTimeWidget.time({
     super.key,
     this.icon = Bootstrap.clock,
     this.labelText = 'event_time',
     required this.hyperText,
-    required this.onPressed
+    required this.onPressed,
   });
 
   @override
