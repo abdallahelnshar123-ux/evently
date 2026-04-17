@@ -39,7 +39,7 @@ The app includes authentication, profile customization, and full CRUD operations
   <li>
     <b>Edit & Delete Events</b>
     <ul>
-      <li>Edit event details بسهولة ✏️</li>
+      <li>Edit event details easily ✏️</li>
       <li>Delete events instantly 🗑️</li>
     </ul>
   </li>
@@ -60,14 +60,39 @@ The app includes authentication, profile customization, and full CRUD operations
 
 <table>
   <tr>
-    <td><img src="assets/screenshots/login.jpeg" width="200"/></td>
-    <td><img src="assets/screenshots/home.jpeg" width="200"/></td>
-    <td><img src="assets/screenshots/add_event.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/splash_screen.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/on_boarding_1.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/on_boarding_2.jpeg" width="200"/></td>
   </tr>
   <tr>
+    <td><img src="assets/screenshots/on_boarding_3.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/on_boarding_4.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/login.jpeg" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/register.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/home_tab_1.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/home_tab_2.jpeg" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/favorite_tab_1.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/favourite_tab_2.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/add_event_1.jpeg" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/add_event_2.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/add_event_3.jpeg" width="200"/></td>
     <td><img src="assets/screenshots/event_details.jpeg" width="200"/></td>
-    <td><img src="assets/screenshots/favorites.jpeg" width="200"/></td>
-    <td><img src="assets/screenshots/profile.jpeg" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/delete_event.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/event_details.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/profile_tab_1.jpeg" width="200"/></td>
+  </tr>
+    <tr>
+    <td><img src="assets/screenshots/profile_tab_2.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/profile_tab_3.jpeg" width="200"/></td>
+    <td><img src="assets/screenshots/profile_tab_4.jpeg" width="200"/></td>
   </tr>
 </table>
 
@@ -77,9 +102,7 @@ The app includes authentication, profile customization, and full CRUD operations
 
 <h3>🎨 UI & Design</h3>
 <ul>
-  <li><b>google_fonts</b> - Custom fonts for better UI appearance.</li>
   <li><b>flutter_svg</b> - Display SVG icons and assets.</li>
-  <li><b>icons_plus</b> - Extra icon collections.</li>
   <li><b>toggle_switch</b> - Used for theme & language switching.</li>
 </ul>
 
@@ -100,7 +123,6 @@ The app includes authentication, profile customization, and full CRUD operations
 
 <h3>🔥 Firebase & Authentication</h3>
 <ul>
-  <li><b>firebase_core</b> - Initialize Firebase.</li>
   <li><b>firebase_auth</b> - Email & Password authentication.</li>
   <li><b>google_sign_in</b> - Google login integration.</li>
   <li><b>cloud_firestore</b> - Store events data (CRUD).</li>
@@ -118,27 +140,9 @@ The app includes authentication, profile customization, and full CRUD operations
   <li><b>path</b> - Handle file paths.</li>
 </ul>
 
-<h3>🌐 Networking</h3>
-<ul>
-  <li><b>http</b> - Handle API requests.</li>
-</ul>
-
 <h3>🔐 Permissions</h3>
 <ul>
   <li><b>permission_handler</b> - Manage permissions (gallery, etc.).</li>
-</ul>
-
-<h3>🔤 Utilities</h3>
-<ul>
-  <li><b>characters</b> - Advanced text handling.</li>
-  <li><b>matcher</b> - Input validation.</li>
-</ul>
-
-<h3>⚙️ Tools</h3>
-<ul>
-  <li><b>flutter_native_splash</b> - Splash screen generation.</li>
-  <li><b>flutter_launcher_icons</b> - App icons generation.</li>
-  <li><b>rename</b> - Rename app بسهولة.</li>
 </ul>
 
 <hr/>
@@ -156,17 +160,9 @@ flutter run
 
 <h2>👨‍💻 Author & License</h2>
 
-<p>
-<b>Abdallah Samir Elnshar</b><br/>
-This app is part of my Flutter development journey during my training at <b>Route Academy</b>.<br/><br/>
+**Abdallah Samir Elnshar**
 
-It demonstrates real-world concepts like:
-<ul>
-  <li>Authentication (Firebase)</li>
-  <li>State Management (Provider)</li>
-  <li>CRUD Operations</li>
-  <li>Clean UI & UX</li>
-</ul>
+This app is part of a series of projects developed during my journey at **Route Academy**.  
+Thank you for checking out my work! 🙏
 
-This project is open source and available under the <b>MIT License</b>.
-</p>
+This project is open source and available under the **MIT License**.
