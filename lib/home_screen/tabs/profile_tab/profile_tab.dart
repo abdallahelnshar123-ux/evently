@@ -7,6 +7,7 @@ import 'package:evently/provider/user_provider.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
+import 'package:evently/utils/local_storage.dart';
 import 'package:evently/utils/screen_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,7 @@ class ProfileTab extends StatelessWidget {
                   onPressed: () async {
                     await FirebaseAuth.instance.signOut();
                     eventsProvider.emptyLists();
+                    await LocalStorage.instance.clearUser();
                     if (!context.mounted) return;
                     Navigator.pushNamedAndRemoveUntil(
                       context,
